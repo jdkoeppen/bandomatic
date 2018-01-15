@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f2daac;
+    background-size: cover;
+    background-repeat: no-repeat;
+height: 100%;
+}
+
+h1  {
+    font-family: "Monoton", sans-serif;
+    color: black;
+    font-size: 60px;
+    font-weight: 300;
+    text-align: center;
+    margin-top: 50px;
+}
