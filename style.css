@@ -4,11 +4,12 @@
 
 body {
     background-color: #f2daac;
-    background-size: cover;
-    background-repeat: no-repeat;
-height: 100%;
 }
 
+main {
+    width: 600px;
+    margin: 0 auto;
+}
 h1  {
     font-family: "Monoton", sans-serif;
     color: black;
@@ -16,4 +17,23 @@ h1  {
     font-weight: 300;
     text-align: center;
     margin-top: 50px;
+}
+
+h2 {
+    font-family: 'Archivo Black', sans-serif;
+    font-weight: 300;
+    text-align: center;
+    text-transform: capitalize;
+    color: #476886;
+}
+
+legend {
+    font-family: 'Permanent Marker', sans-serif;
+    font-size: 24px;
+}
+
+.js-words, .js-quote {
+    height: 80px;
+    padding-top:15px;
+
 }
