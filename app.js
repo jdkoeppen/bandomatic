@@ -1,5 +1,5 @@
 const QUOTEENDPOINT = 'https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?'
-const WORDSENDPOINT = 'http://api.wordnik.com:80/v4/words.json/randomWords'
+const WORDSENDPOINT = 'https://api.wordnik.com:80/v4/words.json/randomWords'
 const WORDAPI = 'a9ebebf8301d0e2e3a0070d083d0143dc1fd6a7989e31b1c6'
 var quote = ''
 var words = ''
