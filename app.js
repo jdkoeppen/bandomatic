@@ -1,5 +1,5 @@
 const QUOTEENDPOINT = 'https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?'
-const WORDSENDPOINT = 'https://api.wordnik.com:80/v4/words.json/randomWords'
+const WORDSENDPOINT = 'https://api.wordnik.com/v4/words.json/randomWords'
 const WORDAPI = 'a9ebebf8301d0e2e3a0070d083d0143dc1fd6a7989e31b1c6'
 var quote = ''
 var words = ''
@@ -10,7 +10,7 @@ var crop
 
 function getWordsData (callback) {
   const query = {
-    limit: 2,
+    limit: 5,
     minLength: 3,
     api_key: WORDAPI
   }
@@ -26,10 +26,10 @@ function watchWords () {
 
 function watchFlip () {
   $('form').on('click', '#flip', function (e) {
-    if (words == 'fwd') {
+    if (words === 'fwd') {
       renderWords(word2 + ' ' + word1)
       words = 'rev'
-    } else if (words == 'rev') {
+    } else if (words === 'rev') {
       renderWords(word1 + ' ' + word2)
       words = 'fwd'
     }
@@ -45,9 +45,11 @@ function renderWords (result) {
 }
 
 function renderAllWords (object) {
+  words = object
   word1 = object[0].word
   word2 = object[1].word
   renderWords(word1 + ' ' + word2)
+  console.log(object)
 }
 
 function getQuoteData (callback) {
