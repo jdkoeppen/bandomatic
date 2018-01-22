@@ -9,34 +9,44 @@
     <link href="https://fonts.googleapis.com/css?family=Monoton|Permanent+Marker|Archivo+Black" rel="stylesheet">
     <link href="normalize.css" rel="stylesheet" type="text/css" />
     <link href="style.css" rel="stylesheet" type="text/css" />
-<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
+
 <body>
     <h1>Band-o-Matic!</h1>
-        <main role="role">
-            <div>
-                <form>
-                    <fieldset id='bandName'>
-                        <legend>Get your Band Name</legend>
-                        <div class='js-words'>
+    <main role="role">
+        <div>
+            <form>
+                <fieldset id='coverArt'>
+                    <legend>Get your Album Cover</legend>
+                    <div class='js-cover'>
+                        
 
-                        </div>
-                        <button type='button' id='words'>Words</button>
-                        <button type='button' id='flip'>Flip</button>
-                        <!--<button type='button' id='mono'>One Word</button>-->
-                    </fieldset>
-                    <fieldset id='albumName'>
-                        <legend>Get your Album Name</legend>
-                        <div class='js-quote'>
+                    </div>
+                    <button type='button' id='cover'>Cover</button>
+                </fieldset>
+                <fieldset id='bandName'>
+                    <legend>Get your Band Name</legend>
+                    <div class='js-words'>
 
-                            </div>
-                        <button type='button' id='quote'>Quote</button>
-                        <button type='button' id='less'>Less</button>
-                        <button type='button' id='more'>More</button>                   
-                    </fieldset>
-                </form>
-            </div>
-        </main>
+                    </div>
+                    <button type='button' id='words'>Words</button>
+                    <button type='button' id='flip'>Flip</button>
+                    <input type='checkBox' id='mono'>
+                    <label for='mono'>One Word Name</label>
+                </fieldset>
+                <fieldset id='albumName'>
+                    <legend>Get your Album Name</legend>
+                    <div class='js-quote'>
+
+                    </div>
+                    <button type='button' id='quote'>Album</button>
+                    <button type='button' id='less'>Less</button>
+                    <button type='button' id='more'>More</button>
+                </fieldset>
+            </form>
+        </div>
+    </main>
 
 
 
