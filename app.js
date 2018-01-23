@@ -1,4 +1,4 @@
-const QUOTEENDPOINT = 'https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?'
+const QUOTEENDPOINT = 'https://talaikis.com/api/quotes/random/'
 const WORDSENDPOINT = 'https://api.wordnik.com/v4/words.json/randomWords'
 const WORDAPI = 'a9ebebf8301d0e2e3a0070d083d0143dc1fd6a7989e31b1c6'
 const COVERENDPOINT = 'https://api.unsplash.com/photos/random'
@@ -26,8 +26,12 @@ function watchCover() {
 
 function renderCover(image) {
   COVERURL = image.urls.regular
-  console.log(COVERURL)
-  $('.js-cover').html(`<img id='coverImg' src='${COVERURL}'>`)
+  let desc = image.description
+  let color = image.color
+  console.log(color)
+  $('.js-cover').html(`<img id='coverOverlay' src='assets/coverOverlay.png'>
+  <h3 id='colorTest' style='color:${color}'>Color Test</h3>
+  <img id='coverImg' src='${COVERURL}' alt='${desc}'>`)
 }
 
 function watchWords () {
@@ -52,7 +56,7 @@ function renderAllWords(object) {
 }
 
 function renderWords(result) {
-  $('.js-words').html(`<h2>${result}</h2>`)
+  $('.js-words span').html(`<h2>${result}</h2>`)
 }
 
 function watchFlip () {
@@ -96,13 +100,13 @@ function watchQuoteLength () {
 function renderQuote (result, noWords) {
   noWords = ALBUM_WORD_COUNT
   let crop = ALBUM.split(' ').splice(0, noWords).join(' ')
-  $('.js-quote').html(`<h2>${crop}</h2>`)
+  $('.js-quote span').html(`<h2>${crop}</h2>`)
   console.log(crop)
   return crop
 }
 
 function renderWholeQuote (data) {
-  ALBUM = data.quoteText
+  ALBUM = data.quote
   renderQuote(ALBUM)
 }
 
