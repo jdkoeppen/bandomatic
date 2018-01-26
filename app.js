@@ -1,37 +1,71 @@
-const QUOTEENDPOINT = 'https://talaikis.com/api/quotes/random/'
-const WORDSENDPOINT = 'https://api.wordnik.com/v4/words.json/randomWords'
-const WORDAPI = 'a9ebebf8301d0e2e3a0070d083d0143dc1fd6a7989e31b1c6'
-const COVERENDPOINT = 'https://api.unsplash.com/photos/random'
-const COVERAPI = 'bad147bdc617e39778666eecef33b4dbee3cfb28693e0b73ba08441bb647c5da'
-var COVERURL = ''
+const QUOTE_ENDPOINT = 'https://talaikis.com/api/quotes/random/'
+const WORDS_ENDPOINT = 'https://api.wordnik.com/v4/words.json/randomWords'
+const WORDS_API = 'a9ebebf8301d0e2e3a0070d083d0143dc1fd6a7989e31b1c6'
+const COVER_ENDPOINT = 'https://api.unsplash.com/photos/random'
+const COVER_API = 'bad147bdc617e39778666eecef33b4dbee3cfb28693e0b73ba08441bb647c5da'
+const COLORS_ENDPOINT = 'https://api.imagga.com/v1/colors'
+var COVER_URL = ''
 var BAND = []
 var ALBUM = []
+var COLORS = []
+var DISPLAY_BAND_NAME = BAND.join(' ')
 var ALBUM_WORD_COUNT = 4
 
 function getCover(callback) {
   const query = {
-    client_id: COVERAPI,
+    client_id: COVER_API,
     orientation: 'squarish'
   }
-  $.getJSON(COVERENDPOINT, query, callback)
-  console.log('getCover ran')
+  $.getJSON(COVER_ENDPOINT, query, callback)
 }
 
 function watchCover() {
   $('form').on('click', '#cover', function(e) {
     getCover(renderCover)
-    console.log('cover clicked')
   })
 }
 
 function renderCover(image) {
-  COVERURL = image.urls.regular
-  let desc = image.description
-  let color = image.color
-  console.log(color)
-  $('.js-cover').html(`<img id='coverOverlay' src='assets/coverOverlay.png'>
-  <h3 id='colorTest' style='color:${color}'>Color Test</h3>
-  <img id='coverImg' src='${COVERURL}' alt='${desc}'>`)
+  COVER_URL = image.urls.regular
+  console.log(COVER_URL)
+  let desc
+  if (image.description) {
+    desc = image.description.replace(/'/g, '&apos;')
+  }
+  $('.js-cover').html(`
+    <div id='textLayer'></div>
+    <div id='coverLayer'><img id='coverOverlay' src='assets/coverOverlay.png' ${desc && "title='An album cover depicting " + desc + "' "}>
+    <img id='coverImg' src='${COVER_URL}'${desc && "alt='An album cover depicting " + desc + "' "}></div>
+    `)
+}
+
+function watchColors () {
+  $('form').on('click', '#name', e => {
+    getColors(renderColors)
+  })
+}
+
+function renderColors (data) {
+  COLORS = data.results[0].info.background_colors.map(color => color.html_code)
+  let color1 = COLORS[1]
+  $('#textLayer').html(`<h3 id='colorTest' style='color:${color1}'>${DISPLAY_BAND_NAME}</h3>`)
+  console.log(COLORS)
+}
+
+function getColors(callback) {
+  return $.ajax({
+    url: COLORS_ENDPOINT,
+    data: {
+      url: COVER_URL
+    },
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader('Authorization', 'Basic YWNjXzkzNmNmNDMzOGQ0ODNiODowMjk3Y2Q3ZTQwMzA1NjJiZWZlMzQzZDEyZWJhOTk2ZQ==')
+    }
+  }).done(callback)
+}
+
+function initZInput () {
+  $('#namePalette').zInput()
 }
 
 function watchWords () {
@@ -44,15 +78,16 @@ function getWordsData (callback) {
   const query = {
     limit: 2,
     minLength: 3,
-    api_key: WORDAPI
+    api_key: WORDS_API
   }
-  $.getJSON(WORDSENDPOINT, query, callback)
+  $.getJSON(WORDS_ENDPOINT, query, callback)
 }
 
 function renderAllWords(object) {
   BAND = object.map(item => item.word)
+  DISPLAY_BAND_NAME = BAND.join(' ')
   console.log(BAND)
-  renderWords(BAND.join(' '))
+  renderWords(DISPLAY_BAND_NAME)
 }
 
 function renderWords(result) {
@@ -61,9 +96,9 @@ function renderWords(result) {
 
 function watchFlip () {
   $('form').on('click', '#flip', function (e) {
-    let flip = BAND.reverse()
-    console.log(flip)
-    renderWords(flip.join(' '))
+    DISPLAY_BAND_NAME = BAND.reverse().join(' ')
+    console.log(DISPLAY_BAND_NAME)
+    renderWords(DISPLAY_BAND_NAME)
   })
 }
 
@@ -77,7 +112,7 @@ function watchMono () {
 }
 
 function getQuoteData (callback) {
-  $.getJSON(QUOTEENDPOINT, callback)
+  $.getJSON(QUOTE_ENDPOINT, callback)
 }
 
 function watchQuote () {
@@ -116,3 +151,5 @@ $(watchWords)
 $(watchFlip)
 $(watchMono)
 $(watchCover)
+$(watchColors)
+$(initZInput)

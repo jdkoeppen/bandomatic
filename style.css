@@ -2,23 +2,46 @@
     box-sizing: border-box;
 }
 
+input[type=radio] {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: 1em;
+    cursor: pointer;
+    }
+
 html {
-        padding:25px;
+    padding:25px;
 }
 
 body {
-    background-color: #f2daac;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url('assets/mainbg-2.jpg');
+  
 
 }
 
 main {
+    padding: 25px;
+    border-radius: 10px;
     width: 700px;
+    height: 900px;
     margin: 0 auto;
+    background-image: url('assets/pattern2.png');
+    background-size: contain;
+    background-repeat: repeat;
+    background-color: #46494C;
+    box-shadow: 0px 5px 10px -1px #242424;
+
 }
 
 h1  {
     font-family: "Monoton", sans-serif;
-    color: #5a89b8;
+    color: #DCDCDD;
     font-size: 60px;
     font-weight: 300;
     text-align: center;
@@ -33,37 +56,25 @@ h2 {
     color: #5a89b8;
 }
 
-legend {
-    padding-top: 40px;
+h3 {
     font-family: 'Permanent Marker', sans-serif;
     font-size: 24px;
-    color: #3f4246;
-    
+    font-weight: normal;
+    color: #DCDCDD; 
 }
 
 fieldset {
-    border-radius: 5px;
-    border:none;
-    background-color: #adcfdf;
-    box-shadow: 0px 2px 3px 0px #949494bf;
+    border: none;
 }
+
 
 span {
     display: inline-block;
     vertical-align: middle;
 }
 
-.js-words, .js-quote {
-    text-align: center;
-    height: 66px;
-    background-color:white;
-    border-radius: 10px;
-    margin: 10px auto;
-
-}
-
 #coverArt {
-    position: initial;
+    position: inherit;
     
 }
 
@@ -77,9 +88,9 @@ span {
     position: inherit; 
     margin: 20px 0 20px 0;
     z-index: 1;
-    width: 570px;
-    height: 570px;
-    box-shadow: 0px 5px 10px -1px #7a7a7a;
+    max-width: 570px;
+    max-height: 570px;
+    box-shadow: 0px 5px 10px -1px #242424;
 }
 
 #colorTest {
@@ -89,6 +100,7 @@ span {
     font-size: 2em;
     text-align: center;
     font-family: 'Archivo Black', sans-serif;
+    text-transform: capitalize;
 }
 
 #coverOverlay {
@@ -99,4 +111,28 @@ span {
     z-index: 2;
     mix-blend-mode: screen;
 
+}
+
+#defaultCover {
+    background-color: #242424;
+    background-image: url('assets/coverOverlay.png')
+    position: absolute;
+    margin: 20px 0 20px 0;
+    z-index: 1;
+    max-width: 570px;
+    max-height: 570px;
+    box-shadow: 0px 5px 10px -1px #242424;
+}
+
+#namePalette {
+    display: flex;
+}
+
+.paletteItem {
+    flex-flow: row;
+    height: 30px;
+    width: 30px;
+    box-shadow: inset 0px 5px 5px -1px #7a7a7a;
+    border-radius: 50%;
+    margin: 5px;
 }
