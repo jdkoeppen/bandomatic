@@ -45,15 +45,15 @@ h1  {
     font-size: 60px;
     font-weight: 300;
     text-align: center;
-    margin-top: 50px;
 }
 
 h2 {
     font-family: 'Archivo Black', sans-serif;
+    font-size: 2em;
     font-weight: 300;
     text-align: center;
     text-transform: capitalize;
-    color: #5a89b8;
+    color: #ffffff;
 }
 
 h3 {
@@ -61,42 +61,62 @@ h3 {
     font-size: 24px;
     font-weight: normal;
     color: #DCDCDD; 
+    margin:5px;
 }
 
 fieldset {
     border: none;
 }
 
+button {
+    height: 30px;
+    color: #DCDCDD;
+    border: 2px solid #DCDCDD;
+    border-radius: 5px;
+    background-color: #242424;
+    margin: 5px;
 
-span {
-    display: inline-block;
-    vertical-align: middle;
 }
 
-#coverArt {
-    position: inherit;
-    
+
+#bandControl, #albumControl, #coverControl {
+    display: flex;
+    align-content: flex-start; 
 }
+
+
 
 .js-cover {
-    position: inherit;
-    margin-left: 7.462%;
-
+    position: relative;
+    margin: 0 auto;
+    width: 570px;
+    height: 570px;
+    overflow: hidden;
 }
 
+.js-band {
+    position: absolute;
+    top: 1%;
+    left: 6%;
+    z-index: 2;
+}
+.js-album {
+    position: absolute;
+    top: 80%;
+    left: 15%;
+    z-index: 2;
+}
 #coverImg {
-    position: inherit; 
-    margin: 20px 0 20px 0;
+    position: absolute; 
+    height:600px;
+    width: 600px;
     z-index: 1;
-    max-width: 570px;
-    max-height: 570px;
+    object-fit: cover;
     box-shadow: 0px 5px 10px -1px #242424;
 }
 
 #colorTest {
     position: absolute;
-    padding-top: 40px;
-    padding-left: 50px;
     font-size: 2em;
     text-align: center;
     font-family: 'Archivo Black', sans-serif;
@@ -105,22 +125,18 @@ span {
 
 #coverOverlay {
     position: absolute;
-    margin: 20px 0 20px 0;
     width: 570px;
     height: 570px;
-    z-index: 2;
+    z-index: 3;
     mix-blend-mode: screen;
 
 }
 
 #defaultCover {
-    background-color: #242424;
-    background-image: url('assets/coverOverlay.png')
     position: absolute;
-    margin: 20px 0 20px 0;
-    z-index: 1;
-    max-width: 570px;
-    max-height: 570px;
+    background-color: #242424;
+    width: 570px;
+    height: 570px;
     box-shadow: 0px 5px 10px -1px #242424;
 }
 

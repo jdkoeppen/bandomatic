@@ -11,6 +11,16 @@ var COLORS = []
 var DISPLAY_BAND_NAME = BAND.join(' ')
 var ALBUM_WORD_COUNT = 4
 
+/***
+ *     ######   #######  ##     ## ######## ########  
+ *    ##    ## ##     ## ##     ## ##       ##     ## 
+ *    ##       ##     ## ##     ## ##       ##     ## 
+ *    ##       ##     ## ##     ## ######   ########  
+ *    ##       ##     ##  ##   ##  ##       ##   ##   
+ *    ##    ## ##     ##   ## ##   ##       ##    ##  
+ *     ######   #######     ###    ######## ##     ## 
+ */
+
 function getCover(callback) {
   const query = {
     client_id: COVER_API,
@@ -22,6 +32,7 @@ function getCover(callback) {
 function watchCover() {
   $('form').on('click', '#cover', function(e) {
     getCover(renderCover)
+    getColors(renderColors)
   })
 }
 
@@ -32,23 +43,32 @@ function renderCover(image) {
   if (image.description) {
     desc = image.description.replace(/'/g, '&apos;')
   }
-  $('.js-cover').html(`
-    <div id='textLayer'></div>
-    <div id='coverLayer'><img id='coverOverlay' src='assets/coverOverlay.png' ${desc && "title='An album cover depicting " + desc + "' "}>
+  $('#defaultCover').css('visibility', 'hidden')
+  $('.js-cover').append(`<div id='coverImg'>
     <img id='coverImg' src='${COVER_URL}'${desc && "alt='An album cover depicting " + desc + "' "}></div>
     `)
 }
 
-function watchColors () {
-  $('form').on('click', '#name', e => {
-    getColors(renderColors)
-  })
-}
+/***
+ *     ######   #######  ##        #######  ########   ######  
+ *    ##    ## ##     ## ##       ##     ## ##     ## ##    ## 
+ *    ##       ##     ## ##       ##     ## ##     ## ##       
+ *    ##       ##     ## ##       ##     ## ########   ######  
+ *    ##       ##     ## ##       ##     ## ##   ##         ## 
+ *    ##    ## ##     ## ##       ##     ## ##    ##  ##    ## 
+ *     ######   #######  ########  #######  ##     ##  ######  
+ */
+
+// function watchColors () {
+//   $('form').on('click', '#cover', e => {
+//     getColors(renderColors)
+//   })
+// }
 
 function renderColors (data) {
   COLORS = data.results[0].info.background_colors.map(color => color.html_code)
   let color1 = COLORS[1]
-  $('#textLayer').html(`<h3 id='colorTest' style='color:${color1}'>${DISPLAY_BAND_NAME}</h3>`)
+  $('#bandName').html(`<h2 id='bandName' style='color:${color1}'>${DISPLAY_BAND_NAME}</h2>`)
   console.log(COLORS)
 }
 
@@ -64,9 +84,16 @@ function getColors(callback) {
   }).done(callback)
 }
 
-function initZInput () {
-  $('#namePalette').zInput()
-}
+/***
+ *    ##      ##  #######  ########  ########   ######  
+ *    ##  ##  ## ##     ## ##     ## ##     ## ##    ## 
+ *    ##  ##  ## ##     ## ##     ## ##     ## ##       
+ *    ##  ##  ## ##     ## ########  ##     ##  ######  
+ *    ##  ##  ## ##     ## ##   ##   ##     ##       ## 
+ *    ##  ##  ## ##     ## ##    ##  ##     ## ##    ## 
+ *     ###  ###   #######  ##     ## ########   ######  
+ */
+
 
 function watchWords () {
   $('form').on('click', '#words', function (e) {
@@ -91,7 +118,7 @@ function renderAllWords(object) {
 }
 
 function renderWords(result) {
-  $('.js-words span').html(`<h2>${result}</h2>`)
+  $('.js-band span').html(`<h2 id='bandName'>${result}</h2>`)
 }
 
 function watchFlip () {
@@ -110,6 +137,17 @@ function watchMono () {
       } else renderWords(BAND.join(' '))
     })
 }
+
+/***
+ *     #######  ##     ##  #######  ######## ######## 
+ *    ##     ## ##     ## ##     ##    ##    ##       
+ *    ##     ## ##     ## ##     ##    ##    ##       
+ *    ##     ## ##     ## ##     ##    ##    ######   
+ *    ##  ## ## ##     ## ##     ##    ##    ##       
+ *    ##    ##  ##     ## ##     ##    ##    ##       
+ *     ##### ##  #######   #######     ##    ######## 
+ */
+
 
 function getQuoteData (callback) {
   $.getJSON(QUOTE_ENDPOINT, callback)
@@ -135,7 +173,7 @@ function watchQuoteLength () {
 function renderQuote (result, noWords) {
   noWords = ALBUM_WORD_COUNT
   let crop = ALBUM.split(' ').splice(0, noWords).join(' ')
-  $('.js-quote span').html(`<h2>${crop}</h2>`)
+  $('.js-album span').html(`<h2>${crop}</h2>`)
   console.log(crop)
   return crop
 }
@@ -145,6 +183,19 @@ function renderWholeQuote (data) {
   renderQuote(ALBUM)
 }
 
+/***
+ *    ########   #######   ######  
+ *    ##     ## ##     ## ##    ## 
+ *    ##     ## ##     ## ##       
+ *    ##     ## ##     ## ##       
+ *    ##     ## ##     ## ##       
+ *    ##     ## ##     ## ##    ## 
+ *    ########   #######   ######  
+ */
+
+function initZInput() {
+  $('#namePalette').zInput()
+}
 $(watchQuote)
 $(watchQuoteLength)
 $(watchWords)
