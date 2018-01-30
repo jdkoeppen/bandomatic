@@ -32,7 +32,6 @@ function getCover(callback) {
 function watchCover() {
   $('form').on('click', '#cover', function(e) {
     getCover(renderCover)
-    getColors(renderColors)
   })
 }
 
@@ -44,9 +43,11 @@ function renderCover(image) {
     desc = image.description.replace(/'/g, '&apos;')
   }
   $('#defaultCover').css('visibility', 'hidden')
+  $('.colorPalette').html(` `)
   $('.js-cover').append(`<div id='coverImg'>
     <img id='coverImg' src='${COVER_URL}'${desc && "alt='An album cover depicting " + desc + "' "}></div>
     `)
+  getColors(renderColors)
 }
 
 /***
@@ -59,17 +60,34 @@ function renderCover(image) {
  *     ######   #######  ########  #######  ##     ##  ######  
  */
 
-// function watchColors () {
-//   $('form').on('click', '#cover', e => {
-//     getColors(renderColors)
-//   })
-// }
-
 function renderColors (data) {
-  COLORS = data.results[0].info.background_colors.map(color => color.html_code)
-  let color1 = COLORS[1]
-  $('#bandName').html(`<h2 id='bandName' style='color:${color1}'>${DISPLAY_BAND_NAME}</h2>`)
+  let bank = []
+  let background = data.results[0].info.background_colors.map(color => color.html_code)
+  let image = data.results[0].info.image_colors.map(color => color.html_code)
+  let foreground = data.results[0].info.foreground_colors.map(color => color.html_code)
+  let colorBatch = [background, image, foreground]
+  for (var i = 0; i < colorBatch.length; i++) {
+    if (colorBatch[i].length !== 0) {
+      bank.push(colorBatch[i], '#ffffff', '#000000')
+    }
+  }
+  COLORS = bank.reduce((a, b) => a.concat(b))
+  renderPalette()
   console.log(COLORS)
+}
+
+function renderPalette () {
+  for (var i = 0; i < COLORS.length; i++) {
+    $('.colorPalette').append(`<input type='button' class='paletteItem' title='' id='color${i + 1}' style='background-color:${COLORS[i]}'>`)
+  }
+  watchPalette()
+}
+
+function watchPalette () {
+  $('.colorPalette').on('click', '.paletteItem', function () {
+    let color = $(this).css('background-color')
+    $('#currentName').css('color', color)
+  })
 }
 
 function getColors(callback) {
@@ -94,7 +112,6 @@ function getColors(callback) {
  *     ###  ###   #######  ##     ## ########   ######  
  */
 
-
 function watchWords () {
   $('form').on('click', '#words', function (e) {
     getWordsData(renderAllWords)
@@ -118,24 +135,32 @@ function renderAllWords(object) {
 }
 
 function renderWords(result) {
-  $('.js-band span').html(`<h2 id='bandName'>${result}</h2>`)
+  $('.js-band').html(`<h2 id='currentName'>${DISPLAY_BAND_NAME}</h2>`)
 }
 
-function watchFlip () {
-  $('form').on('click', '#flip', function (e) {
+function nameControls () {
+  $('input[type=checkbox]#flip').change(function (e) {
     DISPLAY_BAND_NAME = BAND.reverse().join(' ')
-    console.log(DISPLAY_BAND_NAME)
     renderWords(DISPLAY_BAND_NAME)
   })
-}
-
-function watchMono () {
-  $('input[type=checkbox]').change(
-    function () {
-      if (this.checked) {
-        renderWords(BAND[0])
-      } else renderWords(BAND.join(' '))
-    })
+  $('input[type=checkbox]#mono').change(function (e) {
+    if (this.checked) {
+      DISPLAY_BAND_NAME = BAND[0]
+      renderWords(DISPLAY_BAND_NAME)
+    } else {
+      DISPLAY_BAND_NAME = BAND.join(' ')
+      renderWords(DISPLAY_BAND_NAME)
+    }
+  })
+  $('input[type=checkbox]#theNames').change(function (e) {
+    if (this.checked) {
+      DISPLAY_BAND_NAME = 'The ' + DISPLAY_BAND_NAME + 's'
+      renderWords(DISPLAY_BAND_NAME)
+    } else {
+      DISPLAY_BAND_NAME = BAND.join(' ')
+      renderWords(DISPLAY_BAND_NAME)
+    }
+  })
 }
 
 /***
@@ -147,7 +172,6 @@ function watchMono () {
  *    ##    ##  ##     ## ##     ##    ##    ##       
  *     ##### ##  #######   #######     ##    ######## 
  */
-
 
 function getQuoteData (callback) {
   $.getJSON(QUOTE_ENDPOINT, callback)
@@ -173,7 +197,7 @@ function watchQuoteLength () {
 function renderQuote (result, noWords) {
   noWords = ALBUM_WORD_COUNT
   let crop = ALBUM.split(' ').splice(0, noWords).join(' ')
-  $('.js-album span').html(`<h2>${crop}</h2>`)
+  $('.js-album').html(`<h2>${crop}</h2>`)
   console.log(crop)
   return crop
 }
@@ -193,14 +217,10 @@ function renderWholeQuote (data) {
  *    ########   #######   ######  
  */
 
-function initZInput() {
-  $('#namePalette').zInput()
-}
 $(watchQuote)
 $(watchQuoteLength)
 $(watchWords)
-$(watchFlip)
-$(watchMono)
+$(nameControls)
 $(watchCover)
-$(watchColors)
-$(initZInput)
+// $(watchColors)
+// $(initZInput)

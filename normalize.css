@@ -244,7 +244,7 @@ select,
 textarea {
   font-family: sans-serif; /* 1 */
   font-size: 100%; /* 1 */
-  line-height: 1.15; /* 1 */
+  line-height: .80; /* 1 */
   margin: 0; /* 2 */
 }
 
@@ -312,6 +312,14 @@ fieldset {
   padding: 0.35em 0.75em 0.625em;
 }
 
+input[type='checkbox'] {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+}
 /**
  * 1. Correct the text wrapping in Edge and IE.
  * 2. Correct the color inheritance from `fieldset` elements in IE.

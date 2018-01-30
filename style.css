@@ -2,6 +2,20 @@
     box-sizing: border-box;
 }
 
+@media screen and (max-width: 1225px) {
+    main {
+        flex-flow: wrap;
+        max-width: 660px;
+    }
+}
+
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
 input[type=radio] {
     margin: 0;
     padding: 0;
@@ -12,36 +26,34 @@ input[type=radio] {
     cursor: pointer;
     }
 
-html {
-    padding:25px;
-}
-
 body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
+    background-attachment: fixed;
+    height: 100%;
     background-image: url('assets/mainbg-2.jpg');
-  
-
-}
+  }
 
 main {
-    padding: 25px;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
     border-radius: 10px;
-    width: 700px;
-    height: 900px;
+    width: 1220px;
+    height: auto;
     margin: 0 auto;
-    background-image: url('assets/pattern2.png');
+    background-image: url('assets/pattern.jpg');
     background-size: contain;
     background-repeat: repeat;
     background-color: #46494C;
     box-shadow: 0px 5px 10px -1px #242424;
-
 }
 
 h1  {
     font-family: "Monoton", sans-serif;
     color: #DCDCDD;
+    margin: 20px auto;
     font-size: 60px;
     font-weight: 300;
     text-align: center;
@@ -49,8 +61,6 @@ h1  {
 
 h2 {
     font-family: 'Archivo Black', sans-serif;
-    font-size: 2em;
-    font-weight: 300;
     text-align: center;
     text-transform: capitalize;
     color: #ffffff;
@@ -71,27 +81,91 @@ fieldset {
 button {
     height: 30px;
     color: #DCDCDD;
-    border: 2px solid #DCDCDD;
+    width: 80px;
     border-radius: 5px;
+    border: none;
     background-color: #242424;
     margin: 5px;
-
+    padding: 8px;
 }
 
+button:hover {
+    background-color: #46494C;
+    border: 2px solid #DCDCDD;
+    cursor: pointer;
+}
 
-#bandControl, #albumControl, #coverControl {
+button:active {
+    background-color: #40798C;
+    border: 2px solid #DCDCDD;
+    cursor: pointer;
+}
+input[type=checkbox] + label{
+    height: 30px;
+    width: 30px;
+    color: #DCDCDD;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #242424;
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+input[type=checkbox]:checked + label {
+    color: white;
+    background-color: #40798C;
+}
+
+button.paletteItem {
+    display:inline-block;
+    width: 20px;
+    height:20px;
+    margin:3px;
+    text-align:center;
+    cursor: pointer;
+    border: none;
+    border-radius:50%;
+    font-size: 18px;
+    overflow:hidden;
+}
+#bandName, #albumName, #coverControl {
     display: flex;
-    align-content: flex-start; 
+    flex-flow: wrap;
+    justify-content: space-between;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #c7c7c72a;
+    box-shadow: 0px 5px 10px 0px #242424;
 }
 
+#control, #display {
+    flex-wrap: wrap;
+    padding: 10px;
+    width: 600px;
+    min-height: 400px;
+}
 
+.controlPanel, .colorPalette{
+    flex-flow: row;
+    flex: auto;
+    margin-top: 30px;
+    height: 50px;
+}
+
+ .textControl {
+     flex-flow: row;
+     margin: 20px auto;
+ }
 
 .js-cover {
     position: relative;
     margin: 0 auto;
+    background-color: #242424;
     width: 570px;
     height: 570px;
     overflow: hidden;
+    box-shadow: 0px 5px 10px 0px #242424;
+
 }
 
 .js-band {
@@ -100,27 +174,21 @@ button {
     left: 6%;
     z-index: 2;
 }
+
 .js-album {
     position: absolute;
     top: 80%;
     left: 15%;
     z-index: 2;
 }
+
+
 #coverImg {
     position: absolute; 
     height:600px;
     width: 600px;
     z-index: 1;
     object-fit: cover;
-    box-shadow: 0px 5px 10px -1px #242424;
-}
-
-#colorTest {
-    position: absolute;
-    font-size: 2em;
-    text-align: center;
-    font-family: 'Archivo Black', sans-serif;
-    text-transform: capitalize;
 }
 
 #coverOverlay {
@@ -132,23 +200,76 @@ button {
 
 }
 
-#defaultCover {
-    position: absolute;
-    background-color: #242424;
-    width: 570px;
-    height: 570px;
-    box-shadow: 0px 5px 10px -1px #242424;
-}
-
-#namePalette {
-    display: flex;
-}
-
 .paletteItem {
     flex-flow: row;
     height: 30px;
     width: 30px;
-    box-shadow: inset 0px 5px 5px -1px #7a7a7a;
+    box-shadow: inset 0px 3px 5px -1px #24242473;
     border-radius: 50%;
     margin: 5px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 23px;
+    align-content: center;
+
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #adadad;
+    -webkit-transition: .15s;
+    transition: .15s;
+    box-shadow: inset 0px 2px 4px 0px #242424de;
+
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .15s;
+    transition: .15s;
+    box-shadow: 0px 4px 3px -1px #242424de;
+
+}
+
+input:checked+.slider {
+    background-color: #adadad;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #adadad;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(38px);
+    -ms-transform: translateX(38px);
+    transform: translateX(38px);
+}
+
+/* Rounded sliders */
+
+.slider.round {
+    border-radius: 20px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
