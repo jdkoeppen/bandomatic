@@ -32,13 +32,13 @@ function pageLoad () {
 }
 
 /***
- *     ######   #######  ##     ## ######## ########  
- *    ##    ## ##     ## ##     ## ##       ##     ## 
- *    ##       ##     ## ##     ## ##       ##     ## 
- *    ##       ##     ## ##     ## ######   ########  
- *    ##       ##     ##  ##   ##  ##       ##   ##   
- *    ##    ## ##     ##   ## ##   ##       ##    ##  
- *     ######   #######     ###    ######## ##     ## 
+ *     ######   #######  ##     ## ######## ########
+ *    ##    ## ##     ## ##     ## ##       ##     ##
+ *    ##       ##     ## ##     ## ##       ##     ##
+ *    ##       ##     ## ##     ## ######   ########
+ *    ##       ##     ##  ##   ##  ##       ##   ##
+ *    ##    ## ##     ##   ## ##   ##       ##    ##
+ *     ######   #######     ###    ######## ##     ##
  */
 
 function getCover(callback) {
@@ -78,13 +78,13 @@ function renderCover(image) {
 }
 
 /***
- *     ######   #######  ##        #######  ########   ######  
- *    ##    ## ##     ## ##       ##     ## ##     ## ##    ## 
- *    ##       ##     ## ##       ##     ## ##     ## ##       
- *    ##       ##     ## ##       ##     ## ########   ######  
- *    ##       ##     ## ##       ##     ## ##   ##         ## 
- *    ##    ## ##     ## ##       ##     ## ##    ##  ##    ## 
- *     ######   #######  ########  #######  ##     ##  ######  
+ *     ######   #######  ##        #######  ########   ######
+ *    ##    ## ##     ## ##       ##     ## ##     ## ##    ##
+ *    ##       ##     ## ##       ##     ## ##     ## ##
+ *    ##       ##     ## ##       ##     ## ########   ######
+ *    ##       ##     ## ##       ##     ## ##   ##         ##
+ *    ##    ## ##     ## ##       ##     ## ##    ##  ##    ##
+ *     ######   #######  ########  #######  ##     ##  ######
  */
 
 function renderColors (data) {
@@ -129,13 +129,13 @@ function getColors(callback) {
 }
 
 /***
- *    ##      ##  #######  ########  ########   ######  
- *    ##  ##  ## ##     ## ##     ## ##     ## ##    ## 
- *    ##  ##  ## ##     ## ##     ## ##     ## ##       
- *    ##  ##  ## ##     ## ########  ##     ##  ######  
- *    ##  ##  ## ##     ## ##   ##   ##     ##       ## 
- *    ##  ##  ## ##     ## ##    ##  ##     ## ##    ## 
- *     ###  ###   #######  ##     ## ########   ######  
+ *    ##      ##  #######  ########  ########   ######
+ *    ##  ##  ## ##     ## ##     ## ##     ## ##    ##
+ *    ##  ##  ## ##     ## ##     ## ##     ## ##
+ *    ##  ##  ## ##     ## ########  ##     ##  ######
+ *    ##  ##  ## ##     ## ##   ##   ##     ##       ##
+ *    ##  ##  ## ##     ## ##    ##  ##     ## ##    ##
+ *     ###  ###   #######  ##     ## ########   ######
  */
 
 function watchWords () {
@@ -170,41 +170,34 @@ function renderWords(result) {
   $('.js-band').html(`<h2 id='currentBand'>${result}</h2>`)
 }
 
+function applyBlank(band) {
+  let name = BAND.join(' ')
+  let endsInS = name.charAt(-1) === 's' ? '' : 's'
+  console.log(endsInS)
+  return $('#theNames:checked').length ? 'The ' + name + endsInS : name
+}
+
+function applyMono(band) {
+  return $('#mono:checked').length ? [BAND[0]] : band
+}
+
+function applyFlip(band) {
+  return $('#flip:checked').length ? band.reverse() : band
+}
+
 function nameControls () {
   $('#bandPanel').change('input[type=checkbox]', function () {
     renderWords(applyBlank(applyMono(applyFlip(BAND))))
   })
 }
-
-function applyBlank(band) {
-  $('input[type=checkbox]#theNames').change(function (e) {
-    let name = BAND.join(' ')
-    let endsInS = name.charAt(-1) === 's' ? 's' : ''
-    console.log(endsInS)
-    return (this.checked) ? 'The ' + name + endsInS : name
-  })
-}
-
-function applyMono(band) {
-  $('input[type=checkbox]#mono').change(function (e) {
-    return (this.checked) ? [BAND[0]] : BAND
-  })
-}
-
-function applyFlip(band) {
-  $('input[type=checkbox]#flip').change(function (e) {
-    return (this.checked) ? BAND.reverse() : BAND
-  })
-}
-
 /***
- *     #######  ##     ##  #######  ######## ######## 
- *    ##     ## ##     ## ##     ##    ##    ##       
- *    ##     ## ##     ## ##     ##    ##    ##       
- *    ##     ## ##     ## ##     ##    ##    ######   
- *    ##  ## ## ##     ## ##     ##    ##    ##       
- *    ##    ##  ##     ## ##     ##    ##    ##       
- *     ##### ##  #######   #######     ##    ######## 
+ *     #######  ##     ##  #######  ######## ########
+ *    ##     ## ##     ## ##     ##    ##    ##
+ *    ##     ## ##     ## ##     ##    ##    ##
+ *    ##     ## ##     ## ##     ##    ##    ######
+ *    ##  ## ## ##     ## ##     ##    ##    ##
+ *    ##    ##  ##     ## ##     ##    ##    ##
+ *     ##### ##  #######   #######     ##    ########
  */
 
 function getQuoteData (callback) {
@@ -247,11 +240,11 @@ function renderWholeQuote (data) {
   renderQuote(ALBUM)
 }
 
-// 
-// 
+//
+//
 // SLIDERS
-// 
-// 
+//
+//
 
 function setXOffset(num) {
   const name = getCurrentName()
@@ -273,13 +266,13 @@ function watchSliders () {
 }
 
 /***
- *    ########   #######   ######  
- *    ##     ## ##     ## ##    ## 
- *    ##     ## ##     ## ##       
- *    ##     ## ##     ## ##       
- *    ##     ## ##     ## ##       
- *    ##     ## ##     ## ##    ## 
- *    ########   #######   ######  
+ *    ########   #######   ######
+ *    ##     ## ##     ## ##    ##
+ *    ##     ## ##     ## ##
+ *    ##     ## ##     ## ##
+ *    ##     ## ##     ## ##
+ *    ##     ## ##     ## ##    ##
+ *    ########   #######   ######
  */
 
 $(pageLoad)
