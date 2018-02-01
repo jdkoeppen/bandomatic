@@ -4,12 +4,32 @@ const WORDS_API = 'a9ebebf8301d0e2e3a0070d083d0143dc1fd6a7989e31b1c6'
 const COVER_ENDPOINT = 'https://api.unsplash.com/photos/random'
 const COVER_API = 'bad147bdc617e39778666eecef33b4dbee3cfb28693e0b73ba08441bb647c5da'
 const COLORS_ENDPOINT = 'https://api.imagga.com/v1/colors'
+const ALBUM_CANVAS = 600
 var COVER_URL = ''
 var BAND = []
 var ALBUM = []
 var COLORS = []
-var DISPLAY_BAND_NAME = BAND.join(' ')
 var ALBUM_WORD_COUNT = 4
+
+function setControlsOff() {
+  $('#bandPanel').slideUp(10)
+  $('#albumPanel').slideUp(10)
+  $('#coverPanel').slideUp(10)
+}
+
+function getCurrentName() {
+  if ($('#bandControl').is(':checked')) {
+    return $('.js-band')
+  } else {
+    return $('.js-album')
+  }
+}
+
+function pageLoad () {
+  getWordsData(renderAllWords)
+  getQuoteData(renderWholeQuote)
+  getCover(renderCover)
+}
 
 /***
  *     ######   #######  ##     ## ######## ########  
@@ -30,8 +50,15 @@ function getCover(callback) {
 }
 
 function watchCover() {
-  $('form').on('click', '#cover', function(e) {
+  $('#albumCover').on('click', 'h3', function(e) {
+    $('#cover').show('slow').removeAttr('hidden')
     getCover(renderCover)
+  })
+}
+
+function watchCustomCover() {
+  $('form').on('click', '#cover', function () {
+    $('#coverPanel').slideToggle('fast')
   })
 }
 
@@ -73,7 +100,6 @@ function renderColors (data) {
   }
   COLORS = bank.reduce((a, b) => a.concat(b))
   renderPalette()
-  console.log(COLORS)
 }
 
 function renderPalette () {
@@ -86,7 +112,7 @@ function renderPalette () {
 function watchPalette () {
   $('.colorPalette').on('click', '.paletteItem', function () {
     let color = $(this).css('background-color')
-    $('#currentName').css('color', color)
+    getCurrentName().children().css('color', color)
   })
 }
 
@@ -113,8 +139,14 @@ function getColors(callback) {
  */
 
 function watchWords () {
-  $('form').on('click', '#words', function (e) {
+  $('#bandName').on('click', 'h3', function (e) {
     getWordsData(renderAllWords)
+  })
+}
+
+function watchCustomName () {
+  $('form').on('click', '#words', function() {
+    $('#bandPanel').slideToggle('fast')
   })
 }
 
@@ -129,37 +161,39 @@ function getWordsData (callback) {
 
 function renderAllWords(object) {
   BAND = object.map(item => item.word)
-  DISPLAY_BAND_NAME = BAND.join(' ')
+  let result = BAND.join(' ')
   console.log(BAND)
-  renderWords(DISPLAY_BAND_NAME)
+  renderWords(result)
 }
 
 function renderWords(result) {
-  $('.js-band').html(`<h2 id='currentName'>${DISPLAY_BAND_NAME}</h2>`)
+  $('.js-band').html(`<h2 id='currentBand'>${result}</h2>`)
 }
 
 function nameControls () {
-  $('input[type=checkbox]#flip').change(function (e) {
-    DISPLAY_BAND_NAME = BAND.reverse().join(' ')
-    renderWords(DISPLAY_BAND_NAME)
+  $('#bandPanel').change('input[type=checkbox]', function () {
+    renderWords(applyBlank(applyMono(applyFlip(BAND))))
   })
-  $('input[type=checkbox]#mono').change(function (e) {
-    if (this.checked) {
-      DISPLAY_BAND_NAME = BAND[0]
-      renderWords(DISPLAY_BAND_NAME)
-    } else {
-      DISPLAY_BAND_NAME = BAND.join(' ')
-      renderWords(DISPLAY_BAND_NAME)
-    }
-  })
+}
+
+function applyBlank(band) {
   $('input[type=checkbox]#theNames').change(function (e) {
-    if (this.checked) {
-      DISPLAY_BAND_NAME = 'The ' + DISPLAY_BAND_NAME + 's'
-      renderWords(DISPLAY_BAND_NAME)
-    } else {
-      DISPLAY_BAND_NAME = BAND.join(' ')
-      renderWords(DISPLAY_BAND_NAME)
-    }
+    let name = BAND.join(' ')
+    let endsInS = name.charAt(-1) === 's' ? 's' : ''
+    console.log(endsInS)
+    return (this.checked) ? 'The ' + name + endsInS : name
+  })
+}
+
+function applyMono(band) {
+  $('input[type=checkbox]#mono').change(function (e) {
+    return (this.checked) ? [BAND[0]] : BAND
+  })
+}
+
+function applyFlip(band) {
+  $('input[type=checkbox]#flip').change(function (e) {
+    return (this.checked) ? BAND.reverse() : BAND
   })
 }
 
@@ -178,8 +212,14 @@ function getQuoteData (callback) {
 }
 
 function watchQuote () {
-  $('form').on('click', '#quote', function (e) {
+  $('#albumName').on('click', 'h3', function (e) {
     getQuoteData(renderWholeQuote)
+  })
+}
+
+function watchCustomAlbum () {
+  $('form').on('click', '#quote', function () {
+    $('#albumPanel').slideToggle('fast')
   })
 }
 
@@ -197,7 +237,7 @@ function watchQuoteLength () {
 function renderQuote (result, noWords) {
   noWords = ALBUM_WORD_COUNT
   let crop = ALBUM.split(' ').splice(0, noWords).join(' ')
-  $('.js-album').html(`<h2>${crop}</h2>`)
+  $('.js-album').html(`<h2 id='currentAlbum'>${crop}</h2>`)
   console.log(crop)
   return crop
 }
@@ -205,6 +245,31 @@ function renderQuote (result, noWords) {
 function renderWholeQuote (data) {
   ALBUM = data.quote
   renderQuote(ALBUM)
+}
+
+// 
+// 
+// SLIDERS
+// 
+// 
+
+function setXOffset(num) {
+  const name = getCurrentName()
+  const margin = ALBUM_CANVAS * 0.05
+  const contentWidth = ALBUM_CANVAS - margin * 2
+  const nameWidth = parseInt(name.css('width'))
+  const xValue = (margin / 2) + num / 100 * (contentWidth - nameWidth)
+  name.css('left', xValue)
+}
+
+function watchSliders () {
+  $('input[type="range"]').on('input', function() {
+    if ($(this).attr('id') === 'moveX') {
+      setXOffset($(this).val())
+    } else if ($(this).attr('id') === 'moveY') {
+      setYOffset($(this).val())
+    }
+  })
 }
 
 /***
@@ -217,10 +282,16 @@ function renderWholeQuote (data) {
  *    ########   #######   ######  
  */
 
+$(pageLoad)
+$(setControlsOff)
 $(watchQuote)
 $(watchQuoteLength)
 $(watchWords)
 $(nameControls)
 $(watchCover)
+$(watchCustomName)
+$(watchCustomAlbum)
+$(watchCustomCover)
+$(watchSliders)
 // $(watchColors)
 // $(initZInput)

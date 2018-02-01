@@ -9,22 +9,10 @@
     }
 }
 
-
 .footer {
-    position: fixed;
-    bottom: 0;
-    right: 0;
+    float: right;
+    margin: 40px auto;
 }
-
-input[type=radio] {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    font-family: inherit;
-    font-size: 1em;
-    cursor: pointer;
-    }
 
 body {
     background-size: cover;
@@ -33,7 +21,7 @@ body {
     background-attachment: fixed;
     height: 100%;
     background-image: url('assets/mainbg-2.jpg');
-  }
+}
 
 main {
     display: flex;
@@ -43,17 +31,17 @@ main {
     width: 1220px;
     height: auto;
     margin: 0 auto;
-    background-image: url('assets/pattern.jpg');
+    background-image: url('assets/mainbg-4.jpg');
     background-size: contain;
     background-repeat: repeat;
     background-color: #46494C;
     box-shadow: 0px 5px 10px -1px #242424;
 }
 
-h1  {
+h1 {
     font-family: "Monoton", sans-serif;
     color: #DCDCDD;
-    margin: 20px auto;
+    margin: 40px auto;
     font-size: 60px;
     font-weight: 300;
     text-align: center;
@@ -62,16 +50,16 @@ h1  {
 h2 {
     font-family: 'Archivo Black', sans-serif;
     text-align: center;
+    font-size: 1.5em;
     text-transform: capitalize;
-    color: #ffffff;
 }
 
 h3 {
     font-family: 'Permanent Marker', sans-serif;
     font-size: 24px;
     font-weight: normal;
-    color: #DCDCDD; 
-    margin:5px;
+    color: #242424;
+    margin: 5px;
 }
 
 fieldset {
@@ -80,18 +68,16 @@ fieldset {
 
 button {
     height: 30px;
-    color: #DCDCDD;
-    width: 80px;
-    border-radius: 5px;
+    font-family: 'Cutive Mono';
+    color: #242424;
+    background-color: #dcdcdd;
     border: none;
-    background-color: #242424;
     margin: 5px;
-    padding: 8px;
+    padding: 5px;
 }
 
 button:hover {
-    background-color: #46494C;
-    border: 2px solid #DCDCDD;
+    border: 1px solid #242424;
     cursor: pointer;
 }
 
@@ -100,92 +86,128 @@ button:active {
     border: 2px solid #DCDCDD;
     cursor: pointer;
 }
-input[type=checkbox] + label{
-    height: 30px;
-    width: 30px;
-    color: #DCDCDD;
-    padding: 8px;
-    border-radius: 5px;
-    background-color: #242424;
-    cursor: pointer;
-    margin: 0 5px;
+
+input[type="checkbox"] {
+    display: none;
 }
 
-input[type=checkbox]:checked + label {
-    color: white;
-    background-color: #40798C;
+input[type="checkbox"]+label {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin: 10px 15px 15px 15px;
+    font: 20px 'Cutive Mono', Arial, sans-serif;
+    color: #242424;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
-button.paletteItem {
-    display:inline-block;
-    width: 20px;
-    height:20px;
-    margin:3px;
-    text-align:center;
-    cursor: pointer;
-    border: none;
-    border-radius:50%;
-    font-size: 18px;
-    overflow:hidden;
+input[type="checkbox"]+label:before {
+    content: '';
+    display: block;
+    width: 15px;
+    height: 15px;
+    border: 2px solid #242424;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: .6;
+    -webkit-transition: all .12s, border-color .08s;
+    transition: all .12s, border-color .08s;
 }
-#bandName, #albumName, #coverControl {
+
+input[type="checkbox"]:checked+label:before {
+    width: 10px;
+    top: -5px;
+    left: 5px;
+    border-radius: 0;
+    opacity: 1;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+#bandName,#albumName,#albumCover {
+    cursor: pointer;
     display: flex;
     flex-flow: wrap;
+    position: relative;
     justify-content: space-between;
-    padding: 5px;
+    height: 55px;
+    padding: 7px;
     border-radius: 5px;
-    background-color: #c7c7c72a;
-    box-shadow: 0px 5px 10px 0px #242424;
+    background-color: #e2e2e2;
+    box-shadow: 0px 5px 10px 0px #24242477;
+    z-index: 1;
 }
 
-#control, #display {
+#bandName:hover,#albumName:hover,#albumCover:hover {
+    background-color: #adadad
+}
+
+h3:active {
+    color: white;
+}
+
+#control,#display {
     flex-wrap: wrap;
     padding: 10px;
     width: 600px;
-    min-height: 400px;
+    max-height: 600px;
 }
 
-.controlPanel, .colorPalette{
-    flex-flow: row;
-    flex: auto;
-    margin-top: 30px;
-    height: 50px;
+.controlPanel {
+    display: inline-flex;
+    flex-flow: wrap;
+    justify-content: space-between;
+    background-color: #e7e7e7;
+    box-shadow: 0px 5px 10px 0px #24242477;
+    border-radius: 5px;
+    margin-top: -10px;
+    margin-left: 20px;
+    padding: 5px;
+    padding-top: 15px;
+    height: 60px;
+    z-index: 2;
 }
 
- .textControl {
-     flex-flow: row;
-     margin: 20px auto;
- }
+.controlPanel#coverPanel {
+    height: 200px;
+    display: inline-block;
+}
 
 .js-cover {
     position: relative;
     margin: 0 auto;
-    background-color: #242424;
+    background-color: #000000;
     width: 570px;
     height: 570px;
     overflow: hidden;
     box-shadow: 0px 5px 10px 0px #242424;
-
 }
 
+/* BAND NAME TEXT */
 .js-band {
     position: absolute;
     top: 1%;
-    left: 6%;
+    left: 2.5%;
     z-index: 2;
 }
 
+/* ALBUM NAME TEXT */
 .js-album {
     position: absolute;
-    top: 80%;
-    left: 15%;
+    bottom: 4%;
+    left: 2.5%;
     z-index: 2;
 }
 
-
 #coverImg {
-    position: absolute; 
-    height:600px;
+    position: absolute;
+    height: 600px;
     width: 600px;
     z-index: 1;
     object-fit: cover;
@@ -197,7 +219,41 @@ button.paletteItem {
     height: 570px;
     z-index: 3;
     mix-blend-mode: screen;
+}
 
+input[type=radio] {
+    position: absolute;
+    visibility: hidden;
+    display: none;
+}
+
+.textControl label {
+    color: #242424;
+    display: inline-block;
+    cursor: pointer;
+    font-family: 'Cutive Mono';
+    font-weight: bold;
+    padding: 5px 20px;
+}
+
+input[type=radio]:checked+label {
+    color: #dcdcdd;
+    background: #46494C;
+    border: 1px solid #46494C;
+}
+
+.textControl {
+    border: solid 2px #46494C;
+    display: inline-block;
+    margin: 10px 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.colorPalette {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 20px;
 }
 
 .paletteItem {
@@ -209,67 +265,21 @@ button.paletteItem {
     margin: 5px;
 }
 
-.switch {
-    position: relative;
+button.paletteItem {
     display: inline-block;
-    width: 60px;
-    height: 23px;
-    align-content: center;
-
-}
-
-.switch input {
-    display: none;
-}
-
-.slider {
-    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin: 5px;
+    text-align: center;
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #adadad;
-    -webkit-transition: .15s;
-    transition: .15s;
-    box-shadow: inset 0px 2px 4px 0px #242424de;
-
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    -webkit-transition: .15s;
-    transition: .15s;
-    box-shadow: 0px 4px 3px -1px #242424de;
-
-}
-
-input:checked+.slider {
-    background-color: #adadad;
-}
-
-input:focus+.slider {
-    box-shadow: 0 0 1px #adadad;
-}
-
-input:checked+.slider:before {
-    -webkit-transform: translateX(38px);
-    -ms-transform: translateX(38px);
-    transform: translateX(38px);
-}
-
-/* Rounded sliders */
-
-.slider.round {
-    border-radius: 20px;
-}
-
-.slider.round:before {
+    border: none;
     border-radius: 50%;
+    font-size: 18px;
+    overflow: hidden;
+}
+
+input[type=range] {
+    display: inline-block;
+    margin: 10px 20px;
+
 }
