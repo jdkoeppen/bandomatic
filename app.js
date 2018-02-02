@@ -105,6 +105,7 @@ function renderColors (data) {
 function renderPalette () {
   for (var i = 0; i < COLORS.length; i++) {
     $('.colorPalette').append(`<input type='button' class='paletteItem' title='' id='color${i + 1}' style='background-color:${COLORS[i]}'>`)
+    $('h2').css('color', COLORS[1])
   }
   watchPalette()
 }
@@ -171,14 +172,13 @@ function renderWords(result) {
 }
 
 function applyBlank(band) {
-  let name = BAND.join(' ')
-  let endsInS = name.charAt(-1) === 's' ? '' : 's'
-  console.log(endsInS)
+  let name = band.join(' ')
+  let endsInS = name.charAt(-1) === 's' ? 's' : ''
   return $('#theNames:checked').length ? 'The ' + name + endsInS : name
 }
 
 function applyMono(band) {
-  return $('#mono:checked').length ? [BAND[0]] : band
+  return $('#mono:checked').length ? [band[0]] : band
 }
 
 function applyFlip(band) {
@@ -231,7 +231,6 @@ function renderQuote (result, noWords) {
   noWords = ALBUM_WORD_COUNT
   let crop = ALBUM.split(' ').splice(0, noWords).join(' ')
   $('.js-album').html(`<h2 id='currentAlbum'>${crop}</h2>`)
-  console.log(crop)
   return crop
 }
 
@@ -253,6 +252,15 @@ function setXOffset(num) {
   const nameWidth = parseInt(name.css('width'))
   const xValue = (margin / 2) + num / 100 * (contentWidth - nameWidth)
   name.css('left', xValue)
+}
+
+function setYOffset(num) {
+  const name = getCurrentName()
+  const margin = ALBUM_CANVAS * 0.02
+  const contentWidth = ALBUM_CANVAS - margin * 2
+  const nameWidth = parseInt(name.css('height'))
+  const yValue = (margin / 2) + num / 100 * (contentWidth - nameWidth)
+  name.css('top', yValue)
 }
 
 function watchSliders () {
@@ -277,11 +285,11 @@ function watchSliders () {
 
 $(pageLoad)
 $(setControlsOff)
+$(watchCover)
 $(watchQuote)
 $(watchQuoteLength)
 $(watchWords)
 $(nameControls)
-$(watchCover)
 $(watchCustomName)
 $(watchCustomAlbum)
 $(watchCustomCover)

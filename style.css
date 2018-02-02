@@ -50,6 +50,7 @@ h1 {
 h2 {
     font-family: 'Archivo Black', sans-serif;
     text-align: center;
+    margin: 0;
     font-size: 1.5em;
     text-transform: capitalize;
 }
@@ -192,16 +193,16 @@ h3:active {
 /* BAND NAME TEXT */
 .js-band {
     position: absolute;
-    top: 1%;
-    left: 2.5%;
+    top: 2%;
+    left: 2%;
     z-index: 2;
 }
 
 /* ALBUM NAME TEXT */
 .js-album {
     position: absolute;
-    bottom: 4%;
-    left: 2.5%;
+    top: 90%;
+    left: 2%;
     z-index: 2;
 }
 
