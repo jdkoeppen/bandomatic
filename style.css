@@ -193,7 +193,7 @@ h3:active {
 
 .controlPanel#coverPanel {
     width:512px;
-    height: 250px;
+    min-height: 250px;
     display: inline-flex;
     justify-content: space-between;
 }
@@ -282,6 +282,7 @@ input[type=radio]:checked+label {
 
 .colorPalette, .slideContainer {
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
     justify-content: space-around;
     align-items: baseline;

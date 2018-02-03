@@ -77,7 +77,7 @@ function renderWords(result) {
 
 function applyBlank(band) {
   let name = band.join(' ')
-  let endsInS = name.charAt(-1) === 's' ? 's' : ''
+  let endsInS = name.charAt(-1) === 's' ? '' : 's'
   return $('#theNames:checked').length ? 'The ' + name + endsInS : name
 }
 
@@ -86,13 +86,12 @@ function applyMono(band) {
 }
 
 function applyFlip(band) {
-  return $('#flip:checked').length ? band.reverse() : band
+  return $('#flip').length ? band.reverse() : band
 }
 
 function nameControls () {
   $('#bandPanel').change('input[type=checkbox]', function () {
-    DISPLAY_BAND_NAME = applyBlank(applyMono(applyFlip(BAND)))
-    renderWords(DISPLAY_BAND_NAME)
+    renderWords(applyBlank(applyMono(applyFlip(BAND))))
   })
 }
 /***
