@@ -7,16 +7,22 @@ const COLORS_ENDPOINT = 'https://api.imagga.com/v1/colors'
 const ALBUM_CANVAS = 570
 var COVER_URL = ''
 var BAND = []
-var DISPLAY_BAND_NAME
 var ALBUM = []
 var COLORS = []
 var CURRENT_COLOR
 var ALBUM_WORD_COUNT = 4
+var mono = 0, flip = 0, blank = 0
 
 function setControlsOff() {
   $('#bandPanel').slideUp(10)
   $('#albumPanel').slideUp(10)
   $('#coverPanel').slideUp(10)
+}
+
+function watchNameControls() {
+    $('.textControl input[type="radio"]').change(function(){
+        initSliders();
+    })
 }
 
 function getCurrentName() {
@@ -28,9 +34,11 @@ function getCurrentName() {
 }
 
 function pageLoad () {
-  getWordsData(renderAllWords)
+    console.log('page load, rendering all words...');
+    getWordsData(renderAllWords)
   getQuoteData(renderWholeQuote)
   getCover(renderCover)
+    initSliders()
 }
 
 /***
@@ -45,6 +53,7 @@ function pageLoad () {
 
 function watchWords () {
   $('#bandName').on('click', 'h3', function (e) {
+      console.log('h3 clicked, rendering all words...');
     getWordsData(renderAllWords)
   })
 }
@@ -65,6 +74,7 @@ function getWordsData (callback) {
 }
 
 function renderAllWords(object) {
+    console.log('rendering words...')
   BAND = object.map(item => item.word)
   let result = BAND.join(' ')
   console.log(BAND)
@@ -77,22 +87,37 @@ function renderWords(result) {
 
 function applyBlank(band) {
   let name = band.join(' ')
-  let endsInS = name.charAt(-1) === 's' ? 's' : ''
-  return $('#theNames:checked').length ? 'The ' + name + endsInS : name
+  let endsInS = name.charAt(name.length-1) == 's' ? '' : 's'
+  return blank ? 'The ' + name + endsInS : name
 }
 
 function applyMono(band) {
-  return $('#mono:checked').length ? [band[0]] : band
+  return mono ? [band[0]] : band
 }
 
 function applyFlip(band) {
-  return $('#flip:checked').length ? band.reverse() : band
+  return flip ? band.slice().reverse() : band
 }
 
 function nameControls () {
-  $('#bandPanel').change('input[type=checkbox]', function () {
-    DISPLAY_BAND_NAME = applyBlank(applyMono(applyFlip(BAND)))
-    renderWords(DISPLAY_BAND_NAME)
+  $('input[type="checkbox"]').change(function () {
+      
+      blank = $('#theNames:checked').length;
+      mono = $('#mono:checked').length;
+      flip = $('#flip:checked').length;
+      
+      let flipped = applyFlip(BAND)
+      let monoed = applyMono(flipped)
+    let blanked = applyBlank(monoed)  
+    console.log(JSON.stringify({
+                flipped,
+                monoed,
+                blanked
+    }));
+      renderWords(blanked);
+      
+//    var DISPLAY_BAND_NAME = applyBlank(applyMono(applyFlip(BAND)))
+//    renderWords(DISPLAY_BAND_NAME)
   })
 }
 /***
@@ -254,6 +279,31 @@ function getColors(callback) {
  *     ######  ######## #### ########  ######## ##     ##
  */
 
+function initSliders(){
+    const name = getCurrentName()
+    $('#moveX').val(getXOffset());
+    $('#moveY').val()
+}
+
+function getXOffset(){
+    const name = getCurrentName()
+    const xPos = parseInt(name.css('left'), 10)
+    const margin = ALBUM_CANVAS * 0.05
+    const contentWidth = ALBUM_CANVAS - margin * 2
+    const nameWidth = parseInt(name.css('width'))
+    const availableWidth = contentWidth - nameWidth
+    const ratio = (xPos - margin) / availableWidth
+    const num = Math.floor(ratio * 100);
+    console.log(JSON.stringify({
+        margin,
+        xPos,
+        availableWidth,
+        ratio,
+        num,
+    }));
+    return num;
+}
+
 function setXOffset(num) {
   const name = getCurrentName()
   const margin = ALBUM_CANVAS * 0.05
@@ -321,3 +371,4 @@ $(watchCustomName)
 $(watchCustomAlbum)
 $(watchCustomCover)
 $(watchSliders)
+$(watchNameControls)
