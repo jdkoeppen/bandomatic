@@ -23,6 +23,16 @@ body {
     background-image: url('assets/mainbg-2.jpg');
 }
 
+p {
+    font-family: 'Cutive Mono';
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #adadad;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
 main {
     display: flex;
     justify-content: center;
@@ -41,7 +51,8 @@ main {
 h1 {
     font-family: "Monoton", sans-serif;
     color: #DCDCDD;
-    margin: 40px auto;
+    margin: 0 auto;
+    margin-top: 40px;
     font-size: 60px;
     font-weight: 300;
     text-align: center;
@@ -50,8 +61,10 @@ h1 {
 h2 {
     font-family: 'Archivo Black', sans-serif;
     text-align: center;
+    color: white;
     margin: 0;
-    font-size: 1.5em;
+    font-size: 1.6em;
+    letter-spacing: .05em;
     text-transform: capitalize;
 }
 
@@ -100,9 +113,6 @@ input[type="checkbox"]+label {
     font: 20px 'Cutive Mono', Arial, sans-serif;
     color: #242424;
     cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
 }
 
 input[type="checkbox"]+label:before {
@@ -131,7 +141,9 @@ input[type="checkbox"]:checked+label:before {
     transform: rotate(45deg);
 }
 
-#bandName,#albumName,#albumCover {
+#bandName,
+#albumName,
+#albumCover {
     cursor: pointer;
     display: flex;
     flex-flow: wrap;
@@ -145,7 +157,9 @@ input[type="checkbox"]:checked+label:before {
     z-index: 1;
 }
 
-#bandName:hover,#albumName:hover,#albumCover:hover {
+#bandName:hover,
+#albumName:hover,
+#albumCover:hover {
     background-color: #adadad
 }
 
@@ -153,7 +167,8 @@ h3:active {
     color: white;
 }
 
-#control,#display {
+#control,
+#display {
     flex-wrap: wrap;
     padding: 10px;
     width: 600px;
@@ -162,6 +177,7 @@ h3:active {
 
 .controlPanel {
     display: inline-flex;
+    align-items: center;
     flex-flow: wrap;
     justify-content: space-between;
     background-color: #e7e7e7;
@@ -176,10 +192,18 @@ h3:active {
 }
 
 .controlPanel#coverPanel {
-    height: 200px;
-    display: inline-block;
+    width:512px;
+    height: 250px;
+    display: inline-flex;
+    justify-content: space-between;
 }
 
+#coverPanel h3 {
+    text-align: center;
+    width: 512px;
+    font-size: 1em;
+    
+}
 .js-cover {
     position: relative;
     margin: 0 auto;
@@ -191,6 +215,7 @@ h3:active {
 }
 
 /* BAND NAME TEXT */
+
 .js-band {
     position: absolute;
     top: 2%;
@@ -199,6 +224,7 @@ h3:active {
 }
 
 /* ALBUM NAME TEXT */
+
 .js-album {
     position: absolute;
     top: 90%;
@@ -220,10 +246,12 @@ h3:active {
     height: 570px;
     z-index: 3;
     mix-blend-mode: screen;
+    box-shadow: 0px 5px 10px 0px #242424;
+
 }
 
 input[type=radio] {
-    position: absolute;
+    position: relative;
     visibility: hidden;
     display: none;
 }
@@ -244,16 +272,19 @@ input[type=radio]:checked+label {
 }
 
 .textControl {
-    border: solid 2px #46494C;
     display: inline-block;
-    margin: 10px 20px;
+    position: relative;
+    border: solid 2px #46494C;
+    margin: 10px;
     border-radius: 10px;
     overflow: hidden;
 }
 
-.colorPalette {
+.colorPalette, .slideContainer {
     display: flex;
+    width: 100%;
     justify-content: space-around;
+    align-items: baseline;
     margin: 10px 20px;
 }
 
@@ -264,6 +295,7 @@ input[type=radio]:checked+label {
     box-shadow: inset 0px 3px 5px -1px #24242473;
     border-radius: 50%;
     margin: 5px;
+    cursor: pointer;
 }
 
 button.paletteItem {
@@ -279,8 +311,13 @@ button.paletteItem {
     overflow: hidden;
 }
 
-input[type=range] {
-    display: inline-block;
-    margin: 10px 20px;
+.slideContainer label {
+    float: left;
+    margin-right: 10px;
+    margin-top: 2px;
+}
 
+input[type=range]+label {
+    display: inline-block;
+    margin: 10px 5px;
 }

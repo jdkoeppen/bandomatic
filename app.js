@@ -4,11 +4,13 @@ const WORDS_API = 'a9ebebf8301d0e2e3a0070d083d0143dc1fd6a7989e31b1c6'
 const COVER_ENDPOINT = 'https://api.unsplash.com/photos/random'
 const COVER_API = 'bad147bdc617e39778666eecef33b4dbee3cfb28693e0b73ba08441bb647c5da'
 const COLORS_ENDPOINT = 'https://api.imagga.com/v1/colors'
-const ALBUM_CANVAS = 600
+const ALBUM_CANVAS = 570
 var COVER_URL = ''
 var BAND = []
+var DISPLAY_BAND_NAME
 var ALBUM = []
 var COLORS = []
+var CURRENT_COLOR
 var ALBUM_WORD_COUNT = 4
 
 function setControlsOff() {
@@ -29,104 +31,6 @@ function pageLoad () {
   getWordsData(renderAllWords)
   getQuoteData(renderWholeQuote)
   getCover(renderCover)
-}
-
-/***
- *     ######   #######  ##     ## ######## ########
- *    ##    ## ##     ## ##     ## ##       ##     ##
- *    ##       ##     ## ##     ## ##       ##     ##
- *    ##       ##     ## ##     ## ######   ########
- *    ##       ##     ##  ##   ##  ##       ##   ##
- *    ##    ## ##     ##   ## ##   ##       ##    ##
- *     ######   #######     ###    ######## ##     ##
- */
-
-function getCover(callback) {
-  const query = {
-    client_id: COVER_API,
-    orientation: 'squarish'
-  }
-  $.getJSON(COVER_ENDPOINT, query, callback)
-}
-
-function watchCover() {
-  $('#albumCover').on('click', 'h3', function(e) {
-    $('#cover').show('slow').removeAttr('hidden')
-    getCover(renderCover)
-  })
-}
-
-function watchCustomCover() {
-  $('form').on('click', '#cover', function () {
-    $('#coverPanel').slideToggle('fast')
-  })
-}
-
-function renderCover(image) {
-  COVER_URL = image.urls.regular
-  console.log(COVER_URL)
-  let desc
-  if (image.description) {
-    desc = image.description.replace(/'/g, '&apos;')
-  }
-  $('#defaultCover').css('visibility', 'hidden')
-  $('.colorPalette').html(` `)
-  $('.js-cover').append(`<div id='coverImg'>
-    <img id='coverImg' src='${COVER_URL}'${desc && "alt='An album cover depicting " + desc + "' "}></div>
-    `)
-  getColors(renderColors)
-}
-
-/***
- *     ######   #######  ##        #######  ########   ######
- *    ##    ## ##     ## ##       ##     ## ##     ## ##    ##
- *    ##       ##     ## ##       ##     ## ##     ## ##
- *    ##       ##     ## ##       ##     ## ########   ######
- *    ##       ##     ## ##       ##     ## ##   ##         ##
- *    ##    ## ##     ## ##       ##     ## ##    ##  ##    ##
- *     ######   #######  ########  #######  ##     ##  ######
- */
-
-function renderColors (data) {
-  let bank = []
-  let background = data.results[0].info.background_colors.map(color => color.html_code)
-  let image = data.results[0].info.image_colors.map(color => color.html_code)
-  let foreground = data.results[0].info.foreground_colors.map(color => color.html_code)
-  let colorBatch = [background, image, foreground]
-  for (var i = 0; i < colorBatch.length; i++) {
-    if (colorBatch[i].length !== 0) {
-      bank.push(colorBatch[i], '#ffffff', '#000000')
-    }
-  }
-  COLORS = bank.reduce((a, b) => a.concat(b))
-  renderPalette()
-}
-
-function renderPalette () {
-  for (var i = 0; i < COLORS.length; i++) {
-    $('.colorPalette').append(`<input type='button' class='paletteItem' title='' id='color${i + 1}' style='background-color:${COLORS[i]}'>`)
-    $('h2').css('color', COLORS[1])
-  }
-  watchPalette()
-}
-
-function watchPalette () {
-  $('.colorPalette').on('click', '.paletteItem', function () {
-    let color = $(this).css('background-color')
-    getCurrentName().children().css('color', color)
-  })
-}
-
-function getColors(callback) {
-  return $.ajax({
-    url: COLORS_ENDPOINT,
-    data: {
-      url: COVER_URL
-    },
-    beforeSend: function (xhr) {
-      xhr.setRequestHeader('Authorization', 'Basic YWNjXzkzNmNmNDMzOGQ0ODNiODowMjk3Y2Q3ZTQwMzA1NjJiZWZlMzQzZDEyZWJhOTk2ZQ==')
-    }
-  }).done(callback)
 }
 
 /***
@@ -187,7 +91,8 @@ function applyFlip(band) {
 
 function nameControls () {
   $('#bandPanel').change('input[type=checkbox]', function () {
-    renderWords(applyBlank(applyMono(applyFlip(BAND))))
+    DISPLAY_BAND_NAME = applyBlank(applyMono(applyFlip(BAND)))
+    renderWords(DISPLAY_BAND_NAME)
   })
 }
 /***
@@ -239,18 +144,122 @@ function renderWholeQuote (data) {
   renderQuote(ALBUM)
 }
 
-//
-//
-// SLIDERS
-//
-//
+/***
+ *     ######   #######  ##     ## ######## ########
+ *    ##    ## ##     ## ##     ## ##       ##     ##
+ *    ##       ##     ## ##     ## ##       ##     ##
+ *    ##       ##     ## ##     ## ######   ########
+ *    ##       ##     ##  ##   ##  ##       ##   ##
+ *    ##    ## ##     ##   ## ##   ##       ##    ##
+ *     ######   #######     ###    ######## ##     ##
+ */
+
+function getCover(callback) {
+  const query = {
+    client_id: COVER_API,
+    orientation: 'squarish'
+  }
+  $.getJSON(COVER_ENDPOINT, query, callback)
+}
+
+function watchCover() {
+  $('#albumCover').on('click', 'h3', function(e) {
+    $('#cover').show('slow').removeAttr('hidden')
+    getCover(renderCover)
+  })
+}
+
+function watchCustomCover() {
+  $('form').on('click', '#cover', function () {
+    $('#coverPanel').slideToggle('fast')
+  })
+}
+
+function renderCover(image) {
+  COVER_URL = image.urls.regular
+  let photoCreditText = image.user.username
+  let photoCreditLink = image.user.links.html
+  let desc
+  if (image.description) {
+    desc = image.description.replace(/'/g, '&apos;')
+  }
+  $('#defaultCover').css('visibility', 'hidden')
+  $('.colorPalette').html(` `)
+  $('.js-cover').append(`<div id='coverImg'>
+    <img id='coverImg' src='${COVER_URL}'${desc && "alt='An album cover depicting " + desc + "' "}></div>
+    `)
+  $('#photoCreditText').text('Photo by ' + photoCreditText)
+  $('#photoCreditLink').attr('href', photoCreditLink)
+  getColors(renderColors)
+}
+
+/***
+ *     ######   #######  ##        #######  ########   ######
+ *    ##    ## ##     ## ##       ##     ## ##     ## ##    ##
+ *    ##       ##     ## ##       ##     ## ##     ## ##
+ *    ##       ##     ## ##       ##     ## ########   ######
+ *    ##       ##     ## ##       ##     ## ##   ##         ##
+ *    ##    ## ##     ## ##       ##     ## ##    ##  ##    ##
+ *     ######   #######  ########  #######  ##     ##  ######
+ */
+
+function renderColors (data) {
+  let bank = []
+  let background = data.results[0].info.background_colors.map(color => color.html_code)
+  let image = data.results[0].info.image_colors.map(color => color.html_code)
+  let foreground = data.results[0].info.foreground_colors.map(color => color.html_code)
+  let colorBatch = [background, image, foreground]
+  for (var i = 0; i < colorBatch.length; i++) {
+    if (colorBatch[i].length !== 0) {
+      bank.push(colorBatch[i], '#ffffff', '#000000')
+    }
+  }
+  COLORS = bank.reduce((a, b) => a.concat(b))
+  renderPalette()
+}
+
+function renderPalette () {
+  for (var i = 0; i < COLORS.length; i++) {
+    $('.colorPalette').append(`<input type='button' class='paletteItem' title='' id='color${i + 1}' style='background-color:${COLORS[i]}'>`)
+  }
+  watchPalette()
+}
+
+function watchPalette () {
+  $('.colorPalette').on('click', '.paletteItem', function () {
+    CURRENT_COLOR = $(this).css('background-color')
+    getCurrentName().children().css('color', CURRENT_COLOR)
+  })
+}
+
+function getColors(callback) {
+  return $.ajax({
+    url: COLORS_ENDPOINT,
+    data: {
+      url: COVER_URL
+    },
+    beforeSend: function (xhr) {
+      xhr.setRequestHeader('Authorization', 'Basic YWNjXzkzNmNmNDMzOGQ0ODNiODowMjk3Y2Q3ZTQwMzA1NjJiZWZlMzQzZDEyZWJhOTk2ZQ==')
+    }
+  }).done(callback)
+}
+
+/***
+ *     ######  ##       #### ########  ######## ########
+ *    ##    ## ##        ##  ##     ## ##       ##     ##
+ *    ##       ##        ##  ##     ## ##       ##     ##
+ *     ######  ##        ##  ##     ## ######   ########
+ *          ## ##        ##  ##     ## ##       ##   ##
+ *    ##    ## ##        ##  ##     ## ##       ##    ##
+ *     ######  ######## #### ########  ######## ##     ##
+ */
 
 function setXOffset(num) {
   const name = getCurrentName()
   const margin = ALBUM_CANVAS * 0.05
   const contentWidth = ALBUM_CANVAS - margin * 2
   const nameWidth = parseInt(name.css('width'))
-  const xValue = (margin / 2) + num / 100 * (contentWidth - nameWidth)
+  const xValue = (margin) + num / 100 * (contentWidth - nameWidth)
   name.css('left', xValue)
 }
 
@@ -274,6 +283,24 @@ function watchSliders () {
 }
 
 /***
+ *    ########  #######  ##    ## ########  ######  
+ *    ##       ##     ## ###   ##    ##    ##    ## 
+ *    ##       ##     ## ####  ##    ##    ##       
+ *    ######   ##     ## ## ## ##    ##     ######  
+ *    ##       ##     ## ##  ####    ##          ## 
+ *    ##       ##     ## ##   ###    ##    ##    ## 
+ *    ##        #######  ##    ##    ##     ######  
+ */
+
+$(function () {
+  $('#font').fontselect().change(function () {
+    var font = $(this).val().replace(/\+/g, ' ')
+    font = font.split(':')
+    getCurrentName().children().css('font-family', font[0])
+  })
+})
+
+/***
  *    ########   #######   ######
  *    ##     ## ##     ## ##    ##
  *    ##     ## ##     ## ##
@@ -294,5 +321,3 @@ $(watchCustomName)
 $(watchCustomAlbum)
 $(watchCustomCover)
 $(watchSliders)
-// $(watchColors)
-// $(initZInput)
