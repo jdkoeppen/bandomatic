@@ -13,12 +13,6 @@ var CURRENT_COLOR
 var ALBUM_WORD_COUNT = 4
 var mono = 0, flip = 0, blank = 0
 
-// function setControlsOff() {
-//   $('#bandPanel').slideUp(10)
-//   $('#albumPanel').slideUp(10)
-//   $('#coverPanel').slideUp(10)
-// }
-
 function watchNameControls() {
   $('.textControl input[type="radio"]').change(function() {
     initSliders()
@@ -34,7 +28,6 @@ function getCurrentName() {
 }
 
 function pageLoad () {
-  console.log('page load, rendering all words...')
   getWordsData(renderAllWords)
   getQuoteData(renderWholeQuote)
   getCover(renderCover)
@@ -53,7 +46,6 @@ function pageLoad () {
 
 function watchWords () {
   $('#bandName').on('click', 'h3', function (e) {
-    console.log('h3 clicked, rendering all words...')
     getWordsData(renderAllWords)
   })
 }
@@ -74,7 +66,6 @@ function getWordsData (callback) {
 }
 
 function renderAllWords(object) {
-  console.log('rendering words...')
   BAND = object.map(item => item.word)
   let result = BAND.join(' ')
   console.log(BAND)
@@ -108,11 +99,6 @@ function nameControls () {
     let flipped = applyFlip(BAND)
     let monoed = applyMono(flipped)
     let blanked = applyBlank(monoed)
-    console.log(JSON.stringify({
-      flipped,
-      monoed,
-      blanked
-    }))
     renderWords(blanked)
 
     //    var DISPLAY_BAND_NAME = applyBlank(applyMono(applyFlip(BAND)))
@@ -243,8 +229,6 @@ function renderColors (data) {
   let colorList = bank.reduce((a, b) => a.concat(b))
   colorList.push('#ffffff', '#000000')
   COLORS = Array.from(new Set(colorList)).sort()
-  console.log(colorList)
-  console.log(COLORS)
   renderPalette()
 }
 
@@ -299,13 +283,6 @@ function getXOffset() {
   const availableWidth = contentWidth - nameWidth
   const ratio = (xPos - margin) / availableWidth
   const num = Math.floor(ratio * 100)
-  console.log(JSON.stringify({
-    margin,
-    xPos,
-    availableWidth,
-    ratio,
-    num
-  }))
   return num
 }
 
@@ -318,13 +295,6 @@ function getYOffset() {
   const availableWidth = contentWidth - nameHeight
   const ratio = xPos / availableWidth
   const num = Math.floor(ratio * 100)
-  console.log(JSON.stringify({
-    margin,
-    xPos,
-    availableWidth,
-    ratio,
-    num
-  }))
   return num
 }
 
@@ -375,17 +345,17 @@ $(function () {
 })
 
 /***
- *    ########   #######   ######
- *    ##     ## ##     ## ##    ##
- *    ##     ## ##     ## ##
- *    ##     ## ##     ## ##
- *    ##     ## ##     ## ##
- *    ##     ## ##     ## ##    ##
- *    ########   #######   ######
+ *    ########  ##        #######     ###    ########  
+ *    ##     ## ##       ##     ##   ## ##   ##     ## 
+ *    ##     ## ##       ##     ##  ##   ##  ##     ## 
+ *    ##     ## ##       ##     ## ##     ## ##     ## 
+ *    ##     ## ##       ##     ## ######### ##     ## 
+ *    ##     ## ##       ##     ## ##     ## ##     ## 
+ *    ########  ########  #######  ##     ## ########  
  */
 
+
 $(pageLoad)
-// $(setControlsOff)
 $(watchCover)
 $(watchQuote)
 $(watchQuoteLength)
