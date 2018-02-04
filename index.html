@@ -19,11 +19,11 @@
     <p>Be the hipest Hipster in the food cart pod by referencing music so obscure it doesn't even exist yet!</p>
     <main role="main">
         <div id='control'>
-            <form>
+            <form role='form'> 
                 <fieldset>
                     <div id='bandName'>
                         <h3>1. Click to Get a Band Name</h3>
-                        <button type='button' id='words'>Customize</button>
+                        <button type='button' id='words'>Customize Name</button>
                     </div>
                     <div class='controlPanel' id='bandPanel'>
                         <input type='checkbox' id='flip'>
@@ -37,7 +37,7 @@
                 <fieldset>
                     <div id='albumName'>
                         <h3>2. Click to Get an Album Name</h3>
-                        <button type='button' id='quote'>Customize</button>
+                        <button type='button' id='quote'>Customize Name</button>
                     </div>
                     <div class='controlPanel' id='albumPanel'>
                         <button type='button' id='less'>Less</button>
@@ -47,12 +47,9 @@
                 <fieldset>
                     <div id='albumCover'>
                         <h3>3. Click to Get an Album Cover</h3>
-                        <button type='button' id='cover'>Customize</button>
+                        <button type='button' id='cover'>Customize Text</button>
                     </div>
                     <div class='controlPanel' id='coverPanel'>
-                        <span>
-                            <h3>Customize your Text</h3>
-                        </span>
                         <div class='textControl'>
                             <input type='radio' name='textControl' value='band' id='bandControl' checked>
                             <label for='bandControl'>Band Name</label>
@@ -64,18 +61,18 @@
                         <div class='colorPalette'>
                         </div>
                         <div class="slideContainer">
-                            <fieldset>
+                            <div class='slide'>
                                 <label for='moveX'>
                                     <i class="fas fa-arrows-alt-h"></i>
                                 </label>
                                 <input type="range" step='10' min="0" max="100" value="2" class="slider" id="moveX">
-                            </fieldset>
-                            <fieldset>
+                            </div>
+                            <div class = 'slide'>
                                 <label for='moveY'>
                                     <i class="fas fa-arrows-alt-v"></i>
                                 </label>
-                                <input type="range" step='10' min="0" max="100" value="2" class="slider" id="moveY">
-                            </fieldset>
+                                <input type="range" step='5' min="0" max="100" value="2" class="slider" id="moveY">
+                            </div>
 
                         </div>
                     </div>
@@ -102,7 +99,6 @@
             </div>
             <div class="footer">
                 <a id='photoCreditLink' style="background-color:#00000059;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Helvetica, Ubuntu, Roboto, Noto, 'Segoe UI', Arial, sans-serif;font-size:10px;font-weight:bold;display:inline-block;border-radius:3px;"
-                   
                     target="_blank" rel="noopener noreferrer">
                     <span style="display:inline-block;padding:2px 3px;">
                         <svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-1px;fill:white;"
@@ -114,7 +110,7 @@
                     <span id='photoCreditText' style="display:inline-block;padding:2px 3px;"></span>
                 </a>
                 <a style="background-color:#00000059;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Helvetica, Ubuntu, Roboto, Noto, 'Segoe UI', Arial, sans-serif;font-size:10px;font-weight:bold;display:inline-block;border-radius:3px;"
-                    href="https://unsplash.com/@minkmingle?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge"
+                    href="https://unsplash.com/@minkmingle?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge&amp;utm_source=band_o_matic"
                     target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Mink Mingle">
                     <span style="display:inline-block;padding:2px 3px;">
                         <svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-1px;fill:white;"

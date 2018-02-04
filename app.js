@@ -13,16 +13,16 @@ var CURRENT_COLOR
 var ALBUM_WORD_COUNT = 4
 var mono = 0, flip = 0, blank = 0
 
-function setControlsOff() {
-  $('#bandPanel').slideUp(10)
-  $('#albumPanel').slideUp(10)
-  $('#coverPanel').slideUp(10)
-}
+// function setControlsOff() {
+//   $('#bandPanel').slideUp(10)
+//   $('#albumPanel').slideUp(10)
+//   $('#coverPanel').slideUp(10)
+// }
 
 function watchNameControls() {
-    $('.textControl input[type="radio"]').change(function(){
-        initSliders();
-    })
+  $('.textControl input[type="radio"]').change(function() {
+    initSliders()
+  })
 }
 
 function getCurrentName() {
@@ -34,11 +34,11 @@ function getCurrentName() {
 }
 
 function pageLoad () {
-    console.log('page load, rendering all words...');
-    getWordsData(renderAllWords)
+  console.log('page load, rendering all words...')
+  getWordsData(renderAllWords)
   getQuoteData(renderWholeQuote)
   getCover(renderCover)
-    initSliders()
+  initSliders()
 }
 
 /***
@@ -53,7 +53,7 @@ function pageLoad () {
 
 function watchWords () {
   $('#bandName').on('click', 'h3', function (e) {
-      console.log('h3 clicked, rendering all words...');
+    console.log('h3 clicked, rendering all words...')
     getWordsData(renderAllWords)
   })
 }
@@ -74,7 +74,7 @@ function getWordsData (callback) {
 }
 
 function renderAllWords(object) {
-    console.log('rendering words...')
+  console.log('rendering words...')
   BAND = object.map(item => item.word)
   let result = BAND.join(' ')
   console.log(BAND)
@@ -87,7 +87,7 @@ function renderWords(result) {
 
 function applyBlank(band) {
   let name = band.join(' ')
-  lgit set endsInS = name.charAt(name.length-1) == 's' ? '' : 's'
+  let endsInS = name.charAt(name.length - 1) === 's' ? '' : 's'
   return blank ? 'The ' + name + endsInS : name
 }
 
@@ -101,23 +101,22 @@ function applyFlip(band) {
 
 function nameControls () {
   $('input[type="checkbox"]').change(function () {
-      
-      blank = $('#theNames:checked').length;
-      mono = $('#mono:checked').length;
-      flip = $('#flip:checked').length;
-      
-      let flipped = applyFlip(BAND)
-      let monoed = applyMono(flipped)
-    let blanked = applyBlank(monoed)  
+    blank = $('#theNames:checked').length
+    mono = $('#mono:checked').length
+    flip = $('#flip:checked').length
+
+    let flipped = applyFlip(BAND)
+    let monoed = applyMono(flipped)
+    let blanked = applyBlank(monoed)
     console.log(JSON.stringify({
-                flipped,
-                monoed,
-                blanked
-    }));
-      renderWords(blanked);
-      
-//    var DISPLAY_BAND_NAME = applyBlank(applyMono(applyFlip(BAND)))
-//    renderWords(DISPLAY_BAND_NAME)
+      flipped,
+      monoed,
+      blanked
+    }))
+    renderWords(blanked)
+
+    //    var DISPLAY_BAND_NAME = applyBlank(applyMono(applyFlip(BAND)))
+    //    renderWords(DISPLAY_BAND_NAME)
   })
 }
 /***
@@ -202,8 +201,10 @@ function watchCustomCover() {
 
 function renderCover(image) {
   COVER_URL = image.urls.regular
-  let photoCreditText = image.user.username
-  let photoCreditLink = image.user.links.html
+  let photoCreditName = image.user.name
+  let photoCreditLink = image.user.links.html +
+  '?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge&amp;utm_source=band_o_matic'
+  let photoCreditTitle = 'Download free do whatever you want high-resolution photos from ' + photoCreditName
   let desc
   if (image.description) {
     desc = image.description.replace(/'/g, '&apos;')
@@ -213,8 +214,8 @@ function renderCover(image) {
   $('.js-cover').append(`<div id='coverImg'>
     <img id='coverImg' src='${COVER_URL}'${desc && "alt='An album cover depicting " + desc + "' "}></div>
     `)
-  $('#photoCreditText').text('Photo by ' + photoCreditText)
-  $('#photoCreditLink').attr('href', photoCreditLink)
+  $('#photoCreditText').text(`Photo by ${photoCreditName} on Unsplash`)
+  $('#photoCreditLink').attr({href: photoCreditLink, title: photoCreditTitle})
   getColors(renderColors)
 }
 
@@ -236,16 +237,20 @@ function renderColors (data) {
   let colorBatch = [background, image, foreground]
   for (var i = 0; i < colorBatch.length; i++) {
     if (colorBatch[i].length !== 0) {
-      bank.push(colorBatch[i], '#ffffff', '#000000')
+      bank.push(colorBatch[i])
     }
   }
-  COLORS = bank.reduce((a, b) => a.concat(b))
+  let colorList = bank.reduce((a, b) => a.concat(b))
+  colorList.push('#ffffff', '#000000')
+  COLORS = Array.from(new Set(colorList)).sort()
+  console.log(colorList)
+  console.log(COLORS)
   renderPalette()
 }
 
 function renderPalette () {
   for (var i = 0; i < COLORS.length; i++) {
-    $('.colorPalette').append(`<input type='button' class='paletteItem' title='' id='color${i + 1}' style='background-color:${COLORS[i]}'>`)
+    $('.colorPalette').append(`<input type='button' class='paletteItem' title='${COLORS[i]}' id='color${i + 1}' style='background-color:${COLORS[i]}'>`)
   }
   watchPalette()
 }
@@ -279,29 +284,48 @@ function getColors(callback) {
  *     ######  ######## #### ########  ######## ##     ##
  */
 
-function initSliders(){
-    const name = getCurrentName()
-    $('#moveX').val(getXOffset());
-    $('#moveY').val()
+function initSliders() {
+  const name = getCurrentName()
+  $('#moveX').val(getXOffset())
+  $('#moveY').val(getYOffset())
 }
 
-function getXOffset(){
-    const name = getCurrentName()
-    const xPos = parseInt(name.css('left'), 10)
-    const margin = ALBUM_CANVAS * 0.05
-    const contentWidth = ALBUM_CANVAS - margin * 2
-    const nameWidth = parseInt(name.css('width'))
-    const availableWidth = contentWidth - nameWidth
-    const ratio = (xPos - margin) / availableWidth
-    const num = Math.floor(ratio * 100);
-    console.log(JSON.stringify({
-        margin,
-        xPos,
-        availableWidth,
-        ratio,
-        num,
-    }));
-    return num;
+function getXOffset() {
+  const name = getCurrentName()
+  const xPos = parseInt(name.css('left'), 10)
+  const margin = ALBUM_CANVAS * 0.05
+  const contentWidth = ALBUM_CANVAS - margin * 2
+  const nameWidth = parseInt(name.css('width'))
+  const availableWidth = contentWidth - nameWidth
+  const ratio = (xPos - margin) / availableWidth
+  const num = Math.floor(ratio * 100)
+  console.log(JSON.stringify({
+    margin,
+    xPos,
+    availableWidth,
+    ratio,
+    num
+  }))
+  return num
+}
+
+function getYOffset() {
+  const name = getCurrentName()
+  const xPos = parseInt(name.css('top'), 10)
+  const margin = ALBUM_CANVAS * 0.05
+  const contentWidth = ALBUM_CANVAS
+  const nameHeight = parseInt(name.css('height'))
+  const availableWidth = contentWidth - nameHeight
+  const ratio = xPos / availableWidth
+  const num = Math.floor(ratio * 100)
+  console.log(JSON.stringify({
+    margin,
+    xPos,
+    availableWidth,
+    ratio,
+    num
+  }))
+  return num
 }
 
 function setXOffset(num) {
@@ -333,13 +357,13 @@ function watchSliders () {
 }
 
 /***
- *    ########  #######  ##    ## ########  ######  
- *    ##       ##     ## ###   ##    ##    ##    ## 
- *    ##       ##     ## ####  ##    ##    ##       
- *    ######   ##     ## ## ## ##    ##     ######  
- *    ##       ##     ## ##  ####    ##          ## 
- *    ##       ##     ## ##   ###    ##    ##    ## 
- *    ##        #######  ##    ##    ##     ######  
+ *    ########  #######  ##    ## ########  ######
+ *    ##       ##     ## ###   ##    ##    ##    ##
+ *    ##       ##     ## ####  ##    ##    ##
+ *    ######   ##     ## ## ## ##    ##     ######
+ *    ##       ##     ## ##  ####    ##          ##
+ *    ##       ##     ## ##   ###    ##    ##    ##
+ *    ##        #######  ##    ##    ##     ######
  */
 
 $(function () {
@@ -361,7 +385,7 @@ $(function () {
  */
 
 $(pageLoad)
-$(setControlsOff)
+// $(setControlsOff)
 $(watchCover)
 $(watchQuote)
 $(watchQuoteLength)

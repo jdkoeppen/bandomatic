@@ -71,6 +71,7 @@ h2 {
 h3 {
     font-family: 'Permanent Marker', sans-serif;
     font-size: 24px;
+    padding: 8px 0 0 10px;
     font-weight: normal;
     color: #242424;
     margin: 5px;
@@ -81,15 +82,24 @@ fieldset {
 }
 
 button {
-    height: 30px;
+    height: 55px;
     font-family: 'Cutive Mono';
-    color: #242424;
-    background-color: #dcdcdd;
+    width: 100px;
+    line-height: 1.3em;
+    color: #dcdcdd;
+    font-weight: bold;
+    background-color: #6B6D76;
     border: none;
-    margin: 5px;
+    border-radius: 0 5px 5px 0;
     padding: 5px;
+    white-space: normal;
 }
 
+.controlPanel#albumPanel button {
+    height: 35px;
+    border-radius: 5px;
+    margin: 5px;
+}
 button:hover {
     border: 1px solid #242424;
     cursor: pointer;
@@ -150,9 +160,8 @@ input[type="checkbox"]:checked+label:before {
     position: relative;
     justify-content: space-between;
     height: 55px;
-    padding: 7px;
     border-radius: 5px;
-    background-color: #e2e2e2;
+    background-color: #F4F3EE;
     box-shadow: 0px 5px 10px 0px #24242477;
     z-index: 1;
 }
@@ -180,27 +189,27 @@ h3:active {
     align-items: center;
     flex-flow: wrap;
     justify-content: space-between;
-    background-color: #e7e7e7;
+    background-color: #dbdbdb;
     box-shadow: 0px 5px 10px 0px #24242477;
     border-radius: 5px;
     margin-top: -10px;
     margin-left: 20px;
     padding: 5px;
     padding-top: 15px;
-    height: 60px;
     z-index: 2;
 }
 
 .controlPanel#coverPanel {
-    width:512px;
-    min-height: 250px;
+    width:500px;
+    min-height: 200px;
     display: inline-flex;
     justify-content: space-between;
 }
 
 #coverPanel h3 {
     text-align: center;
-    width: 512px;
+    padding: 0;
+    width: 500px;
     font-size: 1em;
     
 }
@@ -262,7 +271,7 @@ input[type=radio] {
     cursor: pointer;
     font-family: 'Cutive Mono';
     font-weight: bold;
-    padding: 5px 20px;
+    padding: 5px 10px;
 }
 
 input[type=radio]:checked+label {
@@ -280,13 +289,19 @@ input[type=radio]:checked+label {
     overflow: hidden;
 }
 
-.colorPalette, .slideContainer {
+.colorPalette {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
     justify-content: space-around;
     align-items: baseline;
-    margin: 10px 20px;
+    margin: 0 20px 10px 20px;
+}
+
+.slideContainer {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .paletteItem {
@@ -295,7 +310,6 @@ input[type=radio]:checked+label {
     width: 30px;
     box-shadow: inset 0px 3px 5px -1px #24242473;
     border-radius: 50%;
-    margin: 5px;
     cursor: pointer;
 }
 
@@ -303,7 +317,6 @@ button.paletteItem {
     display: inline-block;
     width: 20px;
     height: 20px;
-    margin: 5px;
     text-align: center;
     cursor: pointer;
     border: none;
@@ -312,13 +325,110 @@ button.paletteItem {
     overflow: hidden;
 }
 
-.slideContainer label {
-    float: left;
-    margin-right: 10px;
-    margin-top: 2px;
+.slide {
+    display: inline-flex;
+    justify-content: space-between;
+    
 }
 
-input[type=range]+label {
-    display: inline-block;
-    margin: 10px 5px;
+.slide label {
+    padding-top: 2px;
 }
+input[type=range].slider {
+    -webkit-appearance: none;
+    width: 90%;
+    margin: 7px 10px;
+}
+
+input[type=range].slider:focus {
+    outline: none;
+}
+
+input[type=range].slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    box-shadow: 0.9px 0.9px 1px rgba(0, 0, 0, 0.5), 0px 0px 0.9px rgba(13, 13, 13, 0.5);
+    background: rgba(107, 109, 118, 0.34);
+    border-radius: 18.3px;
+    border: 0px solid rgba(0, 0, 0, 0);
+}
+
+input[type=range].slider::-webkit-slider-thumb {
+    box-shadow: 1px 1px 0.3px rgba(0, 0, 0, 0.5), 0px 0px 1px rgba(13, 13, 13, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    height: 22px;
+    width: 22px;
+    border-radius: 50px;
+    background: #ffffff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -6.8px;
+}
+
+input[type=range].slider:focus::-webkit-slider-runnable-track {
+    background: rgba(109, 111, 121, 0.34);
+}
+
+input[type=range].slider::-moz-range-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    box-shadow: 0.9px 0.9px 1px rgba(0, 0, 0, 0.5), 0px 0px 0.9px rgba(13, 13, 13, 0.5);
+    background: rgba(107, 109, 118, 0.34);
+    border-radius: 18.3px;
+    border: 0px solid rgba(0, 0, 0, 0);
+}
+
+input[type=range].slider::-moz-range-thumb {
+    box-shadow: 1px 1px 0.3px rgba(0, 0, 0, 0.5), 0px 0px 1px rgba(13, 13, 13, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    height: 22px;
+    width: 22px;
+    border-radius: 50px;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+input[type=range].slider::-ms-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+}
+
+input[type=range].slider::-ms-fill-lower {
+    background: rgba(105, 107, 115, 0.34);
+    border: 0px solid rgba(0, 0, 0, 0);
+    border-radius: 36.6px;
+    box-shadow: 0.9px 0.9px 1px rgba(0, 0, 0, 0.5), 0px 0px 0.9px rgba(13, 13, 13, 0.5);
+}
+
+input[type=range].slider::-ms-fill-upper {
+    background: rgba(107, 109, 118, 0.34);
+    border: 0px solid rgba(0, 0, 0, 0);
+    border-radius: 36.6px;
+    box-shadow: 0.9px 0.9px 1px rgba(0, 0, 0, 0.5), 0px 0px 0.9px rgba(13, 13, 13, 0.5);
+}
+
+input[type=range].slider::-ms-thumb {
+    box-shadow: 1px 1px 0.3px rgba(0, 0, 0, 0.5), 0px 0px 1px rgba(13, 13, 13, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    height: 22px;
+    width: 22px;
+    border-radius: 50px;
+    background: #ffffff;
+    cursor: pointer;
+    height: 8.4px;
+}
+
+input[type=range].slider:focus::-ms-fill-lower {
+    background: rgba(107, 109, 118, 0.34);
+}
+
+input[type=range].slider:focus::-ms-fill-upper {
+    background: rgba(109, 111, 121, 0.34);
+}
+
