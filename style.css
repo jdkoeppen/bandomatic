@@ -33,6 +33,14 @@ p {
     margin: 20px auto;
 }
 
+#title sup {
+    font-size: 25%;
+    font-family: 'Cutive Mono';
+    line-height: 0;
+    position: relative;
+    vertical-align: top;
+}
+
 main {
     display: flex;
     justify-content: center;
