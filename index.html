@@ -20,14 +20,16 @@
             <sup>Beta</sup>
         </h1>
     </div>
-    <p>Create your own unique album cover using randomly generated words and artwork. Once you get a setup you like, customize
-        the text, colors and layout.</p>
+    <p>Create your own unique album cover using randomly generated words and artwork. We've randomly created the first one for you. Feel free to get new words or images, or if you like what you've got, use the controls to customize it.</p>
+<div id="spinner" class="spinner" style="display:none;">
+    <img id="img-spinner" src="./assets/spinner.gif" alt="Loading" />
+</div>
     <main role="main">
         <div id='control'>
             <form role='form'>
                 <fieldset>
                     <div id='bandName'>
-                        <h3>1. Click to Get a Band Name</h3>
+                        <h3>1. Click to Get a New Band Name</h3>
                         <button type='button' id='words'>Customize Name</button>
                     </div>
                     <div class='controlPanel' id='bandPanel'>
@@ -41,7 +43,7 @@
                 </fieldset>
                 <fieldset>
                     <div id='albumName'>
-                        <h3>2. Click to Get an Album Name</h3>
+                        <h3>2. Click to Get an New Album Name</h3>
                         <button type='button' id='quote'>Customize Name</button>
                     </div>
                     <div class='controlPanel' id='albumPanel'>
@@ -51,7 +53,7 @@
                 </fieldset>
                 <fieldset>
                     <div id='albumCover'>
-                        <h3>3. Click to Get an Album Cover</h3>
+                        <h3>3. Click to Get an New Album Cover</h3>
                         <button type='button' id='cover'>Customize Text</button>
                     </div>
                     <div class='controlPanel' id='coverPanel'>

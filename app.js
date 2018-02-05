@@ -9,7 +9,7 @@ var COVER_URL = ''
 var BAND = []
 var ALBUM = []
 var COLORS = []
-var CURRENT_COLOR
+var CURRENT_COLOR = '#ffffff'
 var ALBUM_WORD_COUNT = 4
 var mono = 0, flip = 0, blank = 0
 
@@ -25,6 +25,12 @@ function getCurrentName() {
   } else {
     return $('.js-album')
   }
+}
+
+function setPanels () {
+  $('#bandPanel').slideUp('5')
+  $('#albumPanel').slideUp('5')
+  $('#coverPanel').slideUp('5')
 }
 
 function pageLoad () {
@@ -46,6 +52,7 @@ function pageLoad () {
 
 function watchWords () {
   $('#bandName').on('click', 'h3', function (e) {
+    $('#bandPanel').slideDown('fast')
     getWordsData(renderAllWords)
   })
 }
@@ -74,6 +81,7 @@ function renderAllWords(object) {
 
 function renderWords(result) {
   $('.js-band').html(`<h2 id='currentBand'>${result}</h2>`)
+  $('.js-band').children().css('color', CURRENT_COLOR)
 }
 
 function applyBlank(band) {
@@ -121,6 +129,7 @@ function getQuoteData (callback) {
 
 function watchQuote () {
   $('#albumName').on('click', 'h3', function (e) {
+    $('#albumPanel').slideDown('fast')
     getQuoteData(renderWholeQuote)
   })
 }
@@ -146,6 +155,8 @@ function renderQuote (result, noWords) {
   noWords = ALBUM_WORD_COUNT
   let crop = ALBUM.split(' ').splice(0, noWords).join(' ')
   $('.js-album').html(`<h2 id='currentAlbum'>${crop}</h2>`)
+  $('.js-album').children().css('color', CURRENT_COLOR)
+
   return crop
 }
 
@@ -174,14 +185,15 @@ function getCover(callback) {
 
 function watchCover() {
   $('#albumCover').on('click', 'h3', function(e) {
-    $('#cover').show('slow').removeAttr('hidden')
+    $('#coverPanel').slideDown('normal')
+    // $('#cover').show('slow').removeAttr('hidden')
     getCover(renderCover)
   })
 }
 
 function watchCustomCover() {
   $('form').on('click', '#cover', function () {
-    $('#coverPanel').slideToggle('fast')
+    $('#coverPanel').slideToggle('normal')
   })
 }
 
@@ -345,17 +357,27 @@ $(function () {
 })
 
 /***
- *    ########  ##        #######     ###    ########  
- *    ##     ## ##       ##     ##   ## ##   ##     ## 
- *    ##     ## ##       ##     ##  ##   ##  ##     ## 
- *    ##     ## ##       ##     ## ##     ## ##     ## 
- *    ##     ## ##       ##     ## ######### ##     ## 
- *    ##     ## ##       ##     ## ##     ## ##     ## 
- *    ########  ########  #######  ##     ## ########  
+ *    ########  ##        #######     ###    ########
+ *    ##     ## ##       ##     ##   ## ##   ##     ##
+ *    ##     ## ##       ##     ##  ##   ##  ##     ##
+ *    ##     ## ##       ##     ## ##     ## ##     ##
+ *    ##     ## ##       ##     ## ######### ##     ##
+ *    ##     ## ##       ##     ## ##     ## ##     ##
+ *    ########  ########  #######  ##     ## ########
  */
-
+function spinner () {
+  $('#spinner').bind('ajaxSend', function () {
+    $(this).show()
+  }).bind('ajaxStop', function () {
+    $(this).hide()
+  }).bind('ajaxError', function () {
+    $(this).hide()
+  })
+}
 
 $(pageLoad)
+$(spinner)
+$(setPanels)
 $(watchCover)
 $(watchQuote)
 $(watchQuoteLength)
