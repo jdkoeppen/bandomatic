@@ -19,6 +19,7 @@ function watchNameControls() {
   })
 }
 
+// Track global for what text element has been clicked on rather than which switch has been selected
 function getCurrentName() {
   if ($('#bandControl').is(':checked')) {
     return $('.js-band')
@@ -365,8 +366,9 @@ $(function () {
  *    ##     ## ##       ##     ## ##     ## ##     ##
  *    ########  ########  #######  ##     ## ########
  */
+
 function spinner () {
-  $('#spinner').bind('ajaxSend', function () {
+  $('#spinner').on('ajaxSend', function () {
     $(this).show()
   }).bind('ajaxStop', function () {
     $(this).hide()
