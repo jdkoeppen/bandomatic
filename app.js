@@ -29,11 +29,11 @@ function getCurrentName() {
   }
 }
 
-function setPanels () {
-  $('#bandPanel').slideUp('5')
-  $('#albumPanel').slideUp('5')
-  $('#coverPanel').slideUp('5')
-}
+// function setPanels () {
+//   $('#bandPanel').slideUp('5')
+//   $('#albumPanel').slideUp('5')
+//   $('#coverPanel').slideUp('5')
+// }
 
 function pageLoad () {
   getWordsData(renderAllWords)
@@ -435,7 +435,7 @@ function bandPanel () {
 $(pageLoad)
 $(dragElement)
 $(watchBandPanel)
-$(setPanels)
+// $(setPanels)
 $(watchCover)
 $(watchQuote)
 $(watchQuoteLength)
