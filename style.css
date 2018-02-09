@@ -2,13 +2,6 @@
     box-sizing: border-box;
 }
 
-@media screen and (max-width: 1150px) {
-    main {
-        flex-flow: wrap;
-        max-width: 580px;
-    }
-}
-
 .footer {
     float: right;
     margin: 25px auto;
@@ -33,6 +26,7 @@ body {
     background-position: center center;
     background-attachment: fixed;
     height: 100%;
+    width: 100%;
     min-width: 600px;
     padding: 5px;
     background-image: url('assets/mainbg-2.jpg');
@@ -44,6 +38,7 @@ p {
     font-size: 16px;
     font-weight: bold;
     color: #adadad;
+    width: 100%;
     max-width: 600px;
     margin: 20px auto;
 }
@@ -61,7 +56,8 @@ main {
     justify-content: space-between;
     padding: 10px;
     border-radius: 10px;
-    width: 1160px;
+    width: 100%;
+    max-width: 1160px;
     height: auto;
     margin: 0 auto;
     background-image: url('assets/mainbg-4.jpg');
@@ -69,6 +65,14 @@ main {
     background-repeat: repeat;
     background-color: #46494C;
     box-shadow: 0px 5px 10px -1px #242424;
+}
+
+@media screen and (max-width: 1150px) {
+    main {
+        flex-flow: wrap;
+        width: 100%;
+        max-width: 580px;
+    }
 }
 
 h1 {
@@ -92,7 +96,7 @@ h2 {
 
 h3 {
     font-family: 'Permanent Marker', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     padding: 8px 0 0 10px;
     font-weight: normal;
     color: #242424;
@@ -203,7 +207,8 @@ h3:active {
 #display {
     flex-wrap: wrap;
     padding: 5px;
-    width: 570px;
+    width: 100%;
+    max-width: 570px;
     max-height: 570px;
 }
 
@@ -223,7 +228,7 @@ h3:active {
 }
 
 .controlPanel#coverPanel {
-    width: 500px;
+    max-width: 500px;
     min-height: 200px;
     display: inline-flex;
     justify-content: space-between;
@@ -232,7 +237,7 @@ h3:active {
 #coverPanel h3 {
     text-align: center;
     padding: 0;
-    width: 500px;
+    max-width: 500px;
     font-size: 1em;
 }
 
@@ -240,7 +245,8 @@ h3:active {
     position: relative;
     margin: 0 auto;
     background-color: #000000;
-    width: 550px;
+    width: 100%;
+    max-width: 550px;
     height: 550px;
     overflow: hidden;
     box-shadow: 0px 5px 10px 0px #242424;
@@ -272,14 +278,16 @@ canvas {
 #coverImg {
     position: absolute;
     height: 550px;
-    width: 550px;
+    width: 100%;
+    max-width: 550px;
     z-index: 1;
     object-fit: cover;
 }
 
 #coverOverlay {
     position: absolute;
-    width: 550px;
+    width: 100%;
+    max-width: 550px;
     height: 550px;
     z-index: 3;
     mix-blend-mode: screen;
