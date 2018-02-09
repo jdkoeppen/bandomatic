@@ -9,7 +9,8 @@
     <link href="https://fonts.googleapis.com/css?family=Cutive+Mono|Monoton|Permanent+Marker|Archivo+Black" rel="stylesheet">
     <link href="normalize.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="./plugins/fontselect/styles/fontselect-default.css">
-
+    <link rel="stylesheet" href="./plugins/jqueryui/jquery-ui.css">
+    <link rel="stylesheet" href="./plugins/jspanel/jspanel.css">
     <link href="style.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 </head>
@@ -22,8 +23,6 @@
     </div>
     <p>Create your own unique album cover using randomly generated words and artwork. We've randomly created the first one for
         you. Feel free to get new words or images, or if you like what you've got, use the controls to customize it.</p>
-    <div id="spinner" class="spinner" style="display:none;">
-        <img id="img-spinner" src="./assets/spinner.gif" alt="Loading" />
     </div>
     <main role="main">
         <div id='control'>
@@ -87,7 +86,7 @@
             </form>
         </div>
         <div id='display'>
-            <div class='js-cover'>
+            <div id='containment-wrapper' class='js-cover'>
 
                 <div id='coverLayer'>
                     <img id='coverOverlay' src='assets/coverOverlay.png'>
@@ -98,6 +97,9 @@
                 </div>
                 <div class='js-band'>
                     <h2></h2>
+                    <div class='gear'>
+                    <i id='bandSet' class="fas fa-cog"></i>
+                    </div>
                 </div>
                 <div class='js-album'>
                     <h2></h2>
@@ -133,6 +135,9 @@
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
+    <script src="./plugins/jqueryui/jquery-ui.js"></script>
+    <script src="./plugins/jspanel/jspanel.js"></script>
+    <script src="./plugins/jspanel/extensions/tooltip/jspanel.tooltip.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <script src="./plugins/fontselect/jquery.fontselect.js"></script>
     <script src="app.js"></script>

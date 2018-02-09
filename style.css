@@ -7,18 +7,6 @@
     margin: 25px auto;
 }
 
-.spinner {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-left: -50px;
-    margin-top: -50px;
-    text-align: center;
-    z-index: 1234;
-    overflow: auto;
-    width: 100px;
-    height: 102px;
-}
 
 body {
     background-size: cover;
@@ -53,18 +41,18 @@ p {
 
 main {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between;  
     padding: 10px;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     width: 100%;
     max-width: 1160px;
     height: auto;
     margin: 0 auto;
-    background-image: url('assets/mainbg-4.jpg');
+    /* background-image: url('assets/mainbg-4.jpg');
     background-size: contain;
     background-repeat: repeat;
     background-color: #46494C;
-    box-shadow: 0px 5px 10px -1px #242424;
+    box-shadow: 0px 5px 10px -1px #242424; */
 }
 
 @media screen and (max-width: 1150px) {
@@ -88,8 +76,9 @@ h1 {
 h2 {
     font-family: 'Archivo Black', sans-serif;
     text-align: center;
+    font-weight: normal;
     margin: 0;
-    font-size: 1.6em;
+    font-size: 1.8em;
     letter-spacing: .05em;
     text-transform: capitalize;
 }
@@ -106,6 +95,8 @@ h3 {
 fieldset {
     border: none;
 }
+
+
 
 button {
     height: 55px;
@@ -248,19 +239,26 @@ h3:active {
     width: 100%;
     max-width: 550px;
     height: 550px;
-    overflow: hidden;
+    /* overflow: hidden; */
     box-shadow: 0px 5px 10px 0px #242424;
 }
 
 /* BAND NAME TEXT */
 
 .js-band {
+    display: flex;
     position: absolute;
     top: 2%;
     left: 2%;
     z-index: 2;
+    cursor: move;
 }
 
+.gear {
+    display: none;
+    margin: 0 5px;
+    cursor: pointer;
+}
 /* ALBUM NAME TEXT */
 
 .js-album {
@@ -268,11 +266,7 @@ h3:active {
     top: 90%;
     left: 2%;
     z-index: 2;
-}
-
-canvas {
-    position: absolute;
-    clear: both;
+    cursor: move;
 }
 
 #coverImg {
@@ -292,6 +286,7 @@ canvas {
     z-index: 3;
     mix-blend-mode: screen;
     box-shadow: 0px 5px 10px 0px #242424;
+    pointer-events: none;
 }
 
 input[type=radio] {

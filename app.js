@@ -11,6 +11,7 @@ var ALBUM = []
 var COLORS = []
 var CURRENT_COLOR = '#ffffff'
 var ALBUM_WORD_COUNT = 4
+var BAND_PANEL
 var mono = 0, flip = 0, blank = 0
 
 function watchNameControls() {
@@ -81,7 +82,7 @@ function renderAllWords(object) {
 }
 
 function renderWords(result) {
-  $('.js-band').html(`<h2 id='currentBand'>${result}</h2>`)
+  $('.js-band > h2').text(result)
   $('.js-band').children().css('color', CURRENT_COLOR)
 }
 
@@ -358,27 +359,82 @@ $(function () {
 })
 
 /***
- *    ########  ##        #######     ###    ########
- *    ##     ## ##       ##     ##   ## ##   ##     ##
- *    ##     ## ##       ##     ##  ##   ##  ##     ##
- *    ##     ## ##       ##     ## ##     ## ##     ##
- *    ##     ## ##       ##     ## ######### ##     ##
- *    ##     ## ##       ##     ## ##     ## ##     ##
- *    ########  ########  #######  ##     ## ########
+ *    ########  ########     ###     ######
+ *    ##     ## ##     ##   ## ##   ##    ##
+ *    ##     ## ##     ##  ##   ##  ##
+ *    ##     ## ########  ##     ## ##   ####
+ *    ##     ## ##   ##   ######### ##    ##
+ *    ##     ## ##    ##  ##     ## ##    ##
+ *    ########  ##     ## ##     ##  ######
  */
 
-function spinner () {
-  $('#spinner').on('ajaxSend', function () {
-    $(this).show()
-  }).bind('ajaxStop', function () {
-    $(this).hide()
-  }).bind('ajaxError', function () {
-    $(this).hide()
+function dragElement() {
+  $('.js-band').draggable({ containment: '#containment-wrapper', scroll: false })
+  $('.js-album').draggable({ containment: '#containment-wrapper', scroll: false })
+}
+
+/***
+ *    ########     ###    ##    ## ######## ##        ######
+ *    ##     ##   ## ##   ###   ## ##       ##       ##    ##
+ *    ##     ##  ##   ##  ####  ## ##       ##       ##
+ *    ########  ##     ## ## ## ## ######   ##        ######
+ *    ##        ######### ##  #### ##       ##             ##
+ *    ##        ##     ## ##   ### ##       ##       ##    ##
+ *    ##        ##     ## ##    ## ######## ########  ######
+ */
+
+function watchBandPanel () {
+  let lastHover
+  $('.js-band').on('mousedown', function(event) {
+    BAND_PANEL || (BAND_PANEL = bandPanel())
+  });
+ document.addEventListener('jspanelclosed', function (event) {
+    if (event.detail === 'bandTool') {
+      BAND_PANEL = undefined
+      // do your things ...
+      // would be executed only for the panel with the id 'panel_id'
+    }
+  });
+}
+
+
+function bandPanel () {
+  return jsPanel.create({
+    container: '.js-band',
+    animateIn: 'jsPanelFadeIn',
+    content: `<div class='colorPalette'>
+                        </div>`,
+    target: '.js-band',
+    mode: 'sticky',
+    ttipEvent: 'click',
+    delay: 0,
+    connector: '#FBD0D9',
+    position: {
+      my: 'left-top',
+      at: 'left-bottom,'
+    },
+    id: 'bandTool',
+    contentSize: '80% 65',
+    theme: 'none',
+    border: false,
+    headerTitle: '',
+    headerControls: 'closeonly'
   })
 }
 
+/***
+ *     #######  ##    ## ##        #######     ###    ########
+ *    ##     ## ###   ## ##       ##     ##   ## ##   ##     ##
+ *    ##     ## ####  ## ##       ##     ##  ##   ##  ##     ##
+ *    ##     ## ## ## ## ##       ##     ## ##     ## ##     ##
+ *    ##     ## ##  #### ##       ##     ## ######### ##     ##
+ *    ##     ## ##   ### ##       ##     ## ##     ## ##     ##
+ *     #######  ##    ## ########  #######  ##     ## ########
+ */
+
 $(pageLoad)
-$(spinner)
+$(dragElement)
+$(watchBandPanel)
 $(setPanels)
 $(watchCover)
 $(watchQuote)
