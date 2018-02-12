@@ -3,7 +3,7 @@ const WORDS_ENDPOINT = 'https://api.wordnik.com/v4/words.json/randomWords'
 const WORDS_API = 'a9ebebf8301d0e2e3a0070d083d0143dc1fd6a7989e31b1c6'
 const COVER_ENDPOINT = 'https://api.unsplash.com/photos/random'
 const COVER_API = 'bad147bdc617e39778666eecef33b4dbee3cfb28693e0b73ba08441bb647c5da'
-// const COLORS_ENDPOINT = 'https://api.imagga.com/v1/colors'
+const COLORS_ENDPOINT = 'https://api.imagga.com/v1/colors'
 const ALBUM_CANVAS = 570
 var COVER_URL = ''
 var BAND = []
@@ -11,24 +11,11 @@ var ALBUM = []
 var COLORS = []
 var CURRENT_COLOR = '#ffffff'
 var ALBUM_WORD_COUNT = 4
-<<<<<<< HEAD
-var BAND_PANEL
-var mono = 0, flip = 0, blank = 0
-
-function watchNameControls() {
-  $('.textControl input[type="radio"]').change(function() {
-    initSliders()
-  })
-}
-
-// Track global for what text element has been clicked on rather than which switch has been selected
-=======
 var PANEL_STATE
 var CURRENT_PANEL
 var CURRENT_NAME
 var mono = 0, flip = 0, blank = 0
 
->>>>>>> ui_overhaul
 function getCurrentName() {
   if (CURRENT_NAME === 'bandName') {
     return $('.js-band')
@@ -37,15 +24,6 @@ function getCurrentName() {
   }
 }
 
-<<<<<<< HEAD
-// function setPanels () {
-//   $('#bandPanel').slideUp('5')
-//   $('#albumPanel').slideUp('5')
-//   $('#coverPanel').slideUp('5')
-// }
-
-=======
->>>>>>> ui_overhaul
 function pageLoad () {
   getWordsData(renderAllWords)
   getQuoteData(renderWholeQuote)
@@ -457,81 +435,6 @@ $('.js-album, .js-band').resizable({
 })
 
 /***
-<<<<<<< HEAD
- *    ########  ########     ###     ######
- *    ##     ## ##     ##   ## ##   ##    ##
- *    ##     ## ##     ##  ##   ##  ##
- *    ##     ## ########  ##     ## ##   ####
- *    ##     ## ##   ##   ######### ##    ##
- *    ##     ## ##    ##  ##     ## ##    ##
- *    ########  ##     ## ##     ##  ######
- */
-
-function dragElement() {
-  $('.js-band').draggable({ containment: '#containment-wrapper', scroll: false })
-  $('.js-album').draggable({ containment: '#containment-wrapper', scroll: false })
-}
-
-/***
- *    ########     ###    ##    ## ######## ##        ######
- *    ##     ##   ## ##   ###   ## ##       ##       ##    ##
- *    ##     ##  ##   ##  ####  ## ##       ##       ##
- *    ########  ##     ## ## ## ## ######   ##        ######
- *    ##        ######### ##  #### ##       ##             ##
- *    ##        ##     ## ##   ### ##       ##       ##    ##
- *    ##        ##     ## ##    ## ######## ########  ######
- */
-
-function watchBandPanel () {
-  let lastHover
-  $('.js-band').on('mousedown', function(event) {
-    BAND_PANEL || (BAND_PANEL = bandPanel())
-  });
- document.addEventListener('jspanelclosed', function (event) {
-    if (event.detail === 'bandTool') {
-      BAND_PANEL = undefined
-      // do your things ...
-      // would be executed only for the panel with the id 'panel_id'
-    }
-  });
-}
-
-
-function bandPanel () {
-  return jsPanel.create({
-    container: '.js-band',
-    animateIn: 'jsPanelFadeIn',
-    content: `<div class='colorPalette'>
-                        </div>`,
-    target: '.js-band',
-    mode: 'sticky',
-    ttipEvent: 'click',
-    delay: 0,
-    connector: '#FBD0D9',
-    position: {
-      my: 'left-top',
-      at: 'left-bottom,'
-    },
-    id: 'bandTool',
-    contentSize: '80% 65',
-    theme: 'none',
-    border: false,
-    headerTitle: '',
-    headerControls: 'closeonly'
-  })
-}
-=======
- *     #######  ##    ## ##        #######     ###    ########
- *    ##     ## ###   ## ##       ##     ##   ## ##   ##     ##
- *    ##     ## ####  ## ##       ##     ##  ##   ##  ##     ##
- *    ##     ## ## ## ## ##       ##     ## ##     ## ##     ##
- *    ##     ## ##  #### ##       ##     ## ######### ##     ##
- *    ##     ## ##   ### ##       ##     ## ##     ## ##     ##
- *     #######  ##    ## ########  #######  ##     ## ########
- */
->>>>>>> ui_overhaul
-
-/***
  *     #######  ##    ## ##        #######     ###    ########
  *    ##     ## ###   ## ##       ##     ##   ## ##   ##     ##
  *    ##     ## ####  ## ##       ##     ##  ##   ##  ##     ##
@@ -544,10 +447,7 @@ function bandPanel () {
 $(pageLoad)
 $(dragElement)
 $(watchBandPanel)
-<<<<<<< HEAD
-=======
 $(watchAlbumPanel)
->>>>>>> ui_overhaul
 // $(setPanels)
 $(watchCover)
 $(watchQuote)

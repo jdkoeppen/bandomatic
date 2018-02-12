@@ -28,14 +28,9 @@ p {
     font-weight: bold;
     color: #adadad;
     width: 100%;
-<<<<<<< HEAD
-    max-width: 600px;
-    margin: 20px auto;
-=======
     max-width: 570px;
     margin: 5px auto;
     margin-bottom: 10px;
->>>>>>> ui_overhaul
 }
 
 .display p {
@@ -64,12 +59,7 @@ main {
     padding: 0 20px;
     border-radius: 10px;
     width: 100%;
-<<<<<<< HEAD
-    max-width: 1160px;
-    height: auto;
-=======
     max-width: 570px;
->>>>>>> ui_overhaul
     margin: 0 auto;
     background-image: url('assets/mainbg-4.jpg');
     background-size: contain;
@@ -118,10 +108,6 @@ h2 {
 h3 {
     font-family: 'Permanent Marker', sans-serif;
     font-size: 18px;
-<<<<<<< HEAD
-    padding: 8px 0 0 10px;
-=======
->>>>>>> ui_overhaul
     font-weight: normal;
     color: #242424;
     margin: 5px;
@@ -224,11 +210,7 @@ h3:active {
     padding: 5px;
     width: 100%;
     max-width: 570px;
-<<<<<<< HEAD
-    max-height: 570px;
-=======
     /* max-height: 570px; */
->>>>>>> ui_overhaul
 }
 
 .controlPanel {
