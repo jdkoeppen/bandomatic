@@ -1,5 +1,4 @@
-# albumcover
-Band-o-Matic
+# Band-o-Matic
 Thinkful Capstone Project 1
 
 Band-o-matic pulls random elements from several different APIs to create a unique album cover for an imaginary band. The band name, 
