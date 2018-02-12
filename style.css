@@ -4,20 +4,8 @@
 
 .footer {
     float: right;
-    margin: 25px auto;
-}
-
-.spinner {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-left: -50px;
-    margin-top: -50px;
-    text-align: center;
-    z-index: 1234;
-    overflow: auto;
-    width: 100px;
-    height: 102px;
+    margin: 10px auto;
+    width: 100%;
 }
 
 body {
@@ -30,6 +18,7 @@ body {
     min-width: 600px;
     padding: 5px;
     background-image: url('assets/mainbg-2.jpg');
+    background-color: lightslategray;
 }
 
 p {
@@ -39,26 +28,48 @@ p {
     font-weight: bold;
     color: #adadad;
     width: 100%;
+<<<<<<< HEAD
     max-width: 600px;
     margin: 20px auto;
+=======
+    max-width: 570px;
+    margin: 5px auto;
+    margin-bottom: 10px;
+>>>>>>> ui_overhaul
 }
 
-#title sup {
-    font-size: 25%;
-    font-family: 'Cutive Mono';
-    line-height: 0;
-    position: relative;
-    vertical-align: top;
+.display p {
+    font-size: 24px;
+    font-family: 'Permanent Marker';
+    color: white;
+    font-weight: 300;
+    margin-top: 0;
 }
+
+.js-band p,
+.js-album p {
+    font-family: 'Cutive Mono';
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #242424;
+    margin: 0 auto;
+}
+
+
 
 main {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding: 0 20px;
     border-radius: 10px;
     width: 100%;
+<<<<<<< HEAD
     max-width: 1160px;
     height: auto;
+=======
+    max-width: 570px;
+>>>>>>> ui_overhaul
     margin: 0 auto;
     background-image: url('assets/mainbg-4.jpg');
     background-size: contain;
@@ -79,17 +90,27 @@ h1 {
     font-family: "Monoton", sans-serif;
     color: #DCDCDD;
     margin: 0 auto;
-    margin-top: 20px;
-    font-size: 60px;
+    font-size: 4rem;
     font-weight: 300;
     text-align: center;
 }
 
+/* @media screen and (max-width: 400px) {
+    #title {
+        width: 100%;
+        max-width: 400px;
+    }
+    h1 {
+        font-size: 48px;
+    }
+} */
+
 h2 {
     font-family: 'Archivo Black', sans-serif;
     text-align: center;
+    font-weight: normal;
     margin: 0;
-    font-size: 1.6em;
+    font-size: 1.8em;
     letter-spacing: .05em;
     text-transform: capitalize;
 }
@@ -97,28 +118,37 @@ h2 {
 h3 {
     font-family: 'Permanent Marker', sans-serif;
     font-size: 18px;
+<<<<<<< HEAD
     padding: 8px 0 0 10px;
+=======
+>>>>>>> ui_overhaul
     font-weight: normal;
     color: #242424;
     margin: 5px;
 }
 
 fieldset {
+    width: 100%;
+    max-width: 570px;
     border: none;
+    margin: 0 auto;
+    padding: 5px 5px 0 5px;
 }
 
 button {
-    height: 55px;
+    height: 40px;
+    width: 150px;
     font-family: 'Cutive Mono';
-    width: 100px;
+    font-size: 16px;
     line-height: 1.3em;
-    color: #dcdcdd;
+    color: #242424;
     font-weight: bold;
-    background-color: #6B6D76;
+    background-color: #dcdcdd;
     border: none;
-    border-radius: 0 5px 5px 0;
+    border-radius: 5px;
     padding: 5px;
     white-space: normal;
+    box-shadow: inset 0px 5px 10px -1px #161616d8;
 }
 
 .controlPanel#albumPanel button {
@@ -128,7 +158,7 @@ button {
 }
 
 button:hover {
-    border: 1px solid #242424;
+    border: 2px solid #dcdcdd;
     cursor: pointer;
 }
 
@@ -136,6 +166,7 @@ button:active {
     background-color: #40798C;
     border: 2px solid #DCDCDD;
     cursor: pointer;
+    transform: scale(.95)
 }
 
 input[type="checkbox"] {
@@ -146,8 +177,9 @@ input[type="checkbox"]+label {
     display: block;
     position: relative;
     padding-left: 35px;
-    margin: 10px 15px 15px 15px;
-    font: 20px 'Cutive Mono', Arial, sans-serif;
+    margin: 10px;
+    font: 18px 'Cutive Mono', Arial, sans-serif;
+    font-weight: bold;
     color: #242424;
     cursor: pointer;
 }
@@ -155,8 +187,8 @@ input[type="checkbox"]+label {
 input[type="checkbox"]+label:before {
     content: '';
     display: block;
-    width: 15px;
-    height: 15px;
+    width: 12px;
+    height: 12px;
     border: 2px solid #242424;
     position: absolute;
     left: 0;
@@ -178,52 +210,35 @@ input[type="checkbox"]:checked+label:before {
     transform: rotate(45deg);
 }
 
-#bandName,
-#albumName,
-#albumCover {
-    cursor: pointer;
-    display: flex;
-    flex-flow: wrap;
-    position: relative;
-    justify-content: space-between;
-    height: 55px;
-    border-radius: 5px;
-    background-color: #F4F3EE;
-    box-shadow: 0px 5px 10px 0px #24242477;
-    z-index: 1;
-}
-
-#bandName:hover,
-#albumName:hover,
-#albumCover:hover {
-    background-color: #adadad
-}
-
 h3:active {
     color: white;
 }
 
-#control,
-#display {
-    flex-wrap: wrap;
+.control {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.display {
     padding: 5px;
     width: 100%;
     max-width: 570px;
+<<<<<<< HEAD
     max-height: 570px;
+=======
+    /* max-height: 570px; */
+>>>>>>> ui_overhaul
 }
 
 .controlPanel {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     flex-flow: wrap;
-    justify-content: space-between;
-    background-color: #dbdbdb;
-    box-shadow: 0px 5px 10px 0px #24242477;
-    border-radius: 5px;
-    margin-top: -10px;
-    margin-left: 20px;
+    justify-content: space-around;
+    margin: 0px auto;
+    margin-bottom: 10px;
     padding: 5px;
-    padding-top: 15px;
     z-index: 2;
 }
 
@@ -248,31 +263,45 @@ h3:active {
     width: 100%;
     max-width: 550px;
     height: 550px;
-    overflow: hidden;
+    padding: 0;
+    /* overflow: hidden; */
     box-shadow: 0px 5px 10px 0px #242424;
 }
 
 /* BAND NAME TEXT */
 
 .js-band {
+    /* display: flex; */
     position: absolute;
     top: 2%;
     left: 2%;
     z-index: 2;
+    cursor: move;
+}
+
+.js-band:hover {
+    border: 1px dashed rgba(255, 255, 255, 0.75);
+}
+
+.gear {
+    display: none;
+    margin: 0 5px;
+    cursor: pointer;
 }
 
 /* ALBUM NAME TEXT */
 
 .js-album {
+    /* display: flex; */
     position: absolute;
     top: 90%;
     left: 2%;
     z-index: 2;
+    cursor: move;
 }
 
-canvas {
-    position: absolute;
-    clear: both;
+.js-album:hover {
+    border: 1px dashed rgba(255, 255, 255, 0.75);
 }
 
 #coverImg {
@@ -291,13 +320,7 @@ canvas {
     height: 550px;
     z-index: 3;
     mix-blend-mode: screen;
-    box-shadow: 0px 5px 10px 0px #242424;
-}
-
-input[type=radio] {
-    position: relative;
-    visibility: hidden;
-    display: none;
+    pointer-events: none;
 }
 
 .textControl label {
@@ -307,12 +330,6 @@ input[type=radio] {
     font-family: 'Cutive Mono';
     font-weight: bold;
     padding: 5px 10px;
-}
-
-input[type=radio]:checked+label {
-    color: #dcdcdd;
-    background: #46494C;
-    border: 1px solid #46494C;
 }
 
 .textControl {
@@ -328,23 +345,18 @@ input[type=radio]:checked+label {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
+    max-width: 350px;
     justify-content: space-around;
-    align-items: baseline;
-    margin: 0 20px 10px 20px;
-}
-
-.slideContainer {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
+    align-items: center;
+    margin: 10px auto;
 }
 
 .paletteItem {
     flex-flow: row;
     height: 30px;
-    width: 30px;
+    width: 20px;
     box-shadow: inset 0px 3px 5px -1px #24242473;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     cursor: pointer;
 }
 
@@ -355,114 +367,7 @@ button.paletteItem {
     text-align: center;
     cursor: pointer;
     border: none;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     font-size: 18px;
     overflow: hidden;
-}
-
-.slide {
-    display: inline-flex;
-    justify-content: space-between;
-}
-
-.slide label {
-    padding-top: 2px;
-}
-
-input[type=range].slider {
-    -webkit-appearance: none;
-    width: 90%;
-    margin: 7px 10px;
-}
-
-input[type=range].slider:focus {
-    outline: none;
-}
-
-input[type=range].slider::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 8.4px;
-    cursor: pointer;
-    box-shadow: 0.9px 0.9px 1px rgba(0, 0, 0, 0.5), 0px 0px 0.9px rgba(13, 13, 13, 0.5);
-    background: rgba(107, 109, 118, 0.34);
-    border-radius: 18.3px;
-    border: 0px solid rgba(0, 0, 0, 0);
-}
-
-input[type=range].slider::-webkit-slider-thumb {
-    box-shadow: 1px 1px 0.3px rgba(0, 0, 0, 0.5), 0px 0px 1px rgba(13, 13, 13, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    height: 22px;
-    width: 22px;
-    border-radius: 50px;
-    background: #ffffff;
-    cursor: pointer;
-    -webkit-appearance: none;
-    margin-top: -6.8px;
-}
-
-input[type=range].slider:focus::-webkit-slider-runnable-track {
-    background: rgba(109, 111, 121, 0.34);
-}
-
-input[type=range].slider::-moz-range-track {
-    width: 100%;
-    height: 8.4px;
-    cursor: pointer;
-    box-shadow: 0.9px 0.9px 1px rgba(0, 0, 0, 0.5), 0px 0px 0.9px rgba(13, 13, 13, 0.5);
-    background: rgba(107, 109, 118, 0.34);
-    border-radius: 18.3px;
-    border: 0px solid rgba(0, 0, 0, 0);
-}
-
-input[type=range].slider::-moz-range-thumb {
-    box-shadow: 1px 1px 0.3px rgba(0, 0, 0, 0.5), 0px 0px 1px rgba(13, 13, 13, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    height: 22px;
-    width: 22px;
-    border-radius: 50px;
-    background: #ffffff;
-    cursor: pointer;
-}
-
-input[type=range].slider::-ms-track {
-    width: 100%;
-    height: 8.4px;
-    cursor: pointer;
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-}
-
-input[type=range].slider::-ms-fill-lower {
-    background: rgba(105, 107, 115, 0.34);
-    border: 0px solid rgba(0, 0, 0, 0);
-    border-radius: 36.6px;
-    box-shadow: 0.9px 0.9px 1px rgba(0, 0, 0, 0.5), 0px 0px 0.9px rgba(13, 13, 13, 0.5);
-}
-
-input[type=range].slider::-ms-fill-upper {
-    background: rgba(107, 109, 118, 0.34);
-    border: 0px solid rgba(0, 0, 0, 0);
-    border-radius: 36.6px;
-    box-shadow: 0.9px 0.9px 1px rgba(0, 0, 0, 0.5), 0px 0px 0.9px rgba(13, 13, 13, 0.5);
-}
-
-input[type=range].slider::-ms-thumb {
-    box-shadow: 1px 1px 0.3px rgba(0, 0, 0, 0.5), 0px 0px 1px rgba(13, 13, 13, 0.5);
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    height: 22px;
-    width: 22px;
-    border-radius: 50px;
-    background: #ffffff;
-    cursor: pointer;
-    height: 8.4px;
-}
-
-input[type=range].slider:focus::-ms-fill-lower {
-    background: rgba(107, 109, 118, 0.34);
-}
-
-input[type=range].slider:focus::-ms-fill-upper {
-    background: rgba(109, 111, 121, 0.34);
 }

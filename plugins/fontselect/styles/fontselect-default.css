@@ -9,8 +9,8 @@
 
 .font-select {
   font-size: 18px;
-  width: 180px;
-  margin: 10px;
+  width: 250px;
+  margin: 10px 70px 20px 70px;
   position: relative;
   display: inline-block;
   zoom: 1;
@@ -60,6 +60,7 @@
 
 .font-select > a span {
   margin-right: 26px;
+  font-family: 'Permanent Marker';
   display: block;
   overflow: hidden;
   white-space: nowrap;
@@ -113,8 +114,8 @@
 
 .font-select .fs-results {
   margin: 0 4px 4px 0;
-  max-height: 190px;
-  width: 200px;
+  max-height: 120px;
+  width: 245px;
   padding: 0 0 0 4px;
   position: relative;
   overflow-x: hidden;

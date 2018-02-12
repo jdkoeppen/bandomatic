@@ -52,7 +52,11 @@
     border: 0;
     box-sizing: border-box;
     vertical-align: baseline;
+<<<<<<< HEAD
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+=======
+    font-family: 'Permanent Marker', Helvetica,Arial,sans-serif;
+>>>>>>> ui_overhaul
     font-weight: normal;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
@@ -128,7 +132,11 @@
   overflow: hidden; }
   .jsPanel-titlebar h3 {
     color: #000000;
+<<<<<<< HEAD
     font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+=======
+    font-family: 'Permanent Marker',Helvetica,Arial,sans-serif;
+>>>>>>> ui_overhaul
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -417,7 +425,11 @@
   opacity: 0;
   animation: jsPanelFadeIn ease-in 1;
   animation-fill-mode: forwards;
+<<<<<<< HEAD
   animation-duration: 600ms; }
+=======
+  animation-duration: 300ms; }
+>>>>>>> ui_overhaul
 
 @keyframes jsPanelFadeOut {
   from {
@@ -428,7 +440,11 @@
 .jsPanelFadeOut {
   animation: jsPanelFadeOut ease-in 1;
   animation-fill-mode: forwards;
+<<<<<<< HEAD
   animation-duration: 600ms; }
+=======
+  animation-duration: 300ms; }
+>>>>>>> ui_overhaul
 
 @keyframes modalBackdropFadeIn {
   from {
@@ -471,7 +487,13 @@
   color: #000000; }
 
 .jsPanel-theme-default > .jsPanel-hdr .jsPanel-hdr-toolbar {
+<<<<<<< HEAD
   border-top: 1px solid #90a4ae; }
+=======
+  border-top: 1px solid #90a4ae;
+  padding: 0 auto;
+}
+>>>>>>> ui_overhaul
 
 .jsPanel-theme-default > .jsPanel-content {
   border-top: 1px solid #90a4ae; }
