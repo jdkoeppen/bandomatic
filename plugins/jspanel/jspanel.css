@@ -52,7 +52,7 @@
     border: 0;
     box-sizing: border-box;
     vertical-align: baseline;
-    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 'Permanent Marker', Helvetica,Arial,sans-serif;
     font-weight: normal;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
@@ -128,7 +128,7 @@
   overflow: hidden; }
   .jsPanel-titlebar h3 {
     color: #000000;
-    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 'Permanent Marker',Helvetica,Arial,sans-serif;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -417,7 +417,7 @@
   opacity: 0;
   animation: jsPanelFadeIn ease-in 1;
   animation-fill-mode: forwards;
-  animation-duration: 600ms; }
+  animation-duration: 300ms; }
 
 @keyframes jsPanelFadeOut {
   from {
@@ -428,7 +428,7 @@
 .jsPanelFadeOut {
   animation: jsPanelFadeOut ease-in 1;
   animation-fill-mode: forwards;
-  animation-duration: 600ms; }
+  animation-duration: 300ms; }
 
 @keyframes modalBackdropFadeIn {
   from {
@@ -471,7 +471,9 @@
   color: #000000; }
 
 .jsPanel-theme-default > .jsPanel-hdr .jsPanel-hdr-toolbar {
-  border-top: 1px solid #90a4ae; }
+  border-top: 1px solid #90a4ae;
+  padding: 0 auto;
+}
 
 .jsPanel-theme-default > .jsPanel-content {
   border-top: 1px solid #90a4ae; }

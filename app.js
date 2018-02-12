@@ -3,7 +3,7 @@ const WORDS_ENDPOINT = 'https://api.wordnik.com/v4/words.json/randomWords'
 const WORDS_API = 'a9ebebf8301d0e2e3a0070d083d0143dc1fd6a7989e31b1c6'
 const COVER_ENDPOINT = 'https://api.unsplash.com/photos/random'
 const COVER_API = 'bad147bdc617e39778666eecef33b4dbee3cfb28693e0b73ba08441bb647c5da'
-const COLORS_ENDPOINT = 'https://api.imagga.com/v1/colors'
+// const COLORS_ENDPOINT = 'https://api.imagga.com/v1/colors'
 const ALBUM_CANVAS = 570
 var COVER_URL = ''
 var BAND = []
@@ -11,35 +11,23 @@ var ALBUM = []
 var COLORS = []
 var CURRENT_COLOR = '#ffffff'
 var ALBUM_WORD_COUNT = 4
-var BAND_PANEL
+var PANEL_STATE
+var CURRENT_PANEL
+var CURRENT_NAME
 var mono = 0, flip = 0, blank = 0
 
-function watchNameControls() {
-  $('.textControl input[type="radio"]').change(function() {
-    initSliders()
-  })
-}
-
-// Track global for what text element has been clicked on rather than which switch has been selected
 function getCurrentName() {
-  if ($('#bandControl').is(':checked')) {
+  if (CURRENT_NAME === 'bandName') {
     return $('.js-band')
-  } else {
+  } else if (CURRENT_NAME === 'albumName') {
     return $('.js-album')
   }
-}
-
-function setPanels () {
-  $('#bandPanel').slideUp('5')
-  $('#albumPanel').slideUp('5')
-  $('#coverPanel').slideUp('5')
 }
 
 function pageLoad () {
   getWordsData(renderAllWords)
   getQuoteData(renderWholeQuote)
   getCover(renderCover)
-  initSliders()
 }
 
 /***
@@ -53,15 +41,8 @@ function pageLoad () {
  */
 
 function watchWords () {
-  $('#bandName').on('click', 'h3', function (e) {
-    $('#bandPanel').slideDown('fast')
+  $('#bandName').on('click', function (e) {
     getWordsData(renderAllWords)
-  })
-}
-
-function watchCustomName () {
-  $('form').on('click', '#words', function() {
-    $('#bandPanel').slideToggle('fast')
   })
 }
 
@@ -101,7 +82,7 @@ function applyFlip(band) {
 }
 
 function nameControls () {
-  $('input[type="checkbox"]').change(function () {
+  $('.js-band').on('change', 'input[type = "checkbox"]', function () {
     blank = $('#theNames:checked').length
     mono = $('#mono:checked').length
     flip = $('#flip:checked').length
@@ -110,11 +91,9 @@ function nameControls () {
     let monoed = applyMono(flipped)
     let blanked = applyBlank(monoed)
     renderWords(blanked)
-
-    //    var DISPLAY_BAND_NAME = applyBlank(applyMono(applyFlip(BAND)))
-    //    renderWords(DISPLAY_BAND_NAME)
   })
 }
+
 /***
  *     #######  ##     ##  #######  ######## ########
  *    ##     ## ##     ## ##     ##    ##    ##
@@ -130,24 +109,17 @@ function getQuoteData (callback) {
 }
 
 function watchQuote () {
-  $('#albumName').on('click', 'h3', function (e) {
-    $('#albumPanel').slideDown('fast')
+  $('#albumName').on('click', function (e) {
     getQuoteData(renderWholeQuote)
   })
 }
 
-function watchCustomAlbum () {
-  $('form').on('click', '#quote', function () {
-    $('#albumPanel').slideToggle('fast')
-  })
-}
-
 function watchQuoteLength () {
-  $('form').on('click', '#less', function (e) {
+  $('.js-album').on('click', '#less', function (e) {
     let noWords = ALBUM_WORD_COUNT--
     renderQuote(ALBUM, noWords)
   })
-  $('form').on('click', '#more', function (e) {
+  $('.js-album').on('click', '#more', function (e) {
     let noWords = ALBUM_WORD_COUNT++
     renderQuote(ALBUM, noWords)
   })
@@ -156,9 +128,8 @@ function watchQuoteLength () {
 function renderQuote (result, noWords) {
   noWords = ALBUM_WORD_COUNT
   let crop = ALBUM.split(' ').splice(0, noWords).join(' ')
-  $('.js-album').html(`<h2 id='currentAlbum'>${crop}</h2>`)
+  $('.js-album > h2').text(crop)
   $('.js-album').children().css('color', CURRENT_COLOR)
-
   return crop
 }
 
@@ -186,9 +157,8 @@ function getCover(callback) {
 }
 
 function watchCover() {
-  $('#albumCover').on('click', 'h3', function(e) {
+  $('#albumCover').on('click', function(e) {
     $('#coverPanel').slideDown('normal')
-    // $('#cover').show('slow').removeAttr('hidden')
     getCover(renderCover)
   })
 }
@@ -247,14 +217,16 @@ function renderColors (data) {
 }
 
 function renderPalette () {
+  const $palette = $('.colorPalette')
+  $palette.empty()
   for (var i = 0; i < COLORS.length; i++) {
-    $('.colorPalette').append(`<input type='button' class='paletteItem' title='${COLORS[i]}' id='color${i + 1}' style='background-color:${COLORS[i]}'>`)
+    $palette.append(`<input type='button' class='paletteItem' title='${COLORS[i]}' id='color${i + 1}' style='background-color:${COLORS[i]}'>`)
   }
   watchPalette()
 }
 
 function watchPalette () {
-  $('.colorPalette').on('click', '.paletteItem', function () {
+  $('.js-cover').on('click', '.paletteItem', function () {
     CURRENT_COLOR = $(this).css('background-color')
     getCurrentName().children().css('color', CURRENT_COLOR)
   })
@@ -273,92 +245,6 @@ function getColors(callback) {
 }
 
 /***
- *     ######  ##       #### ########  ######## ########
- *    ##    ## ##        ##  ##     ## ##       ##     ##
- *    ##       ##        ##  ##     ## ##       ##     ##
- *     ######  ##        ##  ##     ## ######   ########
- *          ## ##        ##  ##     ## ##       ##   ##
- *    ##    ## ##        ##  ##     ## ##       ##    ##
- *     ######  ######## #### ########  ######## ##     ##
- */
-
-function initSliders() {
-  const name = getCurrentName()
-  $('#moveX').val(getXOffset())
-  $('#moveY').val(getYOffset())
-}
-
-function getXOffset() {
-  const name = getCurrentName()
-  const xPos = parseInt(name.css('left'), 10)
-  const margin = ALBUM_CANVAS * 0.05
-  const contentWidth = ALBUM_CANVAS - margin * 2
-  const nameWidth = parseInt(name.css('width'))
-  const availableWidth = contentWidth - nameWidth
-  const ratio = (xPos - margin) / availableWidth
-  const num = Math.floor(ratio * 100)
-  return num
-}
-
-function getYOffset() {
-  const name = getCurrentName()
-  const xPos = parseInt(name.css('top'), 10)
-  const margin = ALBUM_CANVAS * 0.05
-  const contentWidth = ALBUM_CANVAS
-  const nameHeight = parseInt(name.css('height'))
-  const availableWidth = contentWidth - nameHeight
-  const ratio = xPos / availableWidth
-  const num = Math.floor(ratio * 100)
-  return num
-}
-
-function setXOffset(num) {
-  const name = getCurrentName()
-  const margin = ALBUM_CANVAS * 0.05
-  const contentWidth = ALBUM_CANVAS - margin * 2
-  const nameWidth = parseInt(name.css('width'))
-  const xValue = (margin) + num / 100 * (contentWidth - nameWidth)
-  name.css('left', xValue)
-}
-
-function setYOffset(num) {
-  const name = getCurrentName()
-  const margin = ALBUM_CANVAS * 0.02
-  const contentWidth = ALBUM_CANVAS - margin * 2
-  const nameWidth = parseInt(name.css('height'))
-  const yValue = (margin / 2) + num / 100 * (contentWidth - nameWidth)
-  name.css('top', yValue)
-}
-
-function watchSliders () {
-  $('input[type="range"]').on('input', function() {
-    if ($(this).attr('id') === 'moveX') {
-      setXOffset($(this).val())
-    } else if ($(this).attr('id') === 'moveY') {
-      setYOffset($(this).val())
-    }
-  })
-}
-
-/***
- *    ########  #######  ##    ## ########  ######
- *    ##       ##     ## ###   ##    ##    ##    ##
- *    ##       ##     ## ####  ##    ##    ##
- *    ######   ##     ## ## ## ##    ##     ######
- *    ##       ##     ## ##  ####    ##          ##
- *    ##       ##     ## ##   ###    ##    ##    ##
- *    ##        #######  ##    ##    ##     ######
- */
-
-$(function () {
-  $('#font').fontselect().change(function () {
-    var font = $(this).val().replace(/\+/g, ' ')
-    font = font.split(':')
-    getCurrentName().children().css('font-family', font[0])
-  })
-})
-
-/***
  *    ########  ########     ###     ######
  *    ##     ## ##     ##   ## ##   ##    ##
  *    ##     ## ##     ##  ##   ##  ##
@@ -369,9 +255,23 @@ $(function () {
  */
 
 function dragElement() {
-  $('.js-band').draggable({ containment: '#containment-wrapper', scroll: false })
-  $('.js-album').draggable({ containment: '#containment-wrapper', scroll: false })
+  $('.js-band, .js-album').draggable({
+    start: function (event, ui) {
+      if (CURRENT_PANEL) {
+        CURRENT_PANEL.close(function (id) {
+          CURRENT_PANEL = undefined
+          PANEL_STATE = true
+        })
+      } else {
+        PANEL_STATE = false
+      }
+    },
+    containment: '#containment-wrapper', 
+    scroll: false
+  })
 }
+//   $('.js-album').draggable({ containment: '#containment-wrapper', scroll: false })
+// }
 
 /***
  *    ########     ###    ##    ## ######## ##        ######
@@ -384,26 +284,44 @@ function dragElement() {
  */
 
 function watchBandPanel () {
-  let lastHover
   $('.js-band').on('mousedown', function(event) {
-    BAND_PANEL || (BAND_PANEL = bandPanel())
-  });
- document.addEventListener('jspanelclosed', function (event) {
+    CURRENT_PANEL || (CURRENT_PANEL = bandPanel())
+    CURRENT_NAME = 'bandName'
+  })
+  document.addEventListener('jspanelloaded', function (event) {
     if (event.detail === 'bandTool') {
-      BAND_PANEL = undefined
-      // do your things ...
-      // would be executed only for the panel with the id 'panel_id'
+      $('#bandfont').fontselect().on('change', function () {
+        var font = $(this).val().replace(/\+/g, ' '); font = font.split(':')
+        $('.js-band').children().css('font-family', font[0])
+      })
     }
-  });
+    document.addEventListener('jspanelclosed', function (event) {
+      if (event.detail === 'bandTool') {
+        CURRENT_PANEL = undefined
+      }
+    })
+  })
 }
-
 
 function bandPanel () {
   return jsPanel.create({
     container: '.js-band',
     animateIn: 'jsPanelFadeIn',
-    content: `<div class='colorPalette'>
-                        </div>`,
+    callback: renderPalette,
+    content: `<div>
+<input id='bandfont' type='text'>
+</div>
+<p>Customize the Band Name</p>
+<div class='controlPanel' id='textEdit'>
+    <input type='checkbox' id='flip'>
+    <label for='flip'>Flip</label>
+    <input type='checkbox' id='mono'>
+    <label for='mono'>Single</label>
+    <input type='checkbox' id='theNames'>
+    <label for='theNames'>The ___s</label>
+    </div>
+    <p>Pick a Text Color</p>
+    <div class='colorPalette'></div>`,
     target: '.js-band',
     mode: 'sticky',
     ttipEvent: 'click',
@@ -411,16 +329,110 @@ function bandPanel () {
     connector: '#FBD0D9',
     position: {
       my: 'left-top',
-      at: 'left-bottom,'
+      at: 'left-bottom',
+      offsetY: '40px'
     },
     id: 'bandTool',
-    contentSize: '80% 65',
-    theme: 'none',
-    border: false,
-    headerTitle: '',
+    panelSize: '400 275',
+    contentSize: '100% 65',
+    theme: 'default',
+    boxShadow: 3,
+    border: '5px solid',
+    headerTitle: 'Band Name Editor',
     headerControls: 'closeonly'
   })
 }
+
+function watchAlbumPanel() {
+  $('.js-album').on('mousedown', function (event) {
+    CURRENT_PANEL || (CURRENT_PANEL = albumPanel())
+    CURRENT_NAME = 'albumName'
+  })
+  document.addEventListener('jspanelloaded', function (event) {
+    if (event.detail === 'albumTool') {
+      $('#albumfont').fontselect().on('change', function () {
+        var font = $(this).val().replace(/\+/g, ' ')
+        font = font.split(':')
+        $('.js-album').children().css('font-family', font[0])
+      })
+    }
+    document.addEventListener('jspanelclosed', function (event) {
+      if (event.detail === 'albumTool') {
+        CURRENT_PANEL = undefined
+      }
+    })
+  })
+}
+
+function albumPanel() {
+  return jsPanel.create({
+    container: '.js-album',
+    animateIn: 'jsPanelFadeIn',
+    callback: renderPalette,
+    content: `<div>
+    <input id='albumfont' type='text'>
+    </div>
+    <p>Increase or Decrease the Title Length</p>
+    <div class='controlPanel' id='albumPanel'>
+        <button type='button' id='less'>Fewer</button>
+        <button type='button' id='more'>More</button>
+    </div>
+    <p>Pick a Text Color</p>
+    <div class='colorPalette'></div>`,
+    target: '.js-album',
+    mode: 'sticky',
+    ttipEvent: 'click',
+    delay: 0,
+    connector: '#FBD0D9',
+    position: {
+      my: 'left-bottom',
+      at: 'left-top',
+      offsetY: '-40px'
+    },
+    id: 'albumTool',
+    panelSize: '400 275',
+    contentSize: '100% 65',
+    theme: 'default',
+    boxShadow: 3,
+    border: '5px solid',
+    headerTitle: 'Album Name Editor',
+    headerControls: 'closeonly'
+  })
+}
+
+/***
+ *    ########  ########  ######  #### ######## ########
+ *    ##     ## ##       ##    ##  ##       ##  ##
+ *    ##     ## ##       ##        ##      ##   ##
+ *    ########  ######    ######   ##     ##    ######
+ *    ##   ##   ##             ##  ##    ##     ##
+ *    ##    ##  ##       ##    ##  ##   ##      ##
+ *    ##     ## ########  ######  #### ######## ########
+ */
+
+$('.js-album, .js-band').resizable({
+  start: function (event, ui) {
+    if (CURRENT_PANEL) {
+      CURRENT_PANEL.close(function(id) {
+        CURRENT_PANEL = undefined
+        PANEL_STATE = true
+      })
+    } else {
+      PANEL_STATE = false
+    }
+  },
+  resize: function (event, ui) {
+    let size = ui.size
+    $(this).css({
+      'font-size': (size.width * size.height) / 10000 + 'vmin'
+    })
+  },
+
+  handles: 'n, ne, e, se, s, sw, w',
+  containment: $('.js-cover'),
+  autoHide: true,
+  maxWidth: 550
+})
 
 /***
  *     #######  ##    ## ##        #######     ###    ########
@@ -435,14 +447,15 @@ function bandPanel () {
 $(pageLoad)
 $(dragElement)
 $(watchBandPanel)
-$(setPanels)
+$(watchAlbumPanel)
+// $(setPanels)
 $(watchCover)
 $(watchQuote)
 $(watchQuoteLength)
 $(watchWords)
 $(nameControls)
-$(watchCustomName)
-$(watchCustomAlbum)
+// $(watchCustomName)
+// $(watchCustomAlbum)
 $(watchCustomCover)
-$(watchSliders)
-$(watchNameControls)
+// $(watchSliders)
+// $(watchNameControls)
