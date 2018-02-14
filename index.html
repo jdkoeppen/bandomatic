@@ -24,39 +24,47 @@
         you. </p>
     </div>
     <main role="main">
-        <div class='display'>
+        <div class='displayWide'>
             <p>Press a button below to get a new...</p>
             <form role='form'>
                 <fieldset>
                     <div class='control'>
-                        <button type='button' id='bandName'>Band Name</button>
-                        <button type='button' id='albumName'>Album Name</button>
-                        <button type='button' id='albumCover'>Cover</button>
+                        <button type='button' class='bandName' id='wide'>Band Name</button>
+                        <button type='button' class='albumName' id='wide'>Album Name</button>
+                        <button type='button' class='albumCover' id='wide'>Cover</button>
                     </div>
                 </fieldset>
             </form>
             <p>Drag, Resize or Click the Band or Album Name to Customize.</p>
-            <div id='containment-wrapper' class='js-cover'>
-
-                <div id='coverLayer'>
-                    <img id='coverOverlay' src='assets/coverOverlay.png'>
-                </div>
-                <div class='footer'>
-                    box-shadow: 0px 5px 10px 0px #242424;
-
-                </div>
-                <div class='js-band'>
-                    <h2 id='currentBand'>
-                    </h2>
-                    <div class='gear'>
-                        <i id='bandSet' class="fas fa-cog"></i>
+            <p>Take a screenshot to save your creation. Downloading coming soon!</p>
+        </div>
+        <div class='displayNarrow'>
+            <p>Press a button below to get a new...</p>
+            <form role='form'>
+                <fieldset>
+                    <div class='control'>
+                        <button type='button' class='bandName' id='narrow'>Band Name</button>
+                        <button type='button' class='albumName' id='narrow'>Album Name</button>
+                        <button type='button' class='albumCover' id='narrow'>Cover</button>
                     </div>
-                </div>
-                <div class='js-album'>
-                    <h2>
+                </fieldset>
+            </form>
+            <p>Drag, Resize or Click the Band or Album Name to Customize.</p>
 
-                    </h2>
-                </div>
+        </div>
+        <div id='containment-wrapper' class='js-cover'>
+
+            <div id='coverLayer'>
+                <img id='coverOverlay' src='assets/coverOverlay.png'>
+            </div>
+            <div class='js-band'>
+                <h2 id='currentBand'>
+                </h2>
+            </div>
+            <div class='js-album'>
+                <h2>
+
+                </h2>
             </div>
             <div class="footer">
                 <a id='photoCreditLink' style="background-color:#00000059;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Helvetica, Ubuntu, Roboto, Noto, 'Segoe UI', Arial, sans-serif;font-size:10px;font-weight:bold;display:inline-block;border-radius:3px;"
@@ -83,10 +91,11 @@
                     <span style="display:inline-block;padding:2px 3px;">Background by Mink Mingle</span>
                 </a>
             </div>
-            <div>
-                <p>Take a screenshot to save your creation. Downloading coming soon!</p>
-            </div>
         </div>
+        <div class='narrowTag'>
+            <p>Take a screenshot to save your creation. Downloading coming soon!</p>
+        </div>
+
     </main>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="

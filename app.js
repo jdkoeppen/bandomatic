@@ -14,6 +14,7 @@ var ALBUM_WORD_COUNT = 4
 var PANEL_STATE
 var CURRENT_PANEL
 var CURRENT_NAME
+var CURRENT_VIEW
 var mono = 0, flip = 0, blank = 0
 
 function getCurrentName() {
@@ -22,6 +23,12 @@ function getCurrentName() {
   } else if (CURRENT_NAME === 'albumName') {
     return $('.js-album')
   }
+}
+
+function checkViewport () {
+  if ($(window).width > 1150) {
+    CURRENT_VIEW = '#wide'
+  } else CURRENT_VIEW = '#narrow'
 }
 
 function pageLoad () {
@@ -41,7 +48,7 @@ function pageLoad () {
  */
 
 function watchWords () {
-  $('#bandName').on('click', function (e) {
+  $('.bandName').on('click', CURRENT_VIEW, function (e) {
     getWordsData(renderAllWords)
   })
 }
@@ -109,7 +116,7 @@ function getQuoteData (callback) {
 }
 
 function watchQuote () {
-  $('#albumName').on('click', function (e) {
+  $('.albumName').on('click', CURRENT_VIEW, function (e) {
     getQuoteData(renderWholeQuote)
   })
 }
@@ -157,15 +164,8 @@ function getCover(callback) {
 }
 
 function watchCover() {
-  $('#albumCover').on('click', function(e) {
-    $('#coverPanel').slideDown('normal')
+  $('.albumCover').on('click', CURRENT_VIEW, function(e) {
     getCover(renderCover)
-  })
-}
-
-function watchCustomCover() {
-  $('form').on('click', '#cover', function () {
-    $('#coverPanel').slideToggle('normal')
   })
 }
 
@@ -266,12 +266,10 @@ function dragElement() {
         PANEL_STATE = false
       }
     },
-    containment: '#containment-wrapper', 
+    containment: '#containment-wrapper',
     scroll: false
   })
 }
-//   $('.js-album').draggable({ containment: '#containment-wrapper', scroll: false })
-// }
 
 /***
  *    ########     ###    ##    ## ######## ##        ######
@@ -448,14 +446,8 @@ $(pageLoad)
 $(dragElement)
 $(watchBandPanel)
 $(watchAlbumPanel)
-// $(setPanels)
 $(watchCover)
 $(watchQuote)
 $(watchQuoteLength)
 $(watchWords)
 $(nameControls)
-// $(watchCustomName)
-// $(watchCustomAlbum)
-$(watchCustomCover)
-// $(watchSliders)
-// $(watchNameControls)

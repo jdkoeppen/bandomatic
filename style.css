@@ -3,8 +3,10 @@
 }
 
 .footer {
+    position: absolute;
     float: right;
-    margin: 10px auto;
+    right: 0;
+    bottom: -25px;
     width: 100%;
 }
 
@@ -24,16 +26,16 @@ body {
 p {
     font-family: 'Cutive Mono';
     text-align: center;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
-    color: #adadad;
+    color: #d1d1d1;
     width: 100%;
     max-width: 570px;
     margin: 5px auto;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
-.display p {
+.displayWide p {
     font-size: 24px;
     font-family: 'Permanent Marker';
     color: white;
@@ -51,8 +53,6 @@ p {
     margin: 0 auto;
 }
 
-
-
 main {
     display: flex;
     justify-content: space-between;
@@ -68,13 +68,34 @@ main {
     box-shadow: 0px 5px 10px -1px #242424;
 }
 
-/* @media screen and (max-width: 1150px) {
+@media screen and (min-width: 1280px) {
     main {
-        flex-flow: wrap;
-        width: 100%;
-        max-width: 580px;
+        max-width: 1150px;
+        height: 100%;
+        min-height: 600px;
+        margin-top: 50px;
+        padding: 20px;
     }
-} */
+    .displayNarrow {
+        display: none;
+    }
+    .js-cover {
+        padding-top: 10px;
+    }
+    .narrowTag {
+        display: none;
+    }
+}
+
+@media screen and (max-width:1280px) {
+    main {
+        max-width: 600px;
+        flex-flow: wrap;
+    }
+    .displayWide {
+        display: none;
+    }
+}
 
 h1 {
     font-family: "Monoton", sans-serif;
@@ -206,11 +227,29 @@ h3:active {
     margin-bottom: 10px;
 }
 
-.display {
+.displayNarrow {
     padding: 5px;
     width: 100%;
     max-width: 570px;
     /* max-height: 570px; */
+}
+
+.displayWide {
+    margin-right: 5px;
+    padding: 20px;
+    background-color: white;
+    padding-top: 150px;
+    max-height: 550px;
+    width: 100%;
+    max-width: 550px;
+    background-image: url('assets/coverOverlay.png'), url('assets/mainbg.jpg');
+    background-size: cover;
+    background-repeat: round;
+    box-shadow: 0px 5px 10px 0px #242424;
+}
+
+.narrowTag {
+    margin-top: 30px;
 }
 
 .controlPanel {
@@ -240,6 +279,7 @@ h3:active {
 
 .js-cover {
     position: relative;
+    float: right;
     margin: 0 auto;
     background-color: #000000;
     width: 100%;
@@ -265,12 +305,6 @@ h3:active {
     border: 1px dashed rgba(255, 255, 255, 0.75);
 }
 
-.gear {
-    display: none;
-    margin: 0 5px;
-    cursor: pointer;
-}
-
 /* ALBUM NAME TEXT */
 
 .js-album {
@@ -290,7 +324,7 @@ h3:active {
     position: absolute;
     height: 550px;
     width: 100%;
-    max-width: 550px;
+    min-width: 550px;
     z-index: 1;
     object-fit: cover;
 }
