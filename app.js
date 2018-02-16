@@ -12,10 +12,13 @@ var COLORS = []
 var CURRENT_COLOR = '#ffffff'
 var ALBUM_WORD_COUNT = 4
 var PANEL_STATE
-var CURRENT_PANEL
+var BAND_PANEL
+var ALBUM_PANEL
 var CURRENT_NAME
 var CURRENT_VIEW
-var mono = 0, flip = 0, blank = 0
+var mono = 0,
+  flip = 0,
+  blank = 0
 
 function getCurrentName() {
   if (CURRENT_NAME === 'bandName') {
@@ -25,13 +28,13 @@ function getCurrentName() {
   }
 }
 
-function checkViewport () {
+function checkViewport() {
   if ($(window).width > 1150) {
     CURRENT_VIEW = '#wide'
   } else CURRENT_VIEW = '#narrow'
 }
 
-function pageLoad () {
+function pageLoad() {
   getWordsData(renderAllWords)
   getQuoteData(renderWholeQuote)
   getCover(renderCover)
@@ -47,13 +50,13 @@ function pageLoad () {
  *     ###  ###   #######  ##     ## ########   ######
  */
 
-function watchWords () {
+function watchWords() {
   $('.bandName').on('click', CURRENT_VIEW, function (e) {
     getWordsData(renderAllWords)
   })
 }
 
-function getWordsData (callback) {
+function getWordsData(callback) {
   const query = {
     limit: 2,
     minLength: 3,
@@ -88,7 +91,7 @@ function applyFlip(band) {
   return flip ? band.slice().reverse() : band
 }
 
-function nameControls () {
+function nameControls() {
   $('.js-band').on('change', 'input[type = "checkbox"]', function () {
     blank = $('#theNames:checked').length
     mono = $('#mono:checked').length
@@ -111,17 +114,17 @@ function nameControls () {
  *     ##### ##  #######   #######     ##    ########
  */
 
-function getQuoteData (callback) {
+function getQuoteData(callback) {
   $.getJSON(QUOTE_ENDPOINT, callback)
 }
 
-function watchQuote () {
+function watchQuote() {
   $('.albumName').on('click', CURRENT_VIEW, function (e) {
     getQuoteData(renderWholeQuote)
   })
 }
 
-function watchQuoteLength () {
+function watchQuoteLength() {
   $('.js-album').on('click', '#less', function (e) {
     let noWords = ALBUM_WORD_COUNT--
     renderQuote(ALBUM, noWords)
@@ -132,7 +135,7 @@ function watchQuoteLength () {
   })
 }
 
-function renderQuote (result, noWords) {
+function renderQuote(result, noWords) {
   noWords = ALBUM_WORD_COUNT
   let crop = ALBUM.split(' ').splice(0, noWords).join(' ')
   $('.js-album > h2').text(crop)
@@ -140,7 +143,7 @@ function renderQuote (result, noWords) {
   return crop
 }
 
-function renderWholeQuote (data) {
+function renderWholeQuote(data) {
   ALBUM = data.quote
   renderQuote(ALBUM)
 }
@@ -164,7 +167,7 @@ function getCover(callback) {
 }
 
 function watchCover() {
-  $('.albumCover').on('click', CURRENT_VIEW, function(e) {
+  $('.albumCover').on('click', CURRENT_VIEW, function (e) {
     getCover(renderCover)
   })
 }
@@ -173,7 +176,7 @@ function renderCover(image) {
   COVER_URL = image.urls.regular
   let photoCreditName = image.user.name
   let photoCreditLink = image.user.links.html +
-  '?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge&amp;utm_source=band_o_matic'
+    '?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge&amp;utm_source=band_o_matic'
   let photoCreditTitle = 'Download free do whatever you want high-resolution photos from ' + photoCreditName
   let desc
   if (image.description) {
@@ -185,7 +188,10 @@ function renderCover(image) {
     <img id='coverImg' src='${COVER_URL}'${desc && "alt='An album cover depicting " + desc + "' "}></div>
     `)
   $('#photoCreditText').text(`Photo by ${photoCreditName} on Unsplash`)
-  $('#photoCreditLink').attr({href: photoCreditLink, title: photoCreditTitle})
+  $('#photoCreditLink').attr({
+    href: photoCreditLink,
+    title: photoCreditTitle
+  })
   getColors(renderColors)
 }
 
@@ -199,7 +205,7 @@ function renderCover(image) {
  *     ######   #######  ########  #######  ##     ##  ######
  */
 
-function renderColors (data) {
+function renderColors(data) {
   let bank = []
   let background = data.results[0].info.background_colors.map(color => color.html_code)
   let image = data.results[0].info.image_colors.map(color => color.html_code)
@@ -216,7 +222,7 @@ function renderColors (data) {
   renderPalette()
 }
 
-function renderPalette () {
+function renderPalette() {
   const $palette = $('.colorPalette')
   $palette.empty()
   for (var i = 0; i < COLORS.length; i++) {
@@ -225,7 +231,7 @@ function renderPalette () {
   watchPalette()
 }
 
-function watchPalette () {
+function watchPalette() {
   $('.js-cover').on('click', '.paletteItem', function () {
     CURRENT_COLOR = $(this).css('background-color')
     getCurrentName().children().css('color', CURRENT_COLOR)
@@ -281,27 +287,10 @@ function dragElement() {
  *    ##        ##     ## ##    ## ######## ########  ######
  */
 
-function watchBandPanel () {
-  $('.js-band').on('mousedown', function(event) {
-    CURRENT_PANEL || (CURRENT_PANEL = bandPanel())
-    CURRENT_NAME = 'bandName'
-  })
-  document.addEventListener('jspanelloaded', function (event) {
-    if (event.detail === 'bandTool') {
-      $('#bandfont').fontselect().on('change', function () {
-        var font = $(this).val().replace(/\+/g, ' '); font = font.split(':')
-        $('.js-band').children().css('font-family', font[0])
-      })
-    }
-    document.addEventListener('jspanelclosed', function (event) {
-      if (event.detail === 'bandTool') {
-        CURRENT_PANEL = undefined
-      }
-    })
-  })
-}
 
-function bandPanel () {
+
+
+function bandPanel() {
   return jsPanel.create({
     container: '.js-band',
     animateIn: 'jsPanelFadeIn',
@@ -341,24 +330,37 @@ function bandPanel () {
   })
 }
 
-function watchAlbumPanel() {
+function watchPanels() {
+  $('.js-band').on('mousedown', function (event) {
+    BAND_PANEL || (BAND_PANEL = bandPanel())
+    CURRENT_NAME = 'bandName'
+  })
   $('.js-album').on('mousedown', function (event) {
-    CURRENT_PANEL || (CURRENT_PANEL = albumPanel())
+    ALBUM_PANEL || (ALBUM_PANEL = albumPanel())
     CURRENT_NAME = 'albumName'
   })
   document.addEventListener('jspanelloaded', function (event) {
+    let fontID
+    let nameClass
     if (event.detail === 'albumTool') {
-      $('#albumfont').fontselect().on('change', function () {
-        var font = $(this).val().replace(/\+/g, ' ')
-        font = font.split(':')
-        $('.js-album').children().css('font-family', font[0])
-      })
+      fontID = '#albumfont'
+      nameClass = '.js-album'
+    } else if (event.detail === 'bandTool') {
+      fontID = '#bandfont'
+      nameClass = '.js-band'
     }
-    document.addEventListener('jspanelclosed', function (event) {
-      if (event.detail === 'albumTool') {
-        CURRENT_PANEL = undefined
-      }
+    $(fontID).fontselect().on('change', function () {
+      var font = $(this).val().replace(/\+/g, ' ')
+      font = font.split(':')
+      $(nameClass).children().css('font-family', font[0])
     })
+  })
+  document.addEventListener('jspanelclosed', function (event) {
+    if (event.detail === 'albumTool') {
+      ALBUM_PANEL = undefined
+    } else if (event.detail === 'bandTool') {
+      BAND_PANEL = undefined
+    }
   })
 }
 
@@ -411,7 +413,7 @@ function albumPanel() {
 $('.js-album, .js-band').resizable({
   start: function (event, ui) {
     if (CURRENT_PANEL) {
-      CURRENT_PANEL.close(function(id) {
+      CURRENT_PANEL.close(function (id) {
         CURRENT_PANEL = undefined
         PANEL_STATE = true
       })
@@ -444,8 +446,8 @@ $('.js-album, .js-band').resizable({
 
 $(pageLoad)
 $(dragElement)
-$(watchBandPanel)
-$(watchAlbumPanel)
+$(watchPanels)
+// $(watchAlbumPanel)
 $(watchCover)
 $(watchQuote)
 $(watchQuoteLength)
