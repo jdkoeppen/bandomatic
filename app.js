@@ -15,7 +15,6 @@ var PANEL_STATE
 var BAND_PANEL
 var ALBUM_PANEL
 var CURRENT_NAME
-var CURRENT_VIEW
 var CURRENT_PANEL
 var mono = 0,
   flip = 0,
@@ -29,11 +28,6 @@ function getCurrentName() {
   }
 }
 
-function checkViewport() {
-  if ($(window).width > 1150) {
-    CURRENT_VIEW = '#wide'
-  } else CURRENT_VIEW = '#narrow'
-}
 
 function pageLoad() {
   getWordsData(renderAllWords)
@@ -52,7 +46,7 @@ function pageLoad() {
  */
 
 function watchWords() {
-  $('.bandName').on('click', CURRENT_VIEW, function (e) {
+  $('.bandName').click(function (e) {
     getWordsData(renderAllWords)
   })
 }
@@ -120,7 +114,7 @@ function getQuoteData(callback) {
 }
 
 function watchQuote() {
-  $('.albumName').on('click', CURRENT_VIEW, function (e) {
+  $('.albumName').click(function (e) {
     getQuoteData(renderWholeQuote)
   })
 }
@@ -168,7 +162,7 @@ function getCover(callback) {
 }
 
 function watchCover() {
-  $('.albumCover').on('click', CURRENT_VIEW, function (e) {
+  $('.albumCover').click(function (e) {
     getCover(renderCover)
   })
 }
@@ -185,9 +179,9 @@ function renderCover(image) {
   }
   $('#defaultCover').css('visibility', 'hidden')
   $('.colorPalette').html(` `)
-  $('.js-cover').append(`<div id='coverImg'>
-    <img id='coverImg' src='${COVER_URL}'${desc && "alt='An album cover depicting " + desc + "' "}></div>
-    `)
+  $('img#coverImg')
+    .attr('src', COVER_URL)
+    .attr('alt', desc ? 'An album cover depicting " + desc + "' : '')   
   $('#photoCreditText').text(`Photo by ${photoCreditName} on Unsplash`)
   $('#photoCreditLink').attr({
     href: photoCreditLink,
@@ -421,6 +415,15 @@ function albumPanel() {
   })
 }
 
+function watchResize(){
+    $(document).resize(function(event){
+        // squarify cover image(s)
+        $('#coverImg').css('height', $('#coverImg').css('width') );
+        
+        
+    })
+}
+
 /***
  *     #######  ##    ## ##        #######     ###    ########
  *    ##     ## ###   ## ##       ##     ##   ## ##   ##     ##
@@ -439,3 +442,4 @@ $(watchQuote)
 $(watchQuoteLength)
 $(watchWords)
 $(nameControls)
+$(watchResize)
