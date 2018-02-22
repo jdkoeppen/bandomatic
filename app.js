@@ -3,7 +3,7 @@ const WORDS_ENDPOINT = 'https://api.wordnik.com/v4/words.json/randomWords'
 const WORDS_API = 'a9ebebf8301d0e2e3a0070d083d0143dc1fd6a7989e31b1c6'
 const COVER_ENDPOINT = 'https://api.unsplash.com/photos/random'
 const COVER_API = 'bad147bdc617e39778666eecef33b4dbee3cfb28693e0b73ba08441bb647c5da'
-// const COLORS_ENDPOINT = 'https://api.imagga.com/v1/colors'
+const COLORS_ENDPOINT = 'https://api.imagga.com/v1/colors'
 const ALBUM_CANVAS = 570
 var COVER_URL = ''
 var BAND = []
@@ -335,28 +335,14 @@ function bandPanel() {
 
 function watchPanels() {
   $('.js-band').on('mousedown', function (event) {
-    // if (CURRENT_PANEL === albumPanel) {
-    //   CURRENT_PANEL.close(function (id) {
-    //     // CURRENT_PANEL = undefined
-    //     CURRENT_PANEL = bandPanel()
-    //   })
-    // } else {
     CURRENT_PANEL || (CURRENT_PANEL = bandPanel())
     CURRENT_NAME = 'bandName'
   })
-  // })
 
   $('.js-album').on('mousedown', function (event) {
-    // if (CURRENT_PANEL) {
-    //   CURRENT_PANEL.close(function (id) {
-    //     // CURRENT_PANEL = undefined
-    //     CURRENT_PANEL = albumPanel()
-    //   })
-    // } else {
     CURRENT_PANEL || (CURRENT_PANEL = albumPanel())
     CURRENT_NAME = 'albumName'
   })
-  // })
   document.addEventListener('jspanelloaded', function (event) {
     let fontID
     let nameClass
@@ -390,11 +376,7 @@ function watchPanels() {
     })
   })
   document.addEventListener('jspanelclosed', function (event) {
-    // if (event.detail === 'albumTool') {
     CURRENT_PANEL = undefined
-    // } else if (event.detail === 'bandTool') {
-    //   BAND_PANEL = undefined
-    // }
   })
 }
 
@@ -440,40 +422,6 @@ function albumPanel() {
 }
 
 /***
- *    ########  ########  ######  #### ######## ########
- *    ##     ## ##       ##    ##  ##       ##  ##
- *    ##     ## ##       ##        ##      ##   ##
- *    ########  ######    ######   ##     ##    ######
- *    ##   ##   ##             ##  ##    ##     ##
- *    ##    ##  ##       ##    ##  ##   ##      ##
- *    ##     ## ########  ######  #### ######## ########
- */
-
-// $('.js-album, .js-band').resizable({
-//   start: function (event, ui) {
-//     if (CURRENT_PANEL) {
-//       CURRENT_PANEL.close(function (id) {
-//         CURRENT_PANEL = undefined
-//         PANEL_STATE = true
-//       })
-//     } else {
-//       PANEL_STATE = false
-//     }
-//   },
-//   resize: function (event, ui) {
-//     let size = ui.size
-//     $(this).css({
-//       'font-size': (size.width * size.height) / 10000 + 'vmin'
-//     })
-//   },
-
-//   handles: 'n, ne, e, se, s, sw, w',
-//   containment: $('.js-cover'),
-//   autoHide: true,
-//   maxWidth: 550
-// })
-
-/***
  *     #######  ##    ## ##        #######     ###    ########
  *    ##     ## ###   ## ##       ##     ##   ## ##   ##     ##
  *    ##     ## ####  ## ##       ##     ##  ##   ##  ##     ##
@@ -486,7 +434,6 @@ function albumPanel() {
 $(pageLoad)
 $(dragElement)
 $(watchPanels)
-// $(watchAlbumPanel)
 $(watchCover)
 $(watchQuote)
 $(watchQuoteLength)

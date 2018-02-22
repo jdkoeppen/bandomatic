@@ -69,8 +69,6 @@ main {
     box-shadow: 0px 5px 10px -1px #242424;
 }
 
-
-
 h1 {
     font-family: "Monoton", sans-serif;
     color: #DCDCDD;
@@ -80,23 +78,12 @@ h1 {
     text-align: center;
 }
 
-/* @media screen and (max-width: 400px) {
-    #title {
-        width: 100%;
-        max-width: 400px;
-    }
-    h1 {
-        font-size: 48px;
-    }
-} */
-
 h2 {
     font-family: 'Archivo Black', sans-serif;
     text-align: center;
     font-weight: normal;
     margin: 0;
     text-shadow: 1px 1px rgba(107, 107, 107, 0.644);
-
     font-size: 30px;
     letter-spacing: .05em;
     text-transform: capitalize;
@@ -109,7 +96,6 @@ h3 {
     color: #242424;
     margin: 5px;
 }
-
 
 fieldset {
     width: 100%;
@@ -208,7 +194,6 @@ h3:active {
     padding: 5px;
     width: 100%;
     max-width: 570px;
-    /* max-height: 570px; */
 }
 
 .displayWide {
@@ -220,10 +205,6 @@ h3:active {
     max-width: 550px;
     border-radius: 5px;
     background-color: rgba(230, 230, 230, 0.3);
-    /* background-image: url('assets/mainbg.jpg');
-    background-size: cover;
-    background-repeat: round; */
-    /* box-shadow: 0px 5px 10px 0px #242424; */
 }
 
 .narrowTag {
@@ -241,20 +222,6 @@ h3:active {
     z-index: 2;
 }
 
-/* .controlPanel#coverPanel {
-    max-width: 500px;
-    min-height: 200px;
-    display: inline-flex;
-    justify-content: space-between;
-}
-
-#coverPanel h3 {
-    text-align: center;
-    padding: 0;
-    max-width: 500px;
-    font-size: 1em;
-} */
-
 .js-cover {
     position: relative;
     float: right;
@@ -264,14 +231,10 @@ h3:active {
     max-width: 550px;
     height: 550px;
     padding: 0;
-    /* overflow: hidden; */
     box-shadow: 0px 5px 10px 0px #242424;
 }
 
-/* BAND NAME TEXT */
-
 .js-band {
-    /* display: flex; */
     position: absolute;
     top: 2%;
     left: 2%;
@@ -283,10 +246,7 @@ h3:active {
     border: 1px dashed rgba(255, 255, 255, 0.75);
 }
 
-/* ALBUM NAME TEXT */
-
 .js-album {
-    /* display: flex; */
     position: absolute;
     top: 90%;
     left: 2%;
@@ -352,7 +312,6 @@ h3:active {
     height: 30px;
     width: 20px;
     box-shadow: inset 0px 3px 5px -1px #24242473;
-    /* border-radius: 50%; */
     cursor: pointer;
 }
 
@@ -363,15 +322,13 @@ button.paletteItem {
     text-align: center;
     cursor: pointer;
     border: none;
-    /* border-radius: 50%; */
     font-size: 18px;
     overflow: hidden;
 }
 
 .fontControl {
     display: inline-flex;
- padding: 10px 20px 20px 20px;
-
+    padding: 10px 20px 20px 20px;
 }
 
 .fontSize {
@@ -379,17 +336,16 @@ button.paletteItem {
     flex-basis: auto;
     justify-content: space-between;
     margin-left: 15px;
-    /* margin: 10px 10px 20px 10px; */
-    
 }
 
-button#up, button#down{
+button#up,
+button#down {
     width: 50px;
     height: 30px;
 }
 
 p#font-size {
-    margin:10px 0;
+    margin: 10px 0;
 }
 
 @media screen and (min-width: 1280px) {
