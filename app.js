@@ -3,7 +3,7 @@ const WORDS_ENDPOINT = 'https://api.wordnik.com/v4/words.json/randomWords'
 const WORDS_API = 'a9ebebf8301d0e2e3a0070d083d0143dc1fd6a7989e31b1c6'
 const COVER_ENDPOINT = 'https://api.unsplash.com/photos/random'
 const COVER_API = 'bad147bdc617e39778666eecef33b4dbee3cfb28693e0b73ba08441bb647c5da'
-const COLORS_ENDPOINT = 'https://api.imagga.com/v1/colors'
+// const COLORS_ENDPOINT = 'https://api.imagga.com/v1/colors'
 const ALBUM_CANVAS = 570
 var COVER_URL = ''
 var BAND = []
@@ -16,6 +16,7 @@ var BAND_PANEL
 var ALBUM_PANEL
 var CURRENT_NAME
 var CURRENT_VIEW
+var CURRENT_PANEL
 var mono = 0,
   flip = 0,
   blank = 0
@@ -287,16 +288,18 @@ function dragElement() {
  *    ##        ##     ## ##    ## ######## ########  ######
  */
 
-
-
-
 function bandPanel() {
   return jsPanel.create({
     container: '.js-band',
     animateIn: 'jsPanelFadeIn',
     callback: renderPalette,
-    content: `<div>
+    content: `<div class='fontControl'>
 <input id='bandfont' type='text'>
+<div class='fontSize'>
+  <button id="down">-</button>
+  <p id="font-size"></p>
+  <button id="up">+</button>
+  </div>
 </div>
 <p>Customize the Band Name</p>
 <div class='controlPanel' id='textEdit'>
@@ -332,13 +335,28 @@ function bandPanel() {
 
 function watchPanels() {
   $('.js-band').on('mousedown', function (event) {
-    BAND_PANEL || (BAND_PANEL = bandPanel())
+    // if (CURRENT_PANEL === albumPanel) {
+    //   CURRENT_PANEL.close(function (id) {
+    //     // CURRENT_PANEL = undefined
+    //     CURRENT_PANEL = bandPanel()
+    //   })
+    // } else {
+    CURRENT_PANEL || (CURRENT_PANEL = bandPanel())
     CURRENT_NAME = 'bandName'
   })
+  // })
+
   $('.js-album').on('mousedown', function (event) {
-    ALBUM_PANEL || (ALBUM_PANEL = albumPanel())
+    // if (CURRENT_PANEL) {
+    //   CURRENT_PANEL.close(function (id) {
+    //     // CURRENT_PANEL = undefined
+    //     CURRENT_PANEL = albumPanel()
+    //   })
+    // } else {
+    CURRENT_PANEL || (CURRENT_PANEL = albumPanel())
     CURRENT_NAME = 'albumName'
   })
+  // })
   document.addEventListener('jspanelloaded', function (event) {
     let fontID
     let nameClass
@@ -354,13 +372,29 @@ function watchPanels() {
       font = font.split(':')
       $(nameClass).children().css('font-family', font[0])
     })
+
+    let initSize = $(nameClass).children().css('font-size')
+    let size = parseInt(initSize, 10)
+    $('#font-size').text(size)
+    $('#up').on('click', function () {
+      if ((size + 2) <= 90) {
+        $(nameClass).children().css('font-size', '+=2')
+        $('#font-size').text(size += 2)
+      }
+    })
+    $('#down').on('click', function () {
+      if ((size - 2) >= 12) {
+        $(nameClass).children().css('font-size', '-=2')
+        $('#font-size').text(size -= 2)
+      }
+    })
   })
   document.addEventListener('jspanelclosed', function (event) {
-    if (event.detail === 'albumTool') {
-      ALBUM_PANEL = undefined
-    } else if (event.detail === 'bandTool') {
-      BAND_PANEL = undefined
-    }
+    // if (event.detail === 'albumTool') {
+    CURRENT_PANEL = undefined
+    // } else if (event.detail === 'bandTool') {
+    //   BAND_PANEL = undefined
+    // }
   })
 }
 
@@ -369,9 +403,14 @@ function albumPanel() {
     container: '.js-album',
     animateIn: 'jsPanelFadeIn',
     callback: renderPalette,
-    content: `<div>
-    <input id='albumfont' type='text'>
-    </div>
+    content: `<div class='fontControl'>
+<input id='albumfont' type='text'>
+<div class='fontSize'>
+  <button id="down">-</button>
+  <p id="font-size"></p>
+  <button id="up">+</button>
+  </div>
+</div>
     <p>Increase or Decrease the Title Length</p>
     <div class='controlPanel' id='albumPanel'>
         <button type='button' id='less'>Fewer</button>
@@ -410,29 +449,29 @@ function albumPanel() {
  *    ##     ## ########  ######  #### ######## ########
  */
 
-$('.js-album, .js-band').resizable({
-  start: function (event, ui) {
-    if (CURRENT_PANEL) {
-      CURRENT_PANEL.close(function (id) {
-        CURRENT_PANEL = undefined
-        PANEL_STATE = true
-      })
-    } else {
-      PANEL_STATE = false
-    }
-  },
-  resize: function (event, ui) {
-    let size = ui.size
-    $(this).css({
-      'font-size': (size.width * size.height) / 10000 + 'vmin'
-    })
-  },
+// $('.js-album, .js-band').resizable({
+//   start: function (event, ui) {
+//     if (CURRENT_PANEL) {
+//       CURRENT_PANEL.close(function (id) {
+//         CURRENT_PANEL = undefined
+//         PANEL_STATE = true
+//       })
+//     } else {
+//       PANEL_STATE = false
+//     }
+//   },
+//   resize: function (event, ui) {
+//     let size = ui.size
+//     $(this).css({
+//       'font-size': (size.width * size.height) / 10000 + 'vmin'
+//     })
+//   },
 
-  handles: 'n, ne, e, se, s, sw, w',
-  containment: $('.js-cover'),
-  autoHide: true,
-  maxWidth: 550
-})
+//   handles: 'n, ne, e, se, s, sw, w',
+//   containment: $('.js-cover'),
+//   autoHide: true,
+//   maxWidth: 550
+// })
 
 /***
  *     #######  ##    ## ##        #######     ###    ########

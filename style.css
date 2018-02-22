@@ -37,9 +37,9 @@ p {
 
 .displayWide p {
     font-size: 24px;
-    font-family: 'Permanent Marker';
+    line-height: 30px;
+    font-family: 'Coustard';
     color: white;
-    text-shadow: 2px 2px #46494C;
     font-weight: 300;
     margin-top: 0;
 }
@@ -69,34 +69,7 @@ main {
     box-shadow: 0px 5px 10px -1px #242424;
 }
 
-@media screen and (min-width: 1280px) {
-    main {
-        max-width: 1150px;
-        height: 100%;
-        min-height: 600px;
-        margin-top: 50px;
-        padding: 20px;
-    }
-    .displayNarrow {
-        display: none;
-    }
-    .js-cover {
-        padding-top: 10px;
-    }
-    .narrowTag {
-        display: none;
-    }
-}
 
-@media screen and (max-width:1280px) {
-    main {
-        max-width: 600px;
-        flex-flow: wrap;
-    }
-    .displayWide {
-        display: none;
-    }
-}
 
 h1 {
     font-family: "Monoton", sans-serif;
@@ -122,7 +95,9 @@ h2 {
     text-align: center;
     font-weight: normal;
     margin: 0;
-    font-size: 1.8em;
+    text-shadow: 1px 1px rgba(107, 107, 107, 0.644);
+
+    font-size: 30px;
     letter-spacing: .05em;
     text-transform: capitalize;
 }
@@ -134,6 +109,7 @@ h3 {
     color: #242424;
     margin: 5px;
 }
+
 
 fieldset {
     width: 100%;
@@ -156,7 +132,7 @@ button {
     border-radius: 5px;
     padding: 5px;
     white-space: normal;
-    box-shadow: inset 0px 5px 10px -1px #161616d8;
+    box-shadow: 0px 3px 3px -1px #161616d8;
 }
 
 .controlPanel#albumPanel button {
@@ -236,17 +212,18 @@ h3:active {
 }
 
 .displayWide {
-    margin-right: 5px;
     padding: 20px;
     background-color: white;
     padding-top: 150px;
     max-height: 550px;
     width: 100%;
     max-width: 550px;
-    background-image: url('assets/mainbg.jpg');
+    border-radius: 5px;
+    background-color: rgba(230, 230, 230, 0.3);
+    /* background-image: url('assets/mainbg.jpg');
     background-size: cover;
-    background-repeat: round;
-    box-shadow: 0px 5px 10px 0px #242424;
+    background-repeat: round; */
+    /* box-shadow: 0px 5px 10px 0px #242424; */
 }
 
 .narrowTag {
@@ -264,7 +241,7 @@ h3:active {
     z-index: 2;
 }
 
-.controlPanel#coverPanel {
+/* .controlPanel#coverPanel {
     max-width: 500px;
     min-height: 200px;
     display: inline-flex;
@@ -276,12 +253,12 @@ h3:active {
     padding: 0;
     max-width: 500px;
     font-size: 1em;
-}
+} */
 
 .js-cover {
     position: relative;
     float: right;
-    margin: 0 auto;
+    margin: 0 5px 0 0;
     background-color: #000000;
     width: 100%;
     max-width: 550px;
@@ -323,9 +300,10 @@ h3:active {
 
 #coverImg {
     position: absolute;
-    height: 550px;
+    height: auto;
     width: 100%;
-    min-width: 550px;
+    max-width: 550px;
+    max-height: 550px;
     z-index: 1;
     object-fit: cover;
 }
@@ -334,7 +312,8 @@ h3:active {
     position: absolute;
     width: 100%;
     max-width: 550px;
-    height: 550px;
+    max-height: 550px;
+    height: auto;
     z-index: 3;
     mix-blend-mode: screen;
     pointer-events: none;
@@ -387,4 +366,57 @@ button.paletteItem {
     /* border-radius: 50%; */
     font-size: 18px;
     overflow: hidden;
+}
+
+.fontControl {
+    display: inline-flex;
+ padding: 10px 20px 20px 20px;
+
+}
+
+.fontSize {
+    display: flex;
+    flex-basis: auto;
+    justify-content: space-between;
+    margin-left: 15px;
+    /* margin: 10px 10px 20px 10px; */
+    
+}
+
+button#up, button#down{
+    width: 50px;
+    height: 30px;
+}
+
+p#font-size {
+    margin:10px 0;
+}
+
+@media screen and (min-width: 1280px) {
+    main {
+        max-width: 1170px;
+        height: 100%;
+        min-height: 600px;
+        margin-top: 50px;
+        padding: 20px;
+    }
+    .displayNarrow {
+        display: none;
+    }
+    .narrowTag {
+        display: none;
+    }
+}
+
+@media screen and (max-width:1280px) {
+    main {
+        max-width: 600px;
+        flex-flow: wrap;
+    }
+    .displayWide {
+        display: none;
+    }
+    .js-cover {
+        margin-left: 5px;
+    }
 }

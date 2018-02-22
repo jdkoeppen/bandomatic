@@ -9,8 +9,9 @@
 
 .font-select {
   font-size: 18px;
-  width: 250px;
-  margin: 10px 70px 20px 70px;
+  width: 200px;
+  margin-right: 5px;
+  margin-top: 5px;
   position: relative;
   display: inline-block;
   zoom: 1;
