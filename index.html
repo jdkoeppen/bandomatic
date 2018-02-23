@@ -16,22 +16,20 @@
 </head>
 
 <body>
-    <div id='title'>
+    <header role="banner">
         <h1>Band-o-Matic!
         </h1>
-    </div>
-    <p>Create your own unique album cover using randomly generated words and artwork. We've randomly created the first one for
-        you. </p>
-    </div>
+    <p>Create your own unique album cover using randomly generated words and artwork. We've randomly created the first one for you. </p>
+    </header>
     <main role="main">
         <div class='displayWide'>
             <p>Press a button below to get a new...</p>
             <form role='form'>
                 <fieldset>
                     <div class='control'>
-                        <button type='button' class='bandName' id='wide'>Band Name</button>
-                        <button type='button' class='albumName' id='wide'>Album Name</button>
-                        <button type='button' class='albumCover' id='wide'>Cover</button>
+                        <button type='button' class='bandName'>Band Name</button>
+                        <button type='button' class='albumName'>Album Name</button>
+                        <button type='button' class='albumCover'>Cover</button>
                     </div>
                 </fieldset>
             </form>
@@ -43,9 +41,9 @@
             <form role='form'>
                 <fieldset>
                     <div class='control'>
-                        <button type='button' class='bandName' id='narrow'>Band Name</button>
-                        <button type='button' class='albumName' id='narrow'>Album Name</button>
-                        <button type='button' class='albumCover' id='narrow'>Cover</button>
+                        <button type='button' class='bandName'>Band Name</button>
+                        <button type='button' class='albumName'>Album Name</button>
+                        <button type='button' class='albumCover'>Cover</button>
                     </div>
                 </fieldset>
             </form>
@@ -65,6 +63,9 @@
                 <h2 id='currentAlbum'>
 
                 </h2>
+            </div>
+            <div id='imgLayer'>
+                <img id='coverImg'>
             </div>
             <div class="footer">
                 <a id='photoCreditLink' style="background-color:#00000059;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', Helvetica, Ubuntu, Roboto, Noto, 'Segoe UI', Arial, sans-serif;font-size:10px;font-weight:bold;display:inline-block;border-radius:3px;"
