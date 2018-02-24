@@ -28,7 +28,6 @@ function getCurrentName() {
   }
 }
 
-
 function pageLoad() {
   getWordsData(renderAllWords)
   getQuoteData(renderWholeQuote)
@@ -177,11 +176,12 @@ function renderCover(image) {
   if (image.description) {
     desc = image.description.replace(/'/g, '&apos;')
   }
-  $('#defaultCover').css('visibility', 'hidden')
+  $('#initAlbum').css('display', 'none')
+  watchResize()
   $('.colorPalette').html(` `)
-  $('img#coverImg')
+  $('#coverImg')
     .attr('src', COVER_URL)
-    .attr('alt', desc ? 'An album cover depicting " + desc + "' : '')   
+    .attr('alt', desc ? 'An album cover depicting " + desc + "' : '')
   $('#photoCreditText').text(`Photo by ${photoCreditName} on Unsplash`)
   $('#photoCreditLink').attr({
     href: photoCreditLink,
@@ -415,13 +415,11 @@ function albumPanel() {
   })
 }
 
-function watchResize(){
-    $(document).resize(function(event){
-        // squarify cover image(s)
-        $('#coverImg').css('height', $('#coverImg').css('width') );
-        
-        
-    })
+function watchResize() {
+  $(document).resize(function(event) {
+    // squarify cover image(s)
+    $('#imgLayer').css('height', $('#coverOverlay').css('width'))
+  })
 }
 
 /***
