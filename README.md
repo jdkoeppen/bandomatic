@@ -5,3 +5,5 @@ Band-o-matic pulls random elements from several different APIs to create a uniqu
 album name and album art are independently sourced and each text element can be manipulated and customized using the app's controls.
 
 Planned updates include download functionality, page-state url parsing and social media sharing.
+
+This app is best viewed on screens over 480px or on desktop.
