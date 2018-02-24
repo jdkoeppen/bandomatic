@@ -179,9 +179,9 @@ function renderCover(image) {
   $('#initAlbum').css('display', 'none')
   watchResize()
   $('.colorPalette').html(` `)
-  $('#coverImg')
-    .attr('src', COVER_URL)
-    .attr('alt', desc ? 'An album cover depicting " + desc + "' : '')
+  $('.js-cover')
+    .css('background-image', 'url(' + COVER_URL + ')')
+    .attr('aria-label', desc ? 'An album cover depicting " + desc + "' : '')
   $('#photoCreditText').text(`Photo by ${photoCreditName} on Unsplash`)
   $('#photoCreditLink').attr({
     href: photoCreditLink,
