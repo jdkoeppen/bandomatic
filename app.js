@@ -284,6 +284,7 @@ function dragElement() {
 
 function bandPanel() {
   return jsPanel.create({
+    onWindowResize: true,
     container: '.js-band',
     animateIn: 'jsPanelFadeIn',
     callback: renderPalette,
@@ -307,8 +308,8 @@ function bandPanel() {
     <p>Pick a Text Color</p>
     <div class='colorPalette'></div>`,
     target: '.js-band',
-    mode: 'sticky',
-    ttipEvent: 'click',
+    mode: 'default',
+    ttipEvent: 'mouseover',
     delay: 0,
     connector: '#FBD0D9',
     position: {
@@ -317,23 +318,24 @@ function bandPanel() {
       offsetY: '40px'
     },
     id: 'bandTool',
-    panelSize: '400 275',
-    contentSize: '100% 65',
-    theme: 'default',
+    contentOverflow: 'scroll',
+    panelSize: '320 350',
+    contentSize: '100% 20',
+    theme: 'none',
     boxShadow: 3,
-    border: '5px solid',
+    border: '6px solid',
     headerTitle: 'Band Name Editor',
     headerControls: 'closeonly'
   })
 }
 
 function watchPanels() {
-  $('.js-band').on('mousedown', function (event) {
+  $('.js-band').on('pointerdown', function (event) {
     CURRENT_PANEL || (CURRENT_PANEL = bandPanel())
     CURRENT_NAME = 'bandName'
   })
 
-  $('.js-album').on('mousedown', function (event) {
+  $('.js-album').on('pointerdown', function (event) {
     CURRENT_PANEL || (CURRENT_PANEL = albumPanel())
     CURRENT_NAME = 'albumName'
   })
@@ -376,6 +378,7 @@ function watchPanels() {
 
 function albumPanel() {
   return jsPanel.create({
+    onWindowResize: true,
     container: '.js-album',
     animateIn: 'jsPanelFadeIn',
     callback: renderPalette,
@@ -405,11 +408,12 @@ function albumPanel() {
       offsetY: '-40px'
     },
     id: 'albumTool',
-    panelSize: '400 275',
-    contentSize: '100% 65',
-    theme: 'default',
+    contentOverflow: 'scroll',
+    panelSize: '320 350',
+    contentSize: '100% 20',
+    theme: 'none',
     boxShadow: 3,
-    border: '5px solid',
+    border: '6px solid',
     headerTitle: 'Album Name Editor',
     headerControls: 'closeonly'
   })
@@ -418,7 +422,7 @@ function albumPanel() {
 function watchResize() {
   $(document).resize(function(event) {
     // squarify cover image(s)
-    $('#imgLayer').css('height', $('#coverOverlay').css('width'))
+    $('.js-cover').css('height', $('#coverOverlay').css('width'))
   })
 }
 

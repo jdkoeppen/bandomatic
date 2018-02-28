@@ -116,7 +116,7 @@ var jsPanel = {
     version: '4.0.0-beta.2',
     date: '2018-01-08 09:56',
     idCounter: 0,
-    ziBase: 100,
+    ziBase: 500,
     themes: ['default', 'primary', 'info', 'success', 'warning', 'danger'],
     mdbthemes: ['secondary', 'elegant', 'stylish', 'unique', 'special'],
     autopositionSpacing: 4,

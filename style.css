@@ -4,7 +4,7 @@
 
 .footer {
     position: absolute;
-    bottom: -25px;
+    /* bottom: -25px; */
     /* margin: 10px auto; */
 
 }
@@ -216,7 +216,7 @@ h3:active {
 }
 
 .narrowTag {
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
 .controlPanel {
@@ -227,7 +227,7 @@ h3:active {
     margin: 0px auto;
     margin-bottom: 10px;
     padding: 5px;
-    z-index: 2;
+    /* z-index: 2; */
 }
 
 .js-cover {
@@ -251,7 +251,7 @@ h3:active {
     position: absolute;
     top: 2%;
     left: 2%;
-    z-index: 2;
+    /* z-index: 2; */
     cursor: move;
 }
 
@@ -263,7 +263,7 @@ h3:active {
     position: absolute;
     top: 90%;
     left: 2%;
-    z-index: 2;
+    /* z-index: 2; */
     cursor: move;
 }
 
@@ -276,7 +276,7 @@ h3:active {
     width: 100%;
     max-width: 550px;
     max-height: 550px;
-    z-index: 1;
+    /* z-index: 1; */
     object-fit: fill;
     overflow: hidden;
 }
@@ -302,7 +302,7 @@ h3:active {
     max-width: 550px;
     max-height: 550px;
     height: auto;
-    z-index: 3;
+    /* z-index: 3; */
     mix-blend-mode: screen;
     pointer-events: none;
 }
@@ -333,6 +333,7 @@ h3:active {
     justify-content: space-around;
     align-items: center;
     margin: 10px auto;
+    padding: 5px;
 }
 
 .paletteItem {
@@ -356,14 +357,19 @@ button.paletteItem {
 
 .fontControl {
     display: inline-flex;
+    align-content: space-around;
+    flex-wrap: wrap;
     padding: 10px 20px 20px 20px;
+    width: 100%;
 }
 
 .fontSize {
     display: flex;
     flex-basis: auto;
-    justify-content: space-between;
-    margin-left: 15px;
+    justify-content: space-around;
+    margin: 0 auto;
+    padding: 5px;
+    /* margin-left: 15px; */
 }
 
 button#up,
@@ -383,6 +389,7 @@ p#font-size {
 /*        min-height: 600px;*/
         margin-top: 50px;
         padding: 20px;
+        padding-bottom: 40px;
     }
     .displayNarrow {
         display: none;
@@ -403,4 +410,11 @@ p#font-size {
     .js-cover {
         margin-left: 5px;
     }
+    
+}
+
+@media screen and (max-width:480px) {
+h2 {
+    font-size: 16px;
+}
 }

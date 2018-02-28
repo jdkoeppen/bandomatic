@@ -9,13 +9,14 @@
 
 .font-select {
   font-size: 18px;
-  width: 200px;
-  margin-right: 5px;
-  margin-top: 5px;
+  width: 100%;
+  /* margin-right: 5px; */
+  /* margin-top: 5px; */
   position: relative;
   display: inline-block;
   zoom: 1;
   *display: inline;
+  padding: 10px;
 }
 
 .font-select .fs-drop {
